@@ -20,25 +20,25 @@ public class MainActivity extends AppCompatActivity {
 
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);
-        flipCoinButton.setOnClickListener(View -> {
+        /*flipCoinButton.setOnClickListener(View -> {
             Intent intent = new Intent(this, flipCoin.class);//TODO: ADD CLASS HERE
             startActivity(intent);
-        });
+        });*/
     }
 
     void switchActivityTimeoutTimer(){
         Button flipCoinButton = findViewById(R.id.timeoutTimerButton);
         flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, timeoutTimer.class);//TODO: ADD CLASS HERE
+            Intent intent = new Intent(this, TimerActivity.class);//TODO: ADD CLASS HERE
             startActivity(intent);
         });
     }
 
     void switchActivitySettings(){
-        Button flipCoinButton = findViewById(R.id.settingsButton);
+        /*Button flipCoinButton = findViewById(R.id.settingsButton);
         flipCoinButton.setOnClickListener(View -> {
             Intent intent = new Intent(this, settings.class);//TODO: ADD CLASS HERE
             startActivity(intent);
-        });
+        });*/
     }
 }

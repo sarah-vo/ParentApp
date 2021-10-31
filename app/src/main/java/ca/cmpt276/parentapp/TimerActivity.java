@@ -1,9 +1,14 @@
 package ca.cmpt276.parentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -18,6 +23,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class TimerActivity extends AppCompatActivity {
@@ -28,18 +34,21 @@ public class TimerActivity extends AppCompatActivity {
 
     private final long VIBRATION_TIME = 300;
 
-    private TextView hour_text, minute_text, second_text;
-    private TextView progress_text;
+    public static final String NOTIFY_ID = "Notification Channel ID for Timer";
 
-    private Button pause_resume_button, reset_button, start_button;
+    private NotificationManagerCompat notify_manager;
+    public static MediaPlayer alarm_sound;
     private CountDownTimer timer;
+
+    private NumberPicker timer_hour, timer_minute, timer_second;
+    private TextView hour_text, minute_text, second_text;
+
+    private TextView progress_text;
     private ProgressBar timer_bar;
+    private Button pause_resume_button, reset_button, start_button;
 
-    NumberPicker timer_hour, timer_minute, timer_second;
     TableLayout default_time_table;
-
     ArrayList<Integer> default_time_list = new ArrayList<>();
-    int[] default_time = {60,120,180,300,600};
 
     private int initial_time = 0;
     private int time_left = initial_time;
@@ -54,67 +63,20 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+        notify_manager = NotificationManagerCompat.from(this);
+
         initializeTimerScroll();
+        initializeProgressView();
 
-        timer_bar = findViewById(R.id.timer_bar);
-        progress_text = findViewById(R.id.timer_progress_text);
-
+        initializeAlarmSound();
+        setUpTimerButtons();
         populateDefaultTimeButton();
 
-        setUpTimerButtons();
         updateViewInterface();
     }
 
-    private void populateDefaultTimeButton() {
-        default_time_table = findViewById(R.id.default_table);
 
-
-        for (Integer value : default_time){
-            default_time_list.add(value);
-        }
-
-        int max_col = 3;
-        int size_left = default_time_list.size();
-
-        for (int row = 0; row < size_left; row++){
-            TableRow gridRow = new TableRow(this);
-            gridRow.setLayoutParams(new TableLayout.LayoutParams(
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    TableLayout.LayoutParams.MATCH_PARENT,
-                    1.0f
-            ));
-            default_time_table.addView(gridRow);
-
-            for (int col = 0; col < max_col; col++){
-                //Get corresponding index for the default_time_list
-                int i = row * max_col + col;
-
-                if(size_left != 0){
-                    int time_value = convertToMilliSeconds(default_time_list.get(i));
-
-                    //Set up button
-                    CustomButton button = new CustomButton(this);
-                    button.setPadding(0,0,0,0);
-                    button.setOnClickListener(view -> updatePickerText(time_value));
-                    //button.setAutoSizeTextTypeWithDefaults(1);
-                    button.setText(getFormatTime(time_value));
-
-                    button.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.MATCH_PARENT,
-                            TableRow.LayoutParams.MATCH_PARENT,
-                            1.0f
-                    ));
-
-                    gridRow.addView(button);
-
-                    size_left--;
-                    continue;
-                }
-                break;
-
-            }
-        }
-    }
+    ////Functions for initialization
 
     private void initializeTimerScroll(){
         hour_text = findViewById(R.id.text_hour);
@@ -145,6 +107,16 @@ public class TimerActivity extends AppCompatActivity {
                 timer_second.setValue(1);
             }
         });
+    }
+
+    private void initializeProgressView(){
+        timer_bar = findViewById(R.id.timer_bar);
+        progress_text = findViewById(R.id.timer_progress_text);
+    }
+
+    private void initializeAlarmSound(){
+        alarm_sound = MediaPlayer.create(TimerActivity.this,R.raw.alarm_sound);
+        alarm_sound.setLooping(false);
     }
 
     private void setUpTimerButtons(){
@@ -185,9 +157,54 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
+    private void populateDefaultTimeButton() {
+        default_time_table = findViewById(R.id.default_table);
 
-    private int convertToMilliSeconds(int second){
-        return second * 1000;
+        for (Integer value : getResources().getIntArray(R.array.default_time)){
+            default_time_list.add(value);
+        }
+
+        int max_col = 3;
+        int size_left = default_time_list.size();
+
+        for (int row = 0; row < size_left; row++){
+            TableRow gridRow = new TableRow(this);
+            gridRow.setLayoutParams(new TableLayout.LayoutParams(
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.MATCH_PARENT,
+                    1.0f
+            ));
+            default_time_table.addView(gridRow);
+
+            for (int col = 0; col < max_col; col++){
+                //Get corresponding index for the default_time_list
+                int i = row * max_col + col;
+
+                if(size_left != 0){
+                    int time_value = convertToMilliSeconds(default_time_list.get(i));
+
+                    //Set up button
+                    CustomButton button = new CustomButton(this);
+                    button.setPadding(0,0,0,0);
+                    button.setOnClickListener(view -> setPickerValue(time_value));
+                    //button.setAutoSizeTextTypeWithDefaults(1);
+                    button.setText(getFormatTime(time_value));
+
+                    button.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
+                            TableRow.LayoutParams.MATCH_PARENT,
+                            1.0f
+                    ));
+
+                    gridRow.addView(button);
+
+                    size_left--;
+                    continue;
+                }
+                break;
+
+            }
+        }
     }
 
     private int getValueFromPicker(){
@@ -200,44 +217,7 @@ public class TimerActivity extends AppCompatActivity {
         return convertToMilliSeconds(time_sec);
     }
 
-    private void startTimer(){
-        timer_bar.setMax(initial_time);
-
-        timer_bar.setProgress(Math.abs(time_left - initial_time));
-
-        timer = new CountDownTimer(time_left,1000) {
-            @Override
-            public void onTick(long time_until_finish) {
-
-                if (! (time_until_finish + 999 > initial_time)){
-                    time_left -= 1000;
-                }
-
-                timer_bar.setProgress(Math.abs(time_left - initial_time));
-                updateProgressText();
-                updateViewInterface();
-            }
-
-            @Override
-            public void onFinish() {
-                time_left = 0;
-                vibrate(VIBRATION_TIME);
-
-                timer_bar.setProgress(initial_time);
-
-                isTimerRunning = false;
-
-                updateProgressText();
-
-                new Handler().postDelayed(()-> updateViewInterface(),1000);
-
-            }
-        }.start();
-
-        isTimerRunning = true;
-        updateProgressText();
-        updateViewInterface();
-    }
+    //Functions to update Views
 
     private void updateViewInterface(){
         if (isTimerRunning){
@@ -249,6 +229,23 @@ public class TimerActivity extends AppCompatActivity {
                 setInterface_Choose();
             }
         }
+    }
+
+    private void updateProgressText(){
+        int hour = getHour(time_left);
+        int minute = getMinute(time_left);
+        int second = getSecond(time_left);
+        progress_text.setText(getString(R.string.format_time,hour,minute,second));
+    }
+
+    private void setPickerValue(int time){
+        int hour = getHour(time);
+        int minute = getMinute(time);
+        int second = getSecond(time);
+
+        timer_hour.setValue(hour);
+        timer_minute.setValue(minute);
+        timer_second.setValue(second);
     }
 
     private void setInterface_Running(){
@@ -291,19 +288,46 @@ public class TimerActivity extends AppCompatActivity {
         default_time_table.setVisibility(View.VISIBLE);
     }
 
-    private void updateProgressText(){
-        int hour = getHour(time_left);
-        int minute = getMinute(time_left);
-        int second = getSecond(time_left);
-        progress_text.setText(getString(R.string.format_time,hour,minute,second));
-    }
+    //Functions to update Timers
 
-    private String getFormatTime(int time){
-        int hour = getHour(time);
-        int minute = getMinute(time);
-        int second = getSecond(time);
+    private void startTimer(){
+        timer_bar.setMax(initial_time);
 
-        return getString(R.string.format_time,hour,minute,second);
+        timer_bar.setProgress(Math.abs(time_left - initial_time));
+
+        timer = new CountDownTimer(time_left,1000) {
+            @Override
+            public void onTick(long time_until_finish) {
+
+                if (! (time_until_finish + 999 > initial_time)){
+                    time_left -= 1000;
+                }
+
+                timer_bar.setProgress(Math.abs(time_left - initial_time));
+                updateProgressText();
+                updateViewInterface();
+            }
+
+            @Override
+            public void onFinish() {
+                time_left = 0;
+                isTimerRunning = false;
+
+                vibrate(VIBRATION_TIME);
+                playAlarm();
+                sendToNotificationChannel();
+
+                timer_bar.setProgress(initial_time);
+                updateProgressText();
+
+                new Handler().postDelayed(()-> updateViewInterface(),1000);
+
+            }
+        }.start();
+
+        isTimerRunning = true;
+        updateProgressText();
+        updateViewInterface();
     }
 
     private void setTime(int ms){
@@ -327,25 +351,45 @@ public class TimerActivity extends AppCompatActivity {
         updateProgressText();
     }
 
-    private void updatePickerText(int time){
-        int hour = getHour(time);
-        int minute = getMinute(time);
-        int second = getSecond(time);
-
-        timer_hour.setValue(hour);
-        timer_minute.setValue(minute);
-        timer_second.setValue(second);
-
-    }
+    /////Functions for formatting time
 
     private int getHour(int time){
         return  (time/1000) /3600;
     }
+
     private int getMinute(int time){
         return  ((time/1000) % 3600) /60;
     }
+
     private int getSecond(int time){
         return  (time/1000)%60;
+    }
+
+    private String getFormatTime(int time){
+        int hour = getHour(time);
+        int minute = getMinute(time);
+        int second = getSecond(time);
+
+        return getString(R.string.format_time,hour,minute,second);
+    }
+
+    private int convertToMilliSeconds(int second){
+        return second * 1000;
+    }
+
+    //////Functions for playing Sounds
+
+    private void playAlarm(){
+        if (alarm_sound != null){
+            alarm_sound.start();
+        }
+    }
+
+    private void stopAlarm() throws IOException {
+        if (alarm_sound != null && alarm_sound.isPlaying()){
+            alarm_sound.stop();
+            alarm_sound.prepare();
+        }
     }
 
     private void vibrate(long milliseconds){
@@ -353,4 +397,29 @@ public class TimerActivity extends AppCompatActivity {
         vibrator.vibrate(VibrationEffect.createOneShot(milliseconds,
                 VibrationEffect.DEFAULT_AMPLITUDE));
     }
+
+    ///////Functions for notifications
+
+    private void sendToNotificationChannel(){
+        int id = 1;
+        Intent receive_intent = new Intent(this,NotificationReceiver.class);
+        receive_intent.putExtra(NOTIFY_ID,id);
+        PendingIntent pending_intent = PendingIntent.getBroadcast(this, 0,
+                receive_intent,PendingIntent.FLAG_IMMUTABLE);
+
+        Notification notify= new NotificationCompat.Builder(this,
+                NotificationClass.NOTIFICATION_CHANNEL).
+                setSmallIcon(R.drawable.timer).
+                setContentTitle("Timer").
+                setContentText("Timer Has Ended").
+                setPriority(NotificationCompat.PRIORITY_HIGH).
+                setCategory(NotificationCompat.CATEGORY_ALARM).
+                setAutoCancel(true).
+                addAction(R.mipmap.ic_launcher,"Stop",pending_intent).
+                build();
+
+        notify_manager.notify(id,notify);
+
+    }
+
 }

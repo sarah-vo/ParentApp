@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">ParentApp</string>
+
+    <string name="format_time">%1$02d:%2$02d:%3$02d</string>
+
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="reset">Reset</string>
+
     <string name="flip_coin">Flip coin</string>
     <string name="timeout_timer">Timeout Timer</string>
     <string name="settings">Settings</string>

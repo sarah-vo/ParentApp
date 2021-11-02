@@ -13,17 +13,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        switchActivityFlipCoin();
-//        switchActivityTimeoutTimer();
+        switchActivityFlipCoin();
+        switchActivityTimeoutTimer();
 //        switchActivitySettings();
     }
-/*
+
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);
-        /*flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, flipCoin.class);//TODO: ADD CLASS HERE
+        flipCoinButton.setOnClickListener(View -> {
+            Intent intent = new Intent(this, FlipCoinActivity.class);//TODO: ADD CLASS HERE
             startActivity(intent);
-        });*/
+        });
     }
 
     void switchActivityTimeoutTimer(){
@@ -34,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void switchActivitySettings(){
-        /*Button flipCoinButton = findViewById(R.id.settingsButton);
-        flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, settings.class);//TODO: ADD CLASS HERE
-            startActivity(intent);
-        });*/
-    }
+//    void switchActivitySettings(){
+//        Button flipCoinButton = findViewById(R.id.settingsButton);
+//        flipCoinButton.setOnClickListener(View -> {
+//            Intent intent = new Intent(this, settings.class);//TODO: ADD CLASS HERE
+//            startActivity(intent);
+//        });
+//    }
 
- */
+
 }

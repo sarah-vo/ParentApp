@@ -1,12 +1,13 @@
 package ca.cmpt276.parentapp.model;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FlipCoin {
     int lastPickChildIndex;
     private static FlipCoin instance;
-    enum CoinSide {
+    public enum CoinSide {
         HEADS,
         TAILS
     }
@@ -39,7 +40,8 @@ public class FlipCoin {
         int numChildren = childrenList.size();
         int currentPickChildIndex;
         if (lastPickChildIndex == -1) { // First time flip
-            currentPickChildIndex = ThreadLocalRandom.current().nextInt(0, numChildren);
+            Random rand = new Random();
+            currentPickChildIndex = rand.nextInt(numChildren);
         }
         else {
             currentPickChildIndex = lastPickChildIndex + 1;
@@ -51,5 +53,10 @@ public class FlipCoin {
         lastPickChildIndex = currentPickChildIndex;
 
         return childrenList.get(currentPickChildIndex);
+    }
+
+    public CoinSide generateFlipResult() {
+        Random rand = new Random();
+        return CoinSide.values()[rand.nextInt(2)];
     }
 }

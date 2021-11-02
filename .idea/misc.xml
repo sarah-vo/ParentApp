@@ -3,14 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/georg/AndroidStudioProjects/ParentApp/app/src/main/res/layout/activity_timer.xml" value="0.2546875" />
-      </map>
-    </option>
-  </component>
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3416666666666667" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.41458333333333336" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22916666666666666" />
+        <entry key="app/src/main/res/drawable/timer.xml" value="0.4041666666666667" />
+        <entry key="app/src/main/res/layout/activity_flip_coin.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.45" />
+        <entry key="app/src/main/res/layout/activity_timer.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/coin_side_selection_layout.xml" value="0.3880208333333333" />
       </map>
     </option>
   </component>

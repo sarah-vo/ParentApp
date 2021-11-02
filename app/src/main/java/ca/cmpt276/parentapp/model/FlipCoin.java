@@ -4,52 +4,28 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FlipCoin {
-    int lastPickChildIndex;
-    private static FlipCoin instance;
     enum CoinSide {
-        HEADS,
-        TAILS
+        HEAD,
+        TAIL
     }
     CoinSide pickerChoice;
 
-    private FlipCoin() {
-        lastPickChildIndex = -1;
-    }
+    public FlipCoin() { }
 
-    public static FlipCoin getInstance() {
-        if (instance == null) {
-            instance = new FlipCoin();
+    public CoinSide flipCoin(){
+        int flip_output = ThreadLocalRandom.current().nextInt(1, 3);
+
+        if (flip_output == 1){
+            pickerChoice = CoinSide.HEAD;
         }
-        return instance;
-    }
+        else{
+            pickerChoice = CoinSide.TAIL;
+        }
 
-    public int getLastPickChildIndex() {
-        return lastPickChildIndex;
-    }
-
-    public CoinSide getPickerChoice() {
         return pickerChoice;
     }
 
-    public void setPickerChoice(CoinSide pickerChoice) {
-        this.pickerChoice = pickerChoice;
-    }
-
-    public String generateCurrentPickChild(List<String> childrenList) {
-        int numChildren = childrenList.size();
-        int currentPickChildIndex;
-        if (lastPickChildIndex == -1) { // First time flip
-            currentPickChildIndex = ThreadLocalRandom.current().nextInt(0, numChildren);
-        }
-        else {
-            currentPickChildIndex = lastPickChildIndex + 1;
-            if (currentPickChildIndex >= childrenList.size()){
-                currentPickChildIndex = 0;
-            }
-        }
-
-        lastPickChildIndex = currentPickChildIndex;
-
-        return childrenList.get(currentPickChildIndex);
+    public CoinSide getSide(){
+        return pickerChoice;
     }
 }

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/timer_background">
 
 
     <ProgressBar
@@ -37,6 +38,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="128dp"
         android:layout_marginEnd="2dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/timer_bar"
         app:layout_constraintEnd_toStartOf="@+id/text_second"
         app:layout_constraintStart_toEndOf="@+id/text_minute"
@@ -49,6 +51,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="128dp"
         android:layout_marginEnd="2dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/timer_bar"
         app:layout_constraintEnd_toStartOf="@+id/text_minute"
         app:layout_constraintStart_toEndOf="@+id/text_hour"
@@ -60,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
         android:layout_marginTop="128dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="@+id/timer_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -101,7 +105,7 @@
         app:layout_constraintTop_toTopOf="@+id/timer_second"
         app:layout_constraintVertical_bias="0.48" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/timer_pause_resume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,13 +114,14 @@
         android:layout_marginEnd="114dp"
         android:layout_marginBottom="91dp"
         android:text="@string/pause"
+        android:background="@drawable/button_rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/timer_reset"
         app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_bar" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/timer_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,30 +129,33 @@
         android:layout_marginEnd="72dp"
         android:layout_marginBottom="91dp"
         android:text="@string/reset"
+        android:background="@drawable/button_rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_bar" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/timer_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="143dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="52dp"
         android:text="@string/start"
+        android:background="@drawable/button_rounded_corner"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/default_table" />
 
     <TableLayout
         android:id="@+id/default_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginTop="120dp"
         android:stretchColumns="*"
-        app:layout_constraintBottom_toTopOf="@+id/timer_start"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_bar">
 

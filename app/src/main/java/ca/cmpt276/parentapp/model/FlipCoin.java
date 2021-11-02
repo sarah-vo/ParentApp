@@ -1,7 +1,6 @@
 package ca.cmpt276.parentapp.model;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FlipCoin {

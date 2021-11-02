@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     void switchActivityTimeoutTimer(){
         Button flipCoinButton = findViewById(R.id.timeoutTimerButton);
         flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, TimerActivity.class);//TODO: ADD CLASS HERE
+            Intent intent = TimerActivity.makeIntent(this);
             startActivity(intent);
         });
     }
@@ -41,6 +41,5 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(intent);
 //        });
 //    }
-
 
 }

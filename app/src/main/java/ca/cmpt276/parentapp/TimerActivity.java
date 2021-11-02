@@ -14,6 +14,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -55,7 +56,7 @@ public class TimerActivity extends AppCompatActivity {
     private boolean isTimerRunning = false;
 
     public static Intent makeIntent(Context context){
-        return new Intent(context, TimerActivity.class);
+        return  new Intent(context, TimerActivity.class);
     }
 
     @Override
@@ -179,30 +180,36 @@ public class TimerActivity extends AppCompatActivity {
             for (int col = 0; col < max_col; col++){
                 //Get corresponding index for the default_time_list
                 int i = row * max_col + col;
+                int time_value;
 
-                if(size_left != 0){
-                    int time_value = convertToMilliSeconds(default_time_list.get(i));
+                CustomButton button = new CustomButton(this);
 
-                    //Set up button
-                    CustomButton button = new CustomButton(this);
-                    button.setPadding(0,0,0,0);
-                    button.setOnClickListener(view -> setPickerValue(time_value));
-                    //button.setAutoSizeTextTypeWithDefaults(1);
-                    button.setText(getFormatTime(time_value));
 
-                    button.setLayoutParams(new TableRow.LayoutParams(
-                            TableRow.LayoutParams.MATCH_PARENT,
-                            TableRow.LayoutParams.MATCH_PARENT,
-                            1.0f
-                    ));
-
-                    gridRow.addView(button);
-
-                    size_left--;
-                    continue;
+                if (size_left != 0){
+                    time_value = convertToMilliSeconds(default_time_list.get(i));
                 }
-                break;
 
+                else{
+                    time_value = 0;
+                    button.setVisibility(View.INVISIBLE);
+                    button.setClickable(false);
+                }
+
+                //Set up button
+                button.setPadding(0,0,0,0);
+                button.setOnClickListener(view -> setPickerValue(time_value));
+                button.setBackgroundResource(R.drawable.default_button_img);
+                //button.setAutoSizeTextTypeWithDefaults(1);
+                button.setText(getFormatTime(time_value));
+
+                button.setLayoutParams(new TableRow.LayoutParams(
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        TableRow.LayoutParams.MATCH_PARENT,
+                        1.0F
+                ));
+                gridRow.addView(button);
+
+                size_left--;
             }
         }
     }

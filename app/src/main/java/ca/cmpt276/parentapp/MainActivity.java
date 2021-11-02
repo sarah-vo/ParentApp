@@ -13,11 +13,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        switchActivityFlipCoin();
-        switchActivityTimeoutTimer();
-        switchActivitySettings();
+//        switchActivityFlipCoin();
+//        switchActivityTimeoutTimer();
+//        switchActivitySettings();
     }
-
+/*
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);
         flipCoinButton.setOnClickListener(View -> {
@@ -41,4 +41,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+ */
 }

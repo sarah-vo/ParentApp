@@ -1,14 +1,17 @@
 package ca.cmpt276.parentapp.model;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 
 public class FlipCoinManager {
-    public static FlipCoinManager instance;
-    ArrayList<FlipCoin> flipCoin_list = new ArrayList<>();
+    private static FlipCoinManager instance;
+    private ArrayList<FlipCoin> flipCoinGameList;
+    private int currentIndex;
 
-    //Sets the instance to the provided instance
-    public static void setInstance(FlipCoinManager new_instance){
-        instance = new_instance;
+    private FlipCoinManager(){
+        flipCoinGameList = new ArrayList<>();
+        currentIndex = -1;
     }
 
     public static FlipCoinManager getInstance(){
@@ -18,29 +21,28 @@ public class FlipCoinManager {
         return instance;
     }
 
-    public void addGame(FlipCoin flip_coin){
-        flipCoin_list.add(flip_coin);
+    // numChildren = current number of children saved in the app
+    public int getCurrentIndex(int numChildren) {
+        if (currentIndex == -1) {
+            Random rand = new Random();
+            currentIndex = rand.nextInt(numChildren);
+        }
+        else {
+            currentIndex = currentIndex + 1 % numChildren;
+        }
+        return currentIndex;
     }
 
-    public void removeGame(int index){
-        flipCoin_list.remove(index);
-    }
-
-    public void removeGame(FlipCoin flipCoin){
-        flipCoin_list.remove(flipCoin);
-    }
-
-    public void clearGame(){
-        flipCoin_list.clear();
+    public void addGame(FlipCoin flipCoin){
+        flipCoinGameList.add(flipCoin);
     }
 
     public int getNumGames(){
-        return flipCoin_list.size();
+        return flipCoinGameList.size();
     }
 
     public FlipCoin getGame(int index){
-        return flipCoin_list.get(index);
+        return flipCoinGameList.get(index);
     }
-
 
 }

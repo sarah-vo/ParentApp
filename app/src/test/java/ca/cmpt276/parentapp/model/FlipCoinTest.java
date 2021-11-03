@@ -10,11 +10,7 @@ class FlipCoinTest {
 
     @Test
     void testRandomSelect() {
-        ArrayList<String> str = new ArrayList<String>();
-        str.add("Able");
-        str.add("Betty");
-        Coin fc = Coin.getInstance();
-        assertEquals("Able",fc.generateCurrentPickChild(str));
+        fail();
     }
 
 }

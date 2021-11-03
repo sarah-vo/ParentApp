@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 
 public class FlipCoinActivity extends AppCompatActivity {
     FlipCoinManager flipCoinManager = FlipCoinManager.getInstance();
-    FlipCoin flipCoin = new FlipCoin();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,4 +26,5 @@ public class FlipCoinActivity extends AppCompatActivity {
         CoinSideSelectMessageFragment dialog = new CoinSideSelectMessageFragment();
         dialog.show(manager, "MessageDialog");
     }
+
 }

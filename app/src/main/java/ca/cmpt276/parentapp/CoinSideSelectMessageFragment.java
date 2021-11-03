@@ -12,18 +12,15 @@ import ca.cmpt276.parentapp.model.FlipCoin;
 public class CoinSideSelectMessageFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle saveInstanceState) {
-        FlipCoin flipCoin = FlipCoin.getInstance();
 
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        flipCoin.setPickerChoice(FlipCoin.CoinSide.HEADS);
                         break;
 
                     case DialogInterface.BUTTON_NEUTRAL:
-                        flipCoin.setPickerChoice(FlipCoin.CoinSide.TAILS);
                         break;
                 }
             }

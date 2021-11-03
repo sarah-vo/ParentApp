@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ca.cmpt276.parentapp">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -30,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".timer.timerService"/>
 
         <receiver android:name=".timer.NotificationReceiver" />
     </application>

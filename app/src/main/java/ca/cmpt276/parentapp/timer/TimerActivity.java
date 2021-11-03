@@ -66,6 +66,8 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
+
+
         notify_manager = NotificationManagerCompat.from(this);
 
         initializeTimerScroll();
@@ -128,6 +130,10 @@ public class TimerActivity extends AppCompatActivity {
         reset_button = findViewById(R.id.timer_reset);
 
         start_button.setOnClickListener(view ->{
+
+            //starting foreground service
+            startForegroundService(new Intent(this, timerService.class));
+
             setTime(getValueFromPicker());
             startTimer();
             pause_resume_button.setText(R.string.pause);
@@ -300,6 +306,8 @@ public class TimerActivity extends AppCompatActivity {
     //Functions to update Timers
 
     private void startTimer(){
+
+
         timer_bar.setMax(initial_time);
 
         timer_bar.setProgress(Math.abs(time_left - initial_time));
@@ -427,6 +435,8 @@ public class TimerActivity extends AppCompatActivity {
                 addAction(R.mipmap.ic_launcher,"Stop",pending_intent).
                 build();
 
+        //end service that maintains foreground for timer
+        stopService(new Intent(this, timerService.class));
         notify_manager.notify(id,notify);
 
     }

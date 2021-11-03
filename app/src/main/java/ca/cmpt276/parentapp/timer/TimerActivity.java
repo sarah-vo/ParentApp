@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.timer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -14,7 +14,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -26,6 +25,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import ca.cmpt276.parentapp.CustomButton;
+import ca.cmpt276.parentapp.R;
 
 public class TimerActivity extends AppCompatActivity {
 

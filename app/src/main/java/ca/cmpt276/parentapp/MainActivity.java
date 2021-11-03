@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import ca.cmpt276.parentapp.timer.TimerActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

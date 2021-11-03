@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.timer;
 
 import android.app.Application;
 import android.app.NotificationChannel;

@@ -13,7 +13,7 @@ class FlipCoinTest {
         ArrayList<String> str = new ArrayList<String>();
         str.add("Able");
         str.add("Betty");
-        FlipCoin fc = FlipCoin.getInstance();
+        Coin fc = Coin.getInstance();
         assertEquals("Able",fc.generateCurrentPickChild(str));
     }
 

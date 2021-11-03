@@ -1,61 +1,76 @@
 package ca.cmpt276.parentapp.model;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FlipCoin {
-    int lastPickChildIndex;
-    private static FlipCoin instance;
     public enum CoinSide {
         HEADS,
         TAILS
     }
-    CoinSide pickerChoice;
 
-    private FlipCoin() {
-        lastPickChildIndex = -1;
+    public static FlipCoin instance;
+    ArrayList<Child> child_list = new ArrayList<>();
+
+    Child winner;
+    int current_index = -1;
+
+    public FlipCoin(ArrayList<Child> child_list){
+        this.child_list = child_list;
+        updateIndex();
     }
 
-    public static FlipCoin getInstance() {
-        if (instance == null) {
-            instance = new FlipCoin();
-        }
-        return instance;
-    }
-
-    public int getLastPickChildIndex() {
-        return lastPickChildIndex;
-    }
-
-    public CoinSide getPickerChoice() {
-        return pickerChoice;
-    }
-
-    public void setPickerChoice(CoinSide pickerChoice) {
-        this.pickerChoice = pickerChoice;
-    }
-
-    public String generateCurrentPickChild(List<String> childrenList) {
-        int numChildren = childrenList.size();
-        int currentPickChildIndex;
-        if (lastPickChildIndex == -1) { // First time flip
-            Random rand = new Random();
-            currentPickChildIndex = rand.nextInt(numChildren);
-        }
-        else {
-            currentPickChildIndex = lastPickChildIndex + 1;
-            if (currentPickChildIndex >= childrenList.size()){
-                currentPickChildIndex = 0;
-            }
-        }
-
-        lastPickChildIndex = currentPickChildIndex;
-
-        return childrenList.get(currentPickChildIndex);
-    }
-
-    public CoinSide generateFlipResult() {
+    public CoinSide flipCoin(){
         Random rand = new Random();
         return CoinSide.values()[rand.nextInt(2)];
+    }
+
+    public void updateIndex(){
+        if(child_list == null || getNumChild() == 0){
+            throw new NullPointerException("No children list found");
+        }
+
+        //if first time flip
+        if (current_index == -1){
+            current_index = ThreadLocalRandom.current().nextInt(0, getNumChild());
+        }
+
+        else {
+            //get next index in round-robin if children exist
+            current_index += 1 % child_list.size();
+        }
+    }
+
+    public boolean isChildExist(Child child){
+        return child_list.contains(child);
+    }
+
+    public int getNumChild(){
+        return child_list.size();
+    }
+
+    public Child getCurrentChild(){
+        if(child_list == null){
+            return null;
+        }
+
+        return child_list.get(current_index);
+    }
+
+    public void setWinner(Child child){
+        if (!isChildExist(child)){
+            throw new IllegalArgumentException("Child does not Exist!");
+        }
+
+        winner = child;
+    }
+
+    public Child getWinner(){
+        if (winner == null){
+            throw new NullPointerException("No winner yet!");
+        }
+
+        return winner;
     }
 }

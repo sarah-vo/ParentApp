@@ -1,19 +1,15 @@
 package ca.cmpt276.parentapp.timer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.app.Notification;
-import android.app.PendingIntent;
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
+import android.content.IntentFilter;
+
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -23,7 +19,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.CustomButton;
@@ -35,13 +30,9 @@ public class TimerActivity extends AppCompatActivity {
     private static final int MAX_MINUTE = 59;
     private static final int MAX_SECOND = 59;
 
-    private final long VIBRATION_TIME = 300;
-
     public static final String NOTIFY_ID = "Notification Channel ID for Timer";
-
-    private NotificationManagerCompat notify_manager;
-    public static MediaPlayer alarm_sound;
-    private CountDownTimer timer;
+    public static final String TIME_INITIAL_TAG = "INITIAL TIME TAG";
+    public static final String TIME_LEFT_TAG = "INITIAL LEFT TAG";
 
     private NumberPicker timer_hour, timer_minute, timer_second;
     private TextView hour_text, minute_text, second_text;
@@ -53,9 +44,11 @@ public class TimerActivity extends AppCompatActivity {
     TableLayout default_time_table;
     ArrayList<Integer> default_time_list = new ArrayList<>();
 
+    Intent service_intent;
+
     private int initial_time = 0;
     private int time_left = initial_time;
-    private boolean isTimerRunning = false;
+    private boolean isTimerRunning;
 
     public static Intent makeIntent(Context context){
         return  new Intent(context, TimerActivity.class);
@@ -66,22 +59,51 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
 
-
-
-        notify_manager = NotificationManagerCompat.from(this);
-
         initializeTimerScroll();
         initializeProgressView();
-
-        initializeAlarmSound();
         setUpTimerButtons();
-        populateDefaultTimeButton();
 
+        populateDefaultTimeButton();
         updateViewInterface();
+
+        //Check if there a timer service exist and on pause state
+        if(isTimerServiceRunning() && timerService.isPaused){
+            time_left = timerService.timer_intent.getIntExtra(timerService.TIME_LEFT_SERVICE_TAG,3000);
+            initial_time = timerService.timer_intent.getIntExtra(timerService.TIME_INITIAL_SERVICE_TAG,9000);
+            isTimerRunning = false;
+
+            pause_resume_button.setText(getString(R.string.resume));
+
+            timer_bar.setMax(initial_time);
+            timer_bar.setProgress(Math.abs(time_left - initial_time));
+
+            updateProgressText();
+            updateViewInterface();
+        }
     }
 
+    //Create a broadcast receiver
+    private final BroadcastReceiver b_receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateGUI(intent);
+            isTimerRunning = true;
+        }
+    };
 
-    ////Functions for initialization
+    @Override
+    protected void onPause() {
+        unregisterReceiver(b_receiver);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(b_receiver,new IntentFilter(timerService.COUNTDOWN_BR));
+    }
+
+    ///--------------------------Functions for initialization-------------------------///
 
     private void initializeTimerScroll(){
         hour_text = findViewById(R.id.text_hour);
@@ -107,21 +129,19 @@ public class TimerActivity extends AppCompatActivity {
         timer_minute.setValue(0);
         timer_second.setValue(1);
 
-        timer_second.setOnValueChangedListener((numberPicker, old_value, new_value) -> {
-            if (timer_hour.getValue() == 0 && timer_minute.getValue() == 0 && new_value == 0){
-                timer_second.setValue(1);
-            }
-        });
+        timer_second.setOnValueChangedListener((numberPicker, old_value, new_value) ->
+                checkNewScrollValue(new_value));
+
+        timer_minute.setOnValueChangedListener((numberPicker, old_value, new_value) ->
+                checkNewScrollValue(new_value));
+
+        timer_hour.setOnValueChangedListener((numberPicker, old_value, new_value) ->
+                checkNewScrollValue(new_value));
     }
 
     private void initializeProgressView(){
         timer_bar = findViewById(R.id.timer_bar);
         progress_text = findViewById(R.id.timer_progress_text);
-    }
-
-    private void initializeAlarmSound(){
-        alarm_sound = MediaPlayer.create(TimerActivity.this,R.raw.alarm_sound);
-        alarm_sound.setLooping(false);
     }
 
     private void setUpTimerButtons(){
@@ -130,9 +150,6 @@ public class TimerActivity extends AppCompatActivity {
         reset_button = findViewById(R.id.timer_reset);
 
         start_button.setOnClickListener(view ->{
-
-            //starting foreground service
-            startForegroundService(new Intent(this, timerService.class));
 
             setTime(getValueFromPicker());
             startTimer();
@@ -232,17 +249,15 @@ public class TimerActivity extends AppCompatActivity {
         return convertToMilliSeconds(time_sec);
     }
 
-    //Functions to update Views
+    ///--------------------------Functions to update Views-------------------------///
 
     private void updateViewInterface(){
-        if (isTimerRunning){
+        if (time_left != 0){
             setInterface_Running();
         }
 
         else{
-            if (time_left < 1000 || time_left == initial_time){
-                setInterface_Choose();
-            }
+            setInterface_Choose();
         }
     }
 
@@ -261,6 +276,12 @@ public class TimerActivity extends AppCompatActivity {
         timer_hour.setValue(hour);
         timer_minute.setValue(minute);
         timer_second.setValue(second);
+    }
+
+    private void checkNewScrollValue(int new_value){
+        if (timer_hour.getValue() == 0 && timer_minute.getValue() == 0 && new_value == 0){
+            timer_second.setValue(1);
+        }
     }
 
     private void setInterface_Running(){
@@ -303,44 +324,28 @@ public class TimerActivity extends AppCompatActivity {
         default_time_table.setVisibility(View.VISIBLE);
     }
 
-    //Functions to update Timers
-
-    private void startTimer(){
-
+    private void updateGUI(Intent intent){
+        time_left = intent.getIntExtra(timerService.TIME_LEFT_SERVICE_TAG,10);
+        initial_time = intent.getIntExtra(timerService.TIME_INITIAL_SERVICE_TAG,900);
 
         timer_bar.setMax(initial_time);
-
         timer_bar.setProgress(Math.abs(time_left - initial_time));
 
-        timer = new CountDownTimer(time_left,1000) {
-            @Override
-            public void onTick(long time_until_finish) {
+        updateProgressText();
+        updateViewInterface();
+    }
 
-                if (! (time_until_finish + 999 > initial_time)){
-                    time_left -= 1000;
-                }
+    ///--------------------------Functions to update timers from Service-------------------------///
 
-                timer_bar.setProgress(Math.abs(time_left - initial_time));
-                updateProgressText();
-                updateViewInterface();
-            }
+    private void startTimer(){
+        timer_bar.setMax(initial_time);
+        timer_bar.setProgress(Math.abs(time_left - initial_time));
 
-            @Override
-            public void onFinish() {
-                time_left = 0;
-                isTimerRunning = false;
+        service_intent = new Intent(this,timerService.class);
+        service_intent.putExtra(TIME_INITIAL_TAG,initial_time);
+        service_intent.putExtra(TIME_LEFT_TAG,time_left);
 
-                vibrate(VIBRATION_TIME);
-                playAlarm();
-                sendToNotificationChannel();
-
-                timer_bar.setProgress(initial_time);
-                updateProgressText();
-
-                new Handler().postDelayed(()-> updateViewInterface(),1000);
-
-            }
-        }.start();
+        startForegroundService(service_intent);
 
         isTimerRunning = true;
         updateProgressText();
@@ -355,20 +360,36 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void pauseTimer() {
-        timer.cancel();
+        if (isTimerServiceRunning()){
+            Intent intent = new Intent(this,timerService.class);
+            intent.putExtra(timerService.SERVICE_PAUSE,true);
+            startForegroundService(intent);
+        }
         isTimerRunning = false;
     }
 
     private void resetTimer() {
-        timer.cancel();
+        if (!isTimerServiceRunning()){
+            return;
+        }
+
+        else{
+            Intent intent = new Intent(this,timerService.class);
+            intent.putExtra(timerService.SERVICE_DESTROY,true);
+            startForegroundService(intent);
+
+        }
+        time_left = initial_time;
         isTimerRunning = false;
 
-        time_left = initial_time;
+        pause_resume_button.setText(getString(R.string.resume));
 
+        timer_bar.setProgress(0);
         updateProgressText();
+
     }
 
-    /////Functions for formatting time
+    ///--------------------------Functions for formatting time -------------------------///
 
     private int getHour(int time){
         return  (time/1000) /3600;
@@ -394,51 +415,22 @@ public class TimerActivity extends AppCompatActivity {
         return second * 1000;
     }
 
-    //////Functions for playing Sounds
+    ///--------------------------Functions regarding Service -------------------------///
 
-    private void playAlarm(){
-        if (alarm_sound != null){
-            alarm_sound.start();
+   /* public static boolean isServiceRunningInForeground(Context context, Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                if (service.foreground) {
+                    return true;
+                }
+            }
         }
-    }
+        return false;
+    }*/
 
-    private void stopAlarm() throws IOException {
-        if (alarm_sound != null && alarm_sound.isPlaying()){
-            alarm_sound.stop();
-            alarm_sound.prepare();
-        }
-    }
-
-    private void vibrate(long milliseconds){
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(VibrationEffect.createOneShot(milliseconds,
-                VibrationEffect.DEFAULT_AMPLITUDE));
-    }
-
-    ///////Functions for notifications
-
-    private void sendToNotificationChannel(){
-        int id = 1;
-        Intent receive_intent = new Intent(this,NotificationReceiver.class);
-        receive_intent.putExtra(NOTIFY_ID,id);
-        PendingIntent pending_intent = PendingIntent.getBroadcast(this, 0,
-                receive_intent,PendingIntent.FLAG_IMMUTABLE);
-
-        Notification notify= new NotificationCompat.Builder(this,
-                NotificationClass.NOTIFICATION_CHANNEL).
-                setSmallIcon(R.drawable.timer).
-                setContentTitle("Timer").
-                setContentText("Timer Has Ended").
-                setPriority(NotificationCompat.PRIORITY_HIGH).
-                setCategory(NotificationCompat.CATEGORY_ALARM).
-                setAutoCancel(true).
-                addAction(R.mipmap.ic_launcher,"Stop",pending_intent).
-                build();
-
-        //end service that maintains foreground for timer
-        stopService(new Intent(this, timerService.class));
-        notify_manager.notify(id,notify);
-
+    public boolean isTimerServiceRunning (){
+        return timerService.isServiceRunning;
     }
 
 }

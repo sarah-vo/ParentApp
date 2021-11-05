@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.timer;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,10 +16,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         int notification_id = intent.getIntExtra(TimerActivity.NOTIFY_ID,1);
 
-        if (TimerActivity.alarm_sound != null && TimerActivity.alarm_sound.isPlaying()){
+        if (timerService.alarm_sound != null && timerService.alarm_sound.isPlaying()){
             try {
-                TimerActivity.alarm_sound.stop();
-                TimerActivity.alarm_sound.prepare();
+                timerService.alarm_sound.stop();
+                timerService.alarm_sound.prepare();
             } catch (IOException e) {
                 Toast.makeText(context,"Error in playing alarm",Toast.LENGTH_SHORT).show();
             }

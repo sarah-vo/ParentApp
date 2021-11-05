@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import ca.cmpt276.parentapp.timer.TimerActivity;
+import ca.cmpt276.parentapp.timer.timerService;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         switchActivityFlipCoin();
         switchActivityTimeoutTimer();

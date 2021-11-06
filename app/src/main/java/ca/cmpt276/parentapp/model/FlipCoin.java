@@ -47,4 +47,10 @@ public class FlipCoin {
         isPickerWinner = flipResult == pickerChoice;
     }
 
+    //For testing
+    public CoinSide flipCoin(){
+        return CoinSide.values()[new Random().nextInt(2)];
+    }
+
+
 }

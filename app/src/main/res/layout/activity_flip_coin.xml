@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/heads"
+        android:id="@+id/btn_heads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -30,9 +30,10 @@
         app:layout_constraintTop_toBottomOf="@+id/showPicker" />
 
     <Button
-        android:id="@+id/tails"
+        android:id="@+id/btn_tails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="171dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:fadeScrollbars="false"
@@ -40,6 +41,7 @@
         android:textAlignment="center"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_heads"
         app:layout_constraintTop_toBottomOf="@+id/showPicker" />
 
     <ImageView
@@ -51,6 +53,6 @@
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heads"
+        app:layout_constraintTop_toBottomOf="@+id/btn_heads"
         app:srcCompat="@drawable/loonie_heads" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,14 @@ import java.util.Date;
 import java.util.Random;
 
 public class FlipCoin {
+    public int printFinalResults() {
+    }
+
+    public int getPlayerInfo(int i) {
+    }
+
+    public String getTime() {return flipTime.toString();}
+
     public enum CoinSide {
         HEADS,
         TAILS
@@ -53,6 +61,8 @@ public class FlipCoin {
     public void removeChild(int childIndex){
         childrenList.remove(childIndex);
     }
+
+
     //For testing
     public CoinSide flipCoin(){
         return CoinSide.values()[new Random().nextInt(2)];

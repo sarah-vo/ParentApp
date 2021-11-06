@@ -5,14 +5,29 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-public class FlipCoin {
-    public int printFinalResults() {
-    }
+import ca.cmpt276.parentapp.R;
 
-    public int getPlayerInfo(int i) {
+public class FlipCoin {
+    public String printFinalResults() {
+        String results = flipResult.toString() + " was the results. " + picker.getName();
+        if (isPickerWinner) {
+            results += " won.";
+        } else {
+            results += " lost.";
+        }
+        return results;
     }
 
     public String getTime() {return flipTime.toString();}
+
+    public int getFlippedCoin() {
+        if(flipResult.toString().equals("HEADS")){
+            return R.drawable.loonie_heads;
+        }
+        else{
+            return R.drawable.loonie_tails;
+        }
+    }
 
     public enum CoinSide {
         HEADS,

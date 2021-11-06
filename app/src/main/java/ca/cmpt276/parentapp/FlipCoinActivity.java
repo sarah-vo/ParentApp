@@ -8,40 +8,38 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 
 public class FlipCoinActivity extends AppCompatActivity {
-    FlipCoinManager flipCoinManager = FlipCoinManager.getInstance();
     // For testing
-    ArrayList<Child> childrenList = new ArrayList<Child>();
+    ArrayList<Child> childrenList = new ArrayList<>();
     Child able = new Child("Able");
     Child betty = new Child("Betty");
     Child peter = new Child("Peter");
 
+    FlipCoinManager flipCoinManager = FlipCoinManager.getInstance();
     FlipCoin flipCoin;
     int index;
-    FlipCoin.CoinSide childChoice;
-
-    //Initial coin side in image
-    FlipCoin.CoinSide current_coin_side_in_img = FlipCoin.CoinSide.HEADS;
-    FlipCoin.CoinSide coin_result;
+    FlipCoin.CoinSide currentCoinSideInImg = FlipCoin.CoinSide.HEADS;     //Initial coin side in image
+    FlipCoin.CoinSide coinResult;
 
     ObjectAnimator animStage1, animStage2;
+    Button headButton, tailButton;
+    ImageView coinImg;
+    TextView showPicker;
 
-    Button head_button, tail_button;
-
-    int repeat_count = 0;
-    int max_repeat = 6;
-    ImageView coin_img;
+    int repeatCount = 0;
+    int maxRepeat = 6;
+    boolean emptyChildrenList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,47 +50,107 @@ public class FlipCoinActivity extends AppCompatActivity {
         childrenList.add(betty);
         childrenList.add(peter);
 
-        coin_img = findViewById(R.id.iv_coin);
+        showPicker = findViewById(R.id.showPicker);
+        if (childrenList.size() > 0) {
+            flipCoin = new FlipCoin(childrenList);
+            flipCoinManager.addGame(flipCoin);
+            index = flipCoinManager.getCurrentIndex(childrenList.size());
+            initializeLayout();
+        }
+        else {
+            emptyChildrenList = true;
+            showPicker.setText("There are no configured children, but you can sill play with the coin!");
+            coinImg = findViewById(R.id.iv_coin);
+            setUpButtons();
+        }
+        initializeAnimation();
 
-        flipCoin = new FlipCoin(childrenList);
-        flipCoinManager.addGame(flipCoin);
-        index = flipCoinManager.getCurrentIndex(childrenList.size());
-        initializeLayout();
-
-        //Initial side of the img coin
-        setHead();
-        resetRepeatCount();
-
-        coin_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setRepeat(1);
-                animStage1.start();
-            }
+        coinImg.setOnClickListener(view -> {
+            maxRepeat = 1;
+            animStage1.start();
         });
 
-        initializeAnimation();
-        setUpButtons();
     }
 
     private void initializeLayout() {
-        TextView showPicker = findViewById(R.id.showPicker);
         flipCoin.setPicker(index);
         String message = "It's " + flipCoin.getPicker().getName() + "'s turn! Pick a side.";
         showPicker.setText(message);
 
-        ImageView coin = (ImageView) findViewById(R.id.iv_coin);
-
-        initializeAnimation();
+        coinImg = findViewById(R.id.iv_coin);
         setUpButtons();
+    }
+
+    private void setUpButtons(){
+        headButton = findViewById(R.id.btn_heads);
+        tailButton = findViewById(R.id.btn_tails);
+
+        headButton.setOnClickListener(view -> {
+            if (!emptyChildrenList) {
+                String message = flipCoin.getPicker().getName() + " chose " + FlipCoin.CoinSide.HEADS.toString();
+                showPicker.setText(message);
+                flipCoin.setIsPickerWinner(FlipCoin.CoinSide.HEADS);
+            }
+            flipCoinImg();
+        });
+
+        tailButton.setOnClickListener(view -> {
+            if (!emptyChildrenList) {
+                String message = flipCoin.getPicker().getName() + " chose " + FlipCoin.CoinSide.TAILS.toString();
+                showPicker.setText(message);
+                flipCoin.setIsPickerWinner(FlipCoin.CoinSide.TAILS);
+            }
+            flipCoinImg();
+        });
+    }
+
+    private void flipCoinImg(){
+        disableButtons();
+        if (emptyChildrenList) {
+            Random rand = new Random();
+            coinResult = FlipCoin.CoinSide.values()[rand.nextInt(2)];
+        }
+        else {
+            coinResult = flipCoin.getFlipResult();
+        }
+
+        if (coinResult == FlipCoin.CoinSide.HEADS){
+            Log.i("FlipResult:", "HEADS");
+            if (currentCoinSideInImg == FlipCoin.CoinSide.HEADS){
+                maxRepeat = 6; // Land on the same side as before flip
+            }
+            else{
+                maxRepeat = 7; // Land on the different side
+            }
+        }
+        else {
+            Log.i("FlipResult:", "TAILS");
+            if (currentCoinSideInImg == FlipCoin.CoinSide.TAILS) {
+                maxRepeat = 6;
+            } else {
+                maxRepeat = 7;
+            }
+        }
+
+        animStage1.start();
+    }
+
+    public void enableButtons() {
+        headButton.setEnabled(true);
+        tailButton.setEnabled(true);
+    }
+
+    public void disableButtons(){
+        headButton.setEnabled(false);
+        tailButton.setEnabled(false);
     }
 
     private void initializeAnimation(){
 
-        animStage1 =  (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipx1);
+        animStage1 = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipx1);
         animStage2 = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipx2);
-        animStage1.setTarget(coin_img);
-        animStage2.setTarget(coin_img);
+        animStage1.setTarget(coinImg);
+        animStage2.setTarget(coinImg);
         animStage1.setDuration(100);
         animStage2.setDuration(100);
 
@@ -100,14 +158,15 @@ public class FlipCoinActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (current_coin_side_in_img == FlipCoin.CoinSide.HEADS){
-                    coin_img.setImageResource(R.drawable.loonie_tails);
-                    setTail();
+                if (currentCoinSideInImg == FlipCoin.CoinSide.HEADS){
+                    coinImg.setImageResource(R.drawable.loonie_tails);
+                    currentCoinSideInImg = FlipCoin.CoinSide.TAILS;
                 }
                 else{
-                    coin_img.setImageResource(R.drawable.loonie_heads);
-                    setHead();
+                    coinImg.setImageResource(R.drawable.loonie_heads);
+                    currentCoinSideInImg = FlipCoin.CoinSide.HEADS;
                 }
+                repeatCount++;
                 animStage2.start();
             }
         });
@@ -122,99 +181,31 @@ public class FlipCoinActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                addRepeatCount();
-                if (repeat_count < max_repeat){
+                if (repeatCount < maxRepeat){
                     animStage1.start();
                 }
                 else{
-                    coin_img.setClickable(true);
-                    enableButtons();
-                    resetRepeatCount();
+                    if (repeatCount > 1 && !emptyChildrenList){ // repeatCount > 1 means animation is not triggered by changing side before flip
+                        displayResultMessage();
+                    }
+                    if (emptyChildrenList) {
+                        enableButtons();
+                    }
+                    repeatCount = 0;
                 }
             }
         });
     }
 
-    private void setUpButtons(){
-        head_button = findViewById(R.id.btn_heads);
-        tail_button = findViewById(R.id.btn_tails);
-
-
-        head_button.setOnClickListener(view -> {
-            flipCoin_img();
-        });
-
-        tail_button.setOnClickListener(view -> {
-            flipCoin_img();
-        });
-    }
-
-    private void flipCoin_img(){
-        disableButtons();
-        coin_result = flipCoin.flipCoin();
-
-        if (coin_result == FlipCoin.CoinSide.HEADS){
-            Log.i("FlipResult:", "HEADS");
-            if (getCurrentCoinSide() == FlipCoin.CoinSide.HEADS){
-                setRepeat(6);
-            }
-
-            else{
-                setRepeat(7);
-            }
-
-            animStage1.start();
+    private void displayResultMessage() {
+        TextView tvResultMessage = findViewById(R.id.resultMessage);
+        String showResult = "The result is " + flipCoin.getFlipResult().toString();
+        if (flipCoin.isPickerWinner()){
+            tvResultMessage.setText(showResult + ". Congratulations! You won.");
         }
-
-        else{
-            Log.i("FlipResult:", "TAILS");
-            if (getCurrentCoinSide() == FlipCoin.CoinSide.HEADS){
-                setRepeat(7);
-            }
-
-            else{
-                setRepeat(6);
-            }
-
-            animStage1.start();
+        else {
+            tvResultMessage.setText(showResult + ". Sorry you guessed wrong, better luck next time.");
         }
-    }
-
-    private void enableButtons(){
-        head_button.setClickable(true);
-        tail_button.setClickable(true);
-    }
-
-    public void disableButtons(){
-        head_button.setClickable(false);
-        tail_button.setClickable(false);
-    }
-
-
-    //////------------------Functions For Animation --------------------/////////////////
-    public void setHead(){
-        current_coin_side_in_img = FlipCoin.CoinSide.HEADS;
-    }
-
-    public void setTail(){
-        current_coin_side_in_img = FlipCoin.CoinSide.TAILS;
-    }
-
-    //If repeat coin is odd, the coin will change sides when flipped. Else, it will be the same side
-    public void setRepeat(int count){
-        max_repeat = count;
-    }
-
-    public void addRepeatCount(){
-        repeat_count++;
-    }
-
-    public void resetRepeatCount(){
-        repeat_count = 0;
-    }
-
-    public FlipCoin.CoinSide getCurrentCoinSide(){
-        return current_coin_side_in_img;
     }
 
 }

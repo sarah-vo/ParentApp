@@ -10,7 +10,7 @@ public class FlipCoinManager {
     private int currentIndex;
 
     private FlipCoinManager(){
-        flipCoinGameList = new ArrayList<>();
+        flipCoinGameList = new ArrayList<FlipCoin>();
         currentIndex = -1;
     }
 
@@ -28,7 +28,7 @@ public class FlipCoinManager {
             currentIndex = rand.nextInt(numChildren);
         }
         else {
-            currentIndex = currentIndex + 1 % numChildren;
+            currentIndex = (currentIndex + 1) % numChildren;
         }
         return currentIndex;
     }

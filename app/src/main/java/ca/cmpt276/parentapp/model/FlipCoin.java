@@ -5,7 +5,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import ca.cmpt276.parentapp.R;
+
 public class FlipCoin {
+    public String printFinalResults() {
+        String results = flipResult.toString() + " was the results. " + picker.getName();
+        if (isPickerWinner) {
+            results += " won.";
+        } else {
+            results += " lost.";
+        }
+        return results;
+    }
+
+    public String getTime() {return flipTime.toString();}
+
+    public int getFlippedCoin() {
+        if(flipResult.toString().equals("HEADS")){
+            return R.drawable.loonie_heads;
+        }
+        else{
+            return R.drawable.loonie_tails;
+        }
+    }
+
     public enum CoinSide {
         HEADS,
         TAILS
@@ -46,6 +69,14 @@ public class FlipCoin {
     public void setIsPickerWinner(CoinSide pickerChoice) {
         isPickerWinner = flipResult == pickerChoice;
     }
+
+    public void addChild(String newName){
+        childrenList.add(new Child(newName));
+    }
+    public void removeChild(int childIndex){
+        childrenList.remove(childIndex);
+    }
+
 
     //For testing
     public CoinSide flipCoin(){

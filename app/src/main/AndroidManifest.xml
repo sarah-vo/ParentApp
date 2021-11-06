@@ -20,7 +20,8 @@
             android:exported="false" />
         <activity
             android:name=".FlipCoinActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".timer.TimerActivity"
             android:exported="true"

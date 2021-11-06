@@ -43,7 +43,7 @@ public class FlipCoin {
         return isPickerWinner;
     }
 
-    public void setPickerWinner(CoinSide pickerChoice) {
+    public void setIsPickerWinner(CoinSide pickerChoice) {
         isPickerWinner = flipResult == pickerChoice;
     }
 
@@ -53,4 +53,10 @@ public class FlipCoin {
     public void removeChild(int childIndex){
         childrenList.remove(childIndex);
     }
+    //For testing
+    public CoinSide flipCoin(){
+        return CoinSide.values()[new Random().nextInt(2)];
+    }
+
+
 }

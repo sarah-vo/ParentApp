@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);
         flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, FlipCoinActivity.class);//TODO: ADD CLASS HERE
+            Intent intent = new Intent(this, FlipCoinActivity.class);
             startActivity(intent);
         });
     }

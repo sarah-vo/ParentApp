@@ -6,6 +6,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -46,9 +47,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
         // For testing
-        childrenList.add(able);
-        childrenList.add(betty);
-        childrenList.add(peter);
+//        childrenList.add(able);
+//        childrenList.add(betty);
+//        childrenList.add(peter);
 
         showPicker = findViewById(R.id.showPicker);
         if (childrenList.size() > 0) {
@@ -84,6 +85,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void setUpButtons(){
         headButton = findViewById(R.id.btn_heads);
         tailButton = findViewById(R.id.btn_tails);
+        MediaPlayer coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
         headButton.setOnClickListener(view -> {
             if (!emptyChildrenList) {
@@ -91,6 +93,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 showPicker.setText(message);
                 flipCoin.setIsPickerWinner(FlipCoin.CoinSide.HEADS);
             }
+            coinFlipSound.start();
             flipCoinImg();
         });
 
@@ -100,6 +103,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 showPicker.setText(message);
                 flipCoin.setIsPickerWinner(FlipCoin.CoinSide.TAILS);
             }
+            coinFlipSound.start();
             flipCoinImg();
         });
     }

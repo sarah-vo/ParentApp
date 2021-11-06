@@ -47,4 +47,10 @@ public class FlipCoin {
         isPickerWinner = flipResult == pickerChoice;
     }
 
+    public void addChild(String newName){
+        childrenList.add(new Child(newName));
+    }
+    public void removeChild(int childIndex){
+        childrenList.remove(childIndex);
+    }
 }

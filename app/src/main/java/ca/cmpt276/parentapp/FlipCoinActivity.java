@@ -12,7 +12,9 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -37,6 +39,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     Button headButton, tailButton;
     ImageView coinImg;
     TextView showPicker;
+
+    MediaPlayer coinFlipSound;
 
     int repeatCount = 0;
     int maxRepeat = 6;
@@ -85,7 +89,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void setUpButtons(){
         headButton = findViewById(R.id.btn_heads);
         tailButton = findViewById(R.id.btn_tails);
-        MediaPlayer coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
+        coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
         headButton.setOnClickListener(view -> {
             if (!emptyChildrenList) {
@@ -170,7 +174,6 @@ public class FlipCoinActivity extends AppCompatActivity {
                     coinImg.setImageResource(R.drawable.loonie_heads);
                     currentCoinSideInImg = FlipCoin.CoinSide.HEADS;
                 }
-                repeatCount++;
                 animStage2.start();
             }
         });
@@ -185,6 +188,8 @@ public class FlipCoinActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
+                repeatCount++;
+
                 if (repeatCount < maxRepeat){
                     animStage1.start();
                 }
@@ -194,6 +199,15 @@ public class FlipCoinActivity extends AppCompatActivity {
                     }
                     if (emptyChildrenList) {
                         enableButtons();
+                    }
+
+
+                    try {
+                        coinFlipSound.stop();
+                        coinFlipSound.prepare();
+                    } catch (IOException e) {
+                        Toast.makeText(FlipCoinActivity.this, "Error in ending sound",
+                                Toast.LENGTH_SHORT).show();
                     }
                     repeatCount = 0;
                 }

@@ -7,12 +7,13 @@
     android:visibility="visible"
     tools:context=".FlipCoinActivity">
 
+
     <TextView
         android:id="@+id/showPicker"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="TextView"
+        android:text="@string/show_who_s_picking"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:text="Heads"
+        android:text="@string/heads"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/showPicker" />
 
@@ -37,7 +38,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:fadeScrollbars="false"
-        android:text="Tails"
+        android:text="@string/tails"
         android:textAlignment="center"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +55,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_heads"
-        app:srcCompat="@drawable/loonie_heads" />
+        app:srcCompat="@drawable/loonie_heads"
+        android:contentDescription="@string/image_of_coins_FlipCoinActivity" />
 
     <TextView
         android:id="@+id/resultMessage"
@@ -69,4 +71,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_coin" />
+
+    <Button
+        android:id="@+id/historyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="17dp"
+        android:text="@string/history"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

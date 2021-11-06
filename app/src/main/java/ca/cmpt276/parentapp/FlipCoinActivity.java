@@ -6,6 +6,8 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,14 +48,17 @@ public class FlipCoinActivity extends AppCompatActivity {
     int maxRepeat = 6;
     boolean emptyChildrenList;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
-        // For testing
-//        childrenList.add(able);
-//        childrenList.add(betty);
-//        childrenList.add(peter);
+         //For testing
+        childrenList.add(able);
+        childrenList.add(betty);
+        childrenList.add(peter);
+
+        initializeHistoryButton();
 
         showPicker = findViewById(R.id.showPicker);
         if (childrenList.size() > 0) {
@@ -75,6 +80,14 @@ public class FlipCoinActivity extends AppCompatActivity {
             animStage1.start();
         });
 
+    }
+
+    private void initializeHistoryButton() {
+        Button historyButton = findViewById(R.id.historyButton);
+        historyButton.setOnClickListener(View -> {
+            Intent intent = FlipCoinHistory.makeIntent(this);
+            startActivity(intent);
+        });
     }
 
     private void initializeLayout() {
@@ -215,6 +228,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void displayResultMessage() {
         TextView tvResultMessage = findViewById(R.id.resultMessage);
         String showResult = "The result is " + flipCoin.getFlipResult().toString();

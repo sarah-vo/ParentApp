@@ -32,7 +32,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     Child peter = new Child("Peter");
 
     FlipCoinManager flipCoinManager = FlipCoinManager.getInstance();
-    FlipCoin flipCoin;
+    FlipCoin flipCoinGame, newGame;
     int index;
     FlipCoin.CoinSide currentCoinSideInImg = FlipCoin.CoinSide.HEADS;     //Initial coin side in image
     FlipCoin.CoinSide coinResult;
@@ -62,8 +62,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         showPicker = findViewById(R.id.showPicker);
         if (childrenList.size() > 0) {
-            flipCoin = new FlipCoin(childrenList);
-            flipCoinManager.addGame(flipCoin);
+            flipCoinGame = new FlipCoin(childrenList);
             index = flipCoinManager.getCurrentIndex(childrenList.size());
             initializeLayout();
         }
@@ -74,11 +73,6 @@ public class FlipCoinActivity extends AppCompatActivity {
             setUpButtons();
         }
         initializeAnimation();
-
-        coinImg.setOnClickListener(view -> {
-            maxRepeat = 1;
-            animStage1.start();
-        });
 
     }
 
@@ -91,8 +85,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void initializeLayout() {
-        flipCoin.setPicker(index);
-        String message = "It's " + flipCoin.getPicker().getName() + "'s turn! Pick a side.";
+        flipCoinGame.setPicker(index);
+        String message = "It's " + flipCoinGame.getPicker().getName() + "'s turn! Pick a side.";
         showPicker.setText(message);
 
         coinImg = findViewById(R.id.iv_coin);
@@ -106,9 +100,9 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         headButton.setOnClickListener(view -> {
             if (!emptyChildrenList) {
-                String message = flipCoin.getPicker().getName() + " chose " + FlipCoin.CoinSide.HEADS.toString();
+                String message = flipCoinGame.getPicker().getName() + " chose " + FlipCoin.CoinSide.HEADS.toString();
                 showPicker.setText(message);
-                flipCoin.setIsPickerWinner(FlipCoin.CoinSide.HEADS);
+                flipCoinGame.setPickerChoice(FlipCoin.CoinSide.HEADS);
             }
             coinFlipSound.start();
             flipCoinImg();
@@ -116,9 +110,9 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         tailButton.setOnClickListener(view -> {
             if (!emptyChildrenList) {
-                String message = flipCoin.getPicker().getName() + " chose " + FlipCoin.CoinSide.TAILS.toString();
+                String message = flipCoinGame.getPicker().getName() + " chose " + FlipCoin.CoinSide.TAILS.toString();
                 showPicker.setText(message);
-                flipCoin.setIsPickerWinner(FlipCoin.CoinSide.TAILS);
+                flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);
             }
             coinFlipSound.start();
             flipCoinImg();
@@ -127,16 +121,10 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void flipCoinImg(){
         disableButtons();
-        if (emptyChildrenList) {
-            Random rand = new Random();
-            coinResult = FlipCoin.CoinSide.values()[rand.nextInt(2)];
-        }
-        else {
-            coinResult = flipCoin.getFlipResult();
-        }
+        coinResult = new FlipCoin().flipCoin();
 
         if (coinResult == FlipCoin.CoinSide.HEADS){
-            Log.i("FlipResult:", "HEADS");
+            Log.i("CoinResult:", "HEADS");
             if (currentCoinSideInImg == FlipCoin.CoinSide.HEADS){
                 maxRepeat = 6; // Land on the same side as before flip
             }
@@ -145,7 +133,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             }
         }
         else {
-            Log.i("FlipResult:", "TAILS");
+            Log.i("CoinResult:", "TAILS");
             if (currentCoinSideInImg == FlipCoin.CoinSide.TAILS) {
                 maxRepeat = 6;
             } else {
@@ -206,14 +194,10 @@ public class FlipCoinActivity extends AppCompatActivity {
                 if (repeatCount < maxRepeat){
                     animStage1.start();
                 }
-                else{
-                    if (repeatCount > 1 && !emptyChildrenList){ // repeatCount > 1 means animation is not triggered by changing side before flip
-                        displayResultMessage();
-                    }
-                    if (emptyChildrenList) {
-                        enableButtons();
-                    }
 
+                //Animation Ended
+                else{
+                    enableButtons();
 
                     try {
                         coinFlipSound.stop();
@@ -222,6 +206,23 @@ public class FlipCoinActivity extends AppCompatActivity {
                         Toast.makeText(FlipCoinActivity.this, "Error in ending sound",
                                 Toast.LENGTH_SHORT).show();
                     }
+
+                    if (!emptyChildrenList){
+                        flipCoinGame.setFlipResult(coinResult);
+                        flipCoinGame.updateResult();
+                        flipCoinManager.addGame(flipCoinGame);
+                        displayResultMessage();
+
+                        newGame = new FlipCoin(childrenList);
+
+                        flipCoinGame = newGame;
+                        index = flipCoinManager.updateIndex(childrenList.size());
+                        flipCoinGame.setPicker(index);
+
+                        String message = "It's " + flipCoinGame.getPicker().getName() + "'s turn! Pick a side.";
+                        showPicker.setText(message);
+                    }
+
                     repeatCount = 0;
                 }
             }
@@ -231,8 +232,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void displayResultMessage() {
         TextView tvResultMessage = findViewById(R.id.resultMessage);
-        String showResult = "The result is " + flipCoin.getFlipResult().toString();
-        if (flipCoin.isPickerWinner()){
+        String showResult = "The result is " + flipCoinGame.getFlipResult().toString();
+        if (flipCoinGame.isPickerWinner()){
             tvResultMessage.setText(showResult + ". Congratulations! You won.");
         }
         else {

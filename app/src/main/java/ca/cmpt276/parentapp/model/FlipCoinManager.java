@@ -24,6 +24,13 @@ public class FlipCoinManager {
     // numChildren = current number of children saved in the app
     public int getCurrentIndex(int numChildren) {
         if (currentIndex == -1) {
+            updateIndex(numChildren);
+        }
+        return currentIndex;
+    }
+
+    public int updateIndex(int numChildren){
+        if (currentIndex == -1) {
             Random rand = new Random();
             currentIndex = rand.nextInt(numChildren);
         }
@@ -32,6 +39,8 @@ public class FlipCoinManager {
         }
         return currentIndex;
     }
+
+
 
     public void addGame(FlipCoin flipCoin){
         flipCoinGameList.add(flipCoin);
@@ -43,6 +52,10 @@ public class FlipCoinManager {
 
     public FlipCoin getGame(int index){
         return flipCoinGameList.get(index);
+    }
+
+    public ArrayList<FlipCoin> getListGames(){
+        return flipCoinGameList;
     }
 
 }

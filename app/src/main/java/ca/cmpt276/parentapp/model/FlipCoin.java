@@ -1,5 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +10,18 @@ import java.util.Random;
 import ca.cmpt276.parentapp.R;
 
 public class FlipCoin {
+    private ArrayList<Child> childrenList;
+    private Date flipTime;
+    private Child picker;
+    private CoinSide flipResult;
+    private CoinSide pickerChoice;
+    private boolean isPickerWinner;
+
+    public enum CoinSide {
+        HEADS,
+        TAILS
+    }
+
     public String printFinalResults() {
         String results = flipResult.toString() + " was the results. " + picker.getName();
         if (isPickerWinner) {
@@ -16,6 +30,14 @@ public class FlipCoin {
             results += " lost.";
         }
         return results;
+    }
+
+    public FlipCoin(){};
+
+    public FlipCoin(ArrayList<Child> childrenList){
+        this.flipTime = Calendar.getInstance().getTime();
+        Random rand = new Random();
+        this.childrenList = childrenList;
     }
 
     public String getTime() {return flipTime.toString();}
@@ -27,23 +49,6 @@ public class FlipCoin {
         else{
             return R.drawable.loonie_tails;
         }
-    }
-
-    public enum CoinSide {
-        HEADS,
-        TAILS
-    }
-    private ArrayList<Child> childrenList;
-    private Date flipTime;
-    private Child picker;
-    private CoinSide flipResult;
-    private boolean isPickerWinner;
-
-    public FlipCoin(ArrayList<Child> childrenList){
-        this.flipTime = Calendar.getInstance().getTime();
-        Random rand = new Random();
-        this.flipResult = CoinSide.values()[rand.nextInt(2)];
-        this.childrenList = childrenList;
     }
 
     public Date getFlipTime() {
@@ -59,6 +64,12 @@ public class FlipCoin {
     }
 
     public CoinSide getFlipResult(){
+        if (flipResult == null){
+            Log.i("inside", "null");
+            return null;
+        }
+
+        Log.i("outside", "null");
         return flipResult;
     }
 
@@ -66,8 +77,21 @@ public class FlipCoin {
         return isPickerWinner;
     }
 
-    public void setIsPickerWinner(CoinSide pickerChoice) {
-        isPickerWinner = flipResult == pickerChoice;
+    public void setWinner(boolean hasWon){
+        isPickerWinner = hasWon;
+    }
+
+    public void setPickerChoice(CoinSide coinside){
+        this.pickerChoice = coinside;
+    }
+
+    public void setFlipResult(CoinSide flipResult){
+        this.flipResult = flipResult;
+    }
+
+
+    public void updateResult() {
+        isPickerWinner = pickerChoice == flipResult;
     }
 
     public void addChild(String newName){
@@ -76,7 +100,6 @@ public class FlipCoin {
     public void removeChild(int childIndex){
         childrenList.remove(childIndex);
     }
-
 
     //For testing
     public CoinSide flipCoin(){

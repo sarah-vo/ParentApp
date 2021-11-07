@@ -36,7 +36,6 @@ public class FlipCoin {
 
     public FlipCoin(ArrayList<Child> childrenList){
         this.flipTime = Calendar.getInstance().getTime();
-        Random rand = new Random();
         this.childrenList = childrenList;
     }
 
@@ -87,6 +86,10 @@ public class FlipCoin {
 
     public void setFlipResult(CoinSide flipResult){
         this.flipResult = flipResult;
+
+        if(pickerChoice != null){
+            updateResult();
+        }
     }
 
 

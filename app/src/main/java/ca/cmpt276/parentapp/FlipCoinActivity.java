@@ -6,8 +6,8 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,25 +16,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 
 public class FlipCoinActivity extends AppCompatActivity {
+
+    public static final String SHARED_PREFERENCE = "Shared Preference";
+    public static final String SAVE_COIN_MANAGER = "SAVE_COIN_MANAGER";
+
     // For testing
     ArrayList<Child> childrenList = new ArrayList<>();
     Child able = new Child("Able");
     Child betty = new Child("Betty");
     Child peter = new Child("Peter");
 
-    FlipCoinManager flipCoinManager = FlipCoinManager.getInstance();
+    FlipCoinManager flipCoinManager;
     FlipCoin flipCoinGame, newGame;
     int index;
-    FlipCoin.CoinSide currentCoinSideInImg = FlipCoin.CoinSide.HEADS;     //Initial coin side in image
+
+    FlipCoin.CoinSide currentCoinSideInImg = FlipCoin.CoinSide.HEADS; //Initial coin side in image
     FlipCoin.CoinSide coinResult;
 
     ObjectAnimator animStage1, animStage2;
@@ -48,7 +54,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     int maxRepeat = 6;
     boolean emptyChildrenList;
 
-    @SuppressLint("SetTextI18n")
+    TextView resultText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,8 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         initializeHistoryButton();
 
+        loadData();
+
         showPicker = findViewById(R.id.showPicker);
         if (childrenList.size() > 0) {
             flipCoinGame = new FlipCoin(childrenList);
@@ -68,11 +77,43 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
         else {
             emptyChildrenList = true;
-            showPicker.setText("There are no configured children, but you can sill play with the coin!");
+            showPicker.setText(R.string.no_configured_children);
             coinImg = findViewById(R.id.iv_coin);
             setUpButtons();
         }
         initializeAnimation();
+
+    }
+
+    //Save current data of the gameManager using SharedPreferences
+    private void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //Convert gridManager to json format
+        Gson gson = new Gson();
+        String json = gson.toJson(flipCoinManager);
+
+        //Save the json
+        editor.putString(SAVE_COIN_MANAGER,json);
+        editor.apply();
+    }
+
+    //Load data from saved state
+    private void loadData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
+
+        //Get the gridManager in json format
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(SAVE_COIN_MANAGER,null);
+
+        //Covert the gameManager into an Object and set the instance to the specified gameManager
+        flipCoinManager = gson.fromJson(json,FlipCoinManager.class);
+        FlipCoinManager.setInstance(flipCoinManager);
+
+        if(flipCoinManager == null){
+            flipCoinManager = FlipCoinManager.getInstance();
+        }
 
     }
 
@@ -85,8 +126,10 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     private void initializeLayout() {
+        resultText = findViewById(R.id.resultMessage);
+
         flipCoinGame.setPicker(index);
-        String message = "It's " + flipCoinGame.getPicker().getName() + "'s turn! Pick a side.";
+        String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
         showPicker.setText(message);
 
         coinImg = findViewById(R.id.iv_coin);
@@ -104,6 +147,8 @@ public class FlipCoinActivity extends AppCompatActivity {
                 showPicker.setText(message);
                 flipCoinGame.setPickerChoice(FlipCoin.CoinSide.HEADS);
             }
+
+            resultText.setText("");
             coinFlipSound.start();
             flipCoinImg();
         });
@@ -114,6 +159,8 @@ public class FlipCoinActivity extends AppCompatActivity {
                 showPicker.setText(message);
                 flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);
             }
+
+            resultText.setText("");
             coinFlipSound.start();
             flipCoinImg();
         });
@@ -209,9 +256,9 @@ public class FlipCoinActivity extends AppCompatActivity {
 
                     if (!emptyChildrenList){
                         flipCoinGame.setFlipResult(coinResult);
-                        flipCoinGame.updateResult();
                         flipCoinManager.addGame(flipCoinGame);
                         displayResultMessage();
+                        saveData();
 
                         newGame = new FlipCoin(childrenList);
 
@@ -219,7 +266,8 @@ public class FlipCoinActivity extends AppCompatActivity {
                         index = flipCoinManager.updateIndex(childrenList.size());
                         flipCoinGame.setPicker(index);
 
-                        String message = "It's " + flipCoinGame.getPicker().getName() + "'s turn! Pick a side.";
+                        String message = getString(R.string.player_turn,
+                                flipCoinGame.getPicker().getName());
                         showPicker.setText(message);
                     }
 
@@ -229,15 +277,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("SetTextI18n")
     private void displayResultMessage() {
-        TextView tvResultMessage = findViewById(R.id.resultMessage);
-        String showResult = "The result is " + flipCoinGame.getFlipResult().toString();
         if (flipCoinGame.isPickerWinner()){
-            tvResultMessage.setText(showResult + ". Congratulations! You won.");
+            resultText.setText(getString(R.string.player_won, flipCoinGame.getFlipResult().toString()));
         }
         else {
-            tvResultMessage.setText(showResult + ". Sorry you guessed wrong, better luck next time.");
+            resultText.setText(getString(R.string.player_lose, flipCoinGame.getFlipResult().toString()));
         }
     }
 

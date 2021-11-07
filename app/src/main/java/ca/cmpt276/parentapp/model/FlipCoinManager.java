@@ -14,6 +14,11 @@ public class FlipCoinManager {
         currentIndex = -1;
     }
 
+    public static void setInstance(FlipCoinManager new_instance){
+        instance = new_instance;
+    }
+
+
     public static FlipCoinManager getInstance(){
         if (instance == null){
             instance = new FlipCoinManager();

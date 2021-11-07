@@ -8,6 +8,10 @@
     <string name="resume">Resume</string>
     <string name="reset">Reset</string>
 
+    <string name="no_configured_children">There are no configured children, but you can sill play with the coin!</string>
+    <string name="current_setting">Current Settings: %1$d Row x %2$d Column, %3$d Total Virus</string>
+    <string name="player_turn">It\'s %1$s\'s turn! Pick a side.</string>
+
     <string name="flip_coin">Flip coin</string>
     <string name="timeout_timer">Timeout Timer</string>
     <string name="settings">Settings</string>
@@ -20,4 +24,7 @@
     <string name="result">Result</string>
     <string name="history">History</string>
     <string name="image_of_coins_FlipCoinActivity">Image of coins</string>
+
+    <string name="player_won">Result: %1$s\nCongratulations! You won.</string>
+    <string name="player_lose">Result: %1$s\nToo bad! You lost.</string>
 </resources>

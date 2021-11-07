@@ -36,7 +36,7 @@
     <string name="no_add_child">No</string>
     <string name="confirm_edit_child">Are you sure you want to edit this child\'s name?</string>
 
-    <string name="player_choice">%1$s chose %2s </string>
+    <string name="player_choice">%1$s chose %2$s </string>
 
     <string name="win_text">Result: %1$s\nCongratulations! You won.</string>
     <string name="lose_text">Result: %1$s\nToo bad! You lost.</string>

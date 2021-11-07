@@ -42,6 +42,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     FlipCoin.CoinSide currentCoinSideInImg = FlipCoin.CoinSide.HEADS; //Initial coin side in image
     FlipCoin.CoinSide coinResult;
+    FlipCoin.CoinSide pickerChoice;
 
     ObjectAnimator animStage1, animStage2;
     Button headButton, tailButton;
@@ -56,6 +57,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     int maxRepeat = 6;
     boolean emptyChildrenList;
 
+
     TextView resultText;
 
     @Override
@@ -69,24 +71,9 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
-        initializeHistoryButton();
-
         loadData();
-
-        showPicker = findViewById(R.id.showPicker);
-        if (childrenList.size() > 0) {
-            flipCoinGame = new FlipCoin(childrenList);
-            index = flipCoinManager.getCurrentIndex(childrenList.size());
-            initializeLayout();
-        }
-        else {
-            emptyChildrenList = true;
-            showPicker.setText(R.string.no_configured_children);
-            coinImg = findViewById(R.id.iv_coin);
-            setUpButtons();
-        }
+        initializeLayout();
         initializeAnimation();
-
     }
 
     //Save current data of the gameManager using SharedPreferences
@@ -133,12 +120,23 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void initializeLayout() {
         resultText = findViewById(R.id.resultMessage);
-
-        flipCoinGame.setPicker(index);
-        String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
-        showPicker.setText(message);
-
         coinImg = findViewById(R.id.iv_coin);
+        showPicker = findViewById(R.id.showPicker);
+
+        if (childrenList.size() > 0) {
+            flipCoinGame = new FlipCoin(childrenList);
+            index = flipCoinManager.getCurrentIndex(childrenList.size());
+            flipCoinGame.setPicker(index);
+            String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
+            showPicker.setText(message);
+        }
+        else {
+            emptyChildrenList = true;
+            showPicker.setText(R.string.no_configured_children);
+            coinImg = findViewById(R.id.iv_coin);
+        }
+
+        initializeHistoryButton();
         setUpButtons();
     }
 
@@ -169,11 +167,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
 
         animStage2.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                super.onAnimationStart(animation);
-            }
-
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
@@ -215,6 +208,10 @@ public class FlipCoinActivity extends AppCompatActivity {
                         showPicker.setText(message);
                     }
 
+                    else{
+                        displayMessageForEmpty(pickerChoice,coinResult);
+                    }
+
                     rotationCount = 0;
                 }
             }
@@ -231,9 +228,11 @@ public class FlipCoinActivity extends AppCompatActivity {
                 String message = getString(R.string.player_choice,
                         flipCoinGame.getPicker().getName(),
                         FlipCoin.CoinSide.HEADS.toString());
+                showPicker.setText(message);
+                flipCoinGame.setPickerChoice(FlipCoin.CoinSide.HEADS);
             }
 
-            flipCoinGame.setPickerChoice(FlipCoin.CoinSide.HEADS);
+            pickerChoice = FlipCoin.CoinSide.HEADS;
             resultText.setText("");
             coinFlipSound.start();
             flipCoinImg();
@@ -248,7 +247,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                 flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);
             }
 
-            flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);
+            pickerChoice = FlipCoin.CoinSide.TAILS;
             resultText.setText("");
             coinFlipSound.start();
             flipCoinImg();
@@ -270,6 +269,19 @@ public class FlipCoinActivity extends AppCompatActivity {
         else {
             resultText.setText(getString(R.string.lose_text,
                     flipCoinGame.getFlipResult().toString()));
+        }
+    }
+
+    private void displayMessageForEmpty(FlipCoin.CoinSide pickerChoice,
+                                        FlipCoin.CoinSide flipResult) {
+
+        if (pickerChoice == flipResult){
+            resultText.setText(getString(R.string.win_text,
+                    flipResult.toString()));
+        }
+        else {
+            resultText.setText(getString(R.string.lose_text,
+                    flipResult.toString()));
         }
     }
 

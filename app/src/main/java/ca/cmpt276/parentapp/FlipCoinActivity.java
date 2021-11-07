@@ -21,14 +21,11 @@ import java.util.Random;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
+import ca.cmpt276.parentapp.model.childManager;
 
 public class FlipCoinActivity extends AppCompatActivity {
-    // For testing
-    ArrayList<Child> childrenList = new ArrayList<>();
-    Child able = new Child("Able");
-    Child betty = new Child("Betty");
-    Child peter = new Child("Peter");
-
+    childManager manager = childManager.getInstance();
+    ArrayList<Child> childrenList = manager.getChildList();
     FlipCoinManager flipCoinManager = FlipCoinManager.getInstance();
     FlipCoin flipCoin;
     int index;
@@ -49,10 +46,10 @@ public class FlipCoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
-         //For testing
-        childrenList.add(able);
-        childrenList.add(betty);
-        childrenList.add(peter);
+//         //For testing
+//        childrenList.add(able);
+//        childrenList.add(betty);
+//        childrenList.add(peter);
 
         initializeHistoryButton();
 

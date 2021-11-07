@@ -12,6 +12,9 @@ public  class childManager {
             return instance;
     }
 
+
+    public ArrayList<Child> getChildList(){return childrenList;}
+
     public void addChildren(String name){
         childrenList.add(new Child(name));
     }

@@ -63,13 +63,9 @@ public class FlipCoinHistory extends AppCompatActivity {
             TextView gameResult =  itemView.findViewById(R.id.gameResult);
             gameResult.setText(currentGame.printFinalResults());
 
-            // P1 info
+            // Coin Image
             ImageView coinDetails =  itemView.findViewById(R.id.coinDetails);
             coinDetails.setImageResource(currentGame.getFlippedCoin());
-//
-//            // P2 info
-//            TextView player2Info =  itemView.findViewById(R.id.player2Info);
-//            player2Info.setText(currentGame.getPlayerInfo(2));
 
             // time:
             TextView yearText =  itemView.findViewById(R.id.time);

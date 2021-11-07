@@ -14,10 +14,10 @@ public class FlipCoinManager {
         currentIndex = -1;
     }
 
+    ///--------------------------Functions for instances-------------------------///
     public static void setInstance(FlipCoinManager new_instance){
         instance = new_instance;
     }
-
 
     public static FlipCoinManager getInstance(){
         if (instance == null){
@@ -26,7 +26,9 @@ public class FlipCoinManager {
         return instance;
     }
 
-    // numChildren = current number of children saved in the app
+    ///--------------------------Functions for updating index-------------------------///
+
+    //numChildren = current number of children saved in the app
     public int getCurrentIndex(int numChildren) {
         if (currentIndex == -1) {
             updateIndex(numChildren);
@@ -45,14 +47,10 @@ public class FlipCoinManager {
         return currentIndex;
     }
 
-
+    ///--------------------------Functions to update Game-------------------------///
 
     public void addGame(FlipCoin flipCoin){
         flipCoinGameList.add(flipCoin);
-    }
-
-    public int getNumGames(){
-        return flipCoinGameList.size();
     }
 
     public FlipCoin getGame(int index){
@@ -61,6 +59,10 @@ public class FlipCoinManager {
 
     public ArrayList<FlipCoin> getListGames(){
         return flipCoinGameList;
+    }
+
+    public int getNumGames(){
+        return flipCoinGameList.size();
     }
 
 }

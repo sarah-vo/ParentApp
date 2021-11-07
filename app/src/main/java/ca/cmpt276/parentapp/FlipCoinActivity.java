@@ -48,9 +48,11 @@ public class FlipCoinActivity extends AppCompatActivity {
     ImageView coinImg;
     TextView showPicker;
 
+    Button historyButton;
+
     MediaPlayer coinFlipSound;
 
-    int repeatCount = 0;
+    int rotationCount = 0;
     int maxRepeat = 6;
     boolean emptyChildrenList;
 
@@ -64,6 +66,8 @@ public class FlipCoinActivity extends AppCompatActivity {
         childrenList.add(able);
         childrenList.add(betty);
         childrenList.add(peter);
+
+        coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
         initializeHistoryButton();
 
@@ -117,6 +121,8 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     }
 
+    ///--------------------------Functions for initialization-------------------------///
+
     private void initializeHistoryButton() {
         Button historyButton = findViewById(R.id.historyButton);
         historyButton.setOnClickListener(View -> {
@@ -136,77 +142,13 @@ public class FlipCoinActivity extends AppCompatActivity {
         setUpButtons();
     }
 
-    private void setUpButtons(){
-        headButton = findViewById(R.id.btn_heads);
-        tailButton = findViewById(R.id.btn_tails);
-        coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
-
-        headButton.setOnClickListener(view -> {
-            if (!emptyChildrenList) {
-                String message = flipCoinGame.getPicker().getName() + " chose " + FlipCoin.CoinSide.HEADS.toString();
-                showPicker.setText(message);
-                flipCoinGame.setPickerChoice(FlipCoin.CoinSide.HEADS);
-            }
-
-            resultText.setText("");
-            coinFlipSound.start();
-            flipCoinImg();
-        });
-
-        tailButton.setOnClickListener(view -> {
-            if (!emptyChildrenList) {
-                String message = flipCoinGame.getPicker().getName() + " chose " + FlipCoin.CoinSide.TAILS.toString();
-                showPicker.setText(message);
-                flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);
-            }
-
-            resultText.setText("");
-            coinFlipSound.start();
-            flipCoinImg();
-        });
-    }
-
-    private void flipCoinImg(){
-        disableButtons();
-        coinResult = new FlipCoin().flipCoin();
-
-        if (coinResult == FlipCoin.CoinSide.HEADS){
-            Log.i("CoinResult:", "HEADS");
-            if (currentCoinSideInImg == FlipCoin.CoinSide.HEADS){
-                maxRepeat = 6; // Land on the same side as before flip
-            }
-            else{
-                maxRepeat = 7; // Land on the different side
-            }
-        }
-        else {
-            Log.i("CoinResult:", "TAILS");
-            if (currentCoinSideInImg == FlipCoin.CoinSide.TAILS) {
-                maxRepeat = 6;
-            } else {
-                maxRepeat = 7;
-            }
-        }
-
-        animStage1.start();
-    }
-
-    public void enableButtons() {
-        headButton.setEnabled(true);
-        tailButton.setEnabled(true);
-    }
-
-    public void disableButtons(){
-        headButton.setEnabled(false);
-        tailButton.setEnabled(false);
-    }
-
     private void initializeAnimation(){
-
         animStage1 = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipx1);
         animStage2 = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipx2);
+
         animStage1.setTarget(coinImg);
         animStage2.setTarget(coinImg);
+
         animStage1.setDuration(100);
         animStage2.setDuration(100);
 
@@ -236,13 +178,12 @@ public class FlipCoinActivity extends AppCompatActivity {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
 
-                repeatCount++;
+                rotationCount++;
 
-                if (repeatCount < maxRepeat){
+                if (rotationCount < maxRepeat){
                     animStage1.start();
                 }
 
-                //Animation Ended
                 else{
                     enableButtons();
 
@@ -254,14 +195,17 @@ public class FlipCoinActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
 
+                    //Only update if there are children in the list
                     if (!emptyChildrenList){
-                        flipCoinGame.setFlipResult(coinResult);
+
+                        //Set results onto the object and save that data
+                        //flipCoinGame.setFlipResult(coinResult);
                         flipCoinManager.addGame(flipCoinGame);
                         displayResultMessage();
                         saveData();
 
+                        //Create a new game
                         newGame = new FlipCoin(childrenList);
-
                         flipCoinGame = newGame;
                         index = flipCoinManager.updateIndex(childrenList.size());
                         flipCoinGame.setPicker(index);
@@ -271,19 +215,97 @@ public class FlipCoinActivity extends AppCompatActivity {
                         showPicker.setText(message);
                     }
 
-                    repeatCount = 0;
+                    rotationCount = 0;
                 }
             }
         });
     }
 
+    private void setUpButtons(){
+        headButton = findViewById(R.id.btn_heads);
+        tailButton = findViewById(R.id.btn_tails);
+        historyButton = findViewById(R.id.historyButton);
+
+        headButton.setOnClickListener(view -> {
+            if (!emptyChildrenList) {
+                String message = getString(R.string.player_choice,
+                        flipCoinGame.getPicker().getName(),
+                        FlipCoin.CoinSide.HEADS.toString());
+            }
+
+            flipCoinGame.setPickerChoice(FlipCoin.CoinSide.HEADS);
+            resultText.setText("");
+            coinFlipSound.start();
+            flipCoinImg();
+        });
+
+        tailButton.setOnClickListener(view -> {
+            if (!emptyChildrenList) {
+                String message = getString(R.string.player_choice,
+                                            flipCoinGame.getPicker().getName(),
+                                            FlipCoin.CoinSide.TAILS.toString());
+                showPicker.setText(message);
+                flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);
+            }
+
+            flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);
+            resultText.setText("");
+            coinFlipSound.start();
+            flipCoinImg();
+        });
+
+        historyButton.setOnClickListener(View -> {
+            Intent intent = FlipCoinHistory.makeIntent(this);
+            startActivity(intent);
+        });
+    }
+
+    ///--------------------------Functions to update Views-------------------------///
+
     private void displayResultMessage() {
         if (flipCoinGame.isPickerWinner()){
-            resultText.setText(getString(R.string.player_won, flipCoinGame.getFlipResult().toString()));
+            resultText.setText(getString(R.string.win_text,
+                    flipCoinGame.getFlipResult().toString()));
         }
         else {
-            resultText.setText(getString(R.string.player_lose, flipCoinGame.getFlipResult().toString()));
+            resultText.setText(getString(R.string.lose_text,
+                    flipCoinGame.getFlipResult().toString()));
         }
+    }
+
+    private void flipCoinImg(){
+        disableButtons();
+        coinResult = !emptyChildrenList ? flipCoinGame.flipCoin() : new FlipCoin().flipCoin();
+        //coinResult = new FlipCoin().flipCoin();
+        if (coinResult == FlipCoin.CoinSide.HEADS){
+            Log.i("CoinResult:", "HEADS");
+            if (currentCoinSideInImg == FlipCoin.CoinSide.HEADS){
+                maxRepeat = 6; // Lands on same side
+            }
+            else{
+                maxRepeat = 7; // Land on the different side
+            }
+        }
+        else {
+            Log.i("CoinResult:", "TAILS");
+            if (currentCoinSideInImg == FlipCoin.CoinSide.TAILS) {
+                maxRepeat = 6;
+            } else {
+                maxRepeat = 7;
+            }
+        }
+
+        animStage1.start();
+    }
+
+    public void enableButtons() {
+        headButton.setEnabled(true);
+        tailButton.setEnabled(true);
+    }
+
+    public void disableButtons(){
+        headButton.setEnabled(false);
+        tailButton.setEnabled(false);
     }
 
 }

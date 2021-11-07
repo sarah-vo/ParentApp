@@ -34,7 +34,7 @@ public class timerService extends Service {
     public static final String SERVICE_DESTROY = "DESTROY SERVICE TAG";
     public static final String SERVICE_PAUSE = "PAUSE SERVICE TAG";
 
-    public static final String COUNTDOWN_BR = "SS";
+    public static final String COUNTDOWN_BR = "COUNTDOWN_BR";
     public static Intent timer_intent = new Intent(COUNTDOWN_BR);
 
     public static boolean isServiceRunning = false;
@@ -102,18 +102,15 @@ public class timerService extends Service {
         return null;
     }
 
-    private void initializeAlarmSound(){
-        alarm_sound = MediaPlayer.create(timerService.this,R.raw.alarm_sound);
-        alarm_sound.setLooping(false);
-    }
-
     private void startTimer(){
 
-        timer = new CountDownTimer(time_left,1000) {
+        int countDownInterval = 100;
+
+        timer = new CountDownTimer(time_left,countDownInterval) {
             @Override
             public void onTick(long time_until_finish) {
-                if (! (time_until_finish + 999 > initial_time)){
-                    time_left -= 1000;
+                if (! (time_until_finish + (countDownInterval - 1) > initial_time)){
+                    time_left -= countDownInterval;
                 }
 
                 timer_intent.putExtra(TIME_LEFT_SERVICE_TAG,time_left);
@@ -137,20 +134,25 @@ public class timerService extends Service {
         }.start();
     }
 
-    //////Functions for playing Sounds
+    ///--------------------------Functions for Playing Sounds-------------------------///
+    private void initializeAlarmSound(){
+        alarm_sound = MediaPlayer.create(timerService.this,R.raw.alarm_sound);
+        alarm_sound.setLooping(false);
+    }
 
     private void playAlarm(){
         if (alarm_sound != null){
             alarm_sound.start();
         }
     }
+
     private void vibrate(long milliseconds){
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(VibrationEffect.createOneShot(milliseconds,
                 VibrationEffect.DEFAULT_AMPLITUDE));
     }
 
-    ///////Functions for notifications
+    ///--------------------------Functions for Notifications-------------------------///
 
     private Notification createTimerRunningNotification(){
         Intent intent = new Intent(this, TimerActivity.class);

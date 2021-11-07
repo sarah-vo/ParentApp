@@ -29,16 +29,37 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
         if (currentGame.getFlipResult() != null){
             // Result:
             TextView gameResult =  itemView.findViewById(R.id.gameResult);
-            gameResult.setText(currentGame.printFinalResults());
+            gameResult.setText(formatResult(currentGame));
 
             // P1 info
             ImageView coinDetails =  itemView.findViewById(R.id.coinDetails);
-            coinDetails.setImageResource(currentGame.getFlippedCoin());
+            coinDetails.setImageResource(getCoinImageId(currentGame));
 
-            TextView yearText =  itemView.findViewById(R.id.time);
-            yearText.setText(currentGame.getTime());
+            TextView creationTime =  itemView.findViewById(R.id.time);
+            creationTime.setText(currentGame.getCreatedTime());
         }
 
         return itemView;
+    }
+
+    private String formatResult(FlipCoin currentGame) {
+        String results = currentGame.getFlipResult().toString() + " was the results. " +
+                currentGame.getPicker().getName();
+
+        if (currentGame.isPickerWinner()) {
+            results += " won.";
+        } else {
+            results += " lost.";
+        }
+        return results;
+    }
+
+    private int getCoinImageId(FlipCoin currentGame){
+        if(currentGame.getFlipResult() == FlipCoin.CoinSide.HEADS){
+            return R.drawable.loonie_heads;
+        }
+        else{
+            return R.drawable.loonie_tails;
+        }
     }
 }

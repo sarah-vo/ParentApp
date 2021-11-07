@@ -19,6 +19,9 @@
             android:name=".childConfiguration"
             android:exported="false" />
         <activity
+            android:name=".FlipCoinHistory"
+            android:exported="false" />
+        <activity
             android:name=".FlipCoinActivity"
             android:exported="true"
             android:screenOrientation="portrait" />

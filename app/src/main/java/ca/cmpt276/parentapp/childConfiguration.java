@@ -103,7 +103,7 @@ public class childConfiguration extends AppCompatActivity {
             EditText editText = findViewById(R.id.TextInputEdit);
             if (!TextUtils.isEmpty(editText.getText().toString())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.confirm_delete_child)
+                builder.setMessage(R.string.confirm_edit_child)
                         .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
                             String newName = editText.getText().toString();
                             manager.editChildren(newName, spinnerPosition);

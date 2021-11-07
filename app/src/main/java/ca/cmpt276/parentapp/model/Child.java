@@ -10,4 +10,8 @@ public class Child {
     public String getName(){
         return this.name;
     }
+
+    public void editName(String newName){
+        name = newName;
+    }
 }

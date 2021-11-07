@@ -16,13 +16,16 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".childConfiguration"
+            android:exported="false" />
+        <activity
             android:name=".FlipCoinActivity"
             android:exported="true"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".timer.TimerActivity"
-            android:launchMode="singleTop"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -33,7 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".timer.timerService"/>
+
+        <service android:name=".timer.timerService" />
 
         <receiver android:name=".timer.NotificationReceiver" />
     </application>

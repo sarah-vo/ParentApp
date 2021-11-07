@@ -10,7 +10,7 @@ public class FlipCoin {
         HEADS,
         TAILS
     }
-    private ArrayList<Child> childrenList;
+
     private Date flipTime;
     private Child picker;
     private CoinSide flipResult;

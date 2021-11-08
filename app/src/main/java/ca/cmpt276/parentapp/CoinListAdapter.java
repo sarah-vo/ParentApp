@@ -37,21 +37,18 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
 
             TextView creationTime =  itemView.findViewById(R.id.time);
             creationTime.setText(currentGame.getCreatedTime());
+
+            ImageView result_img = itemView.findViewById(R.id.result_img);
+            result_img.setImageResource(getResultIconId(currentGame));
         }
 
         return itemView;
     }
 
     private String formatResult(FlipCoin currentGame) {
-        String results = currentGame.getFlipResult().toString() + " was the results. " +
-                currentGame.getPicker().getName();
 
-        if (currentGame.isPickerWinner()) {
-            results += " won.";
-        } else {
-            results += " lost.";
-        }
-        return results;
+        return "Result: " + currentGame.getFlipResult().toString()+
+                         "\nPicker: " + currentGame.getPicker().getName();
     }
 
     private int getCoinImageId(FlipCoin currentGame){
@@ -61,5 +58,15 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
         else{
             return R.drawable.loonie_tails;
         }
+    }
+
+    private int getResultIconId(FlipCoin currentGame){
+        if(currentGame.isPickerWinner()){
+            return R.drawable.tick_icon;
+        }
+        else{
+            return R.drawable.x_icon;
+        }
+
     }
 }

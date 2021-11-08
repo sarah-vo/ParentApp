@@ -7,33 +7,48 @@
 
     <TextView
         android:id="@+id/gameResult"
-        android:layout_width="260dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="132dp"
+        android:layout_width="182dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="13dp"
         android:layout_marginTop="16dp"
         android:text="@string/game_result"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coinDetails"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/time"
-        android:layout_width="346dp"
-        android:layout_height="23dp"
-        android:layout_marginStart="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:text="@string/time"
+        app:layout_constraintEnd_toEndOf="@+id/coinDetails"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameResult" />
+        app:layout_constraintTop_toBottomOf="@+id/coinDetails" />
 
     <ImageView
         android:id="@+id/coinDetails"
         android:layout_width="68dp"
         android:layout_height="62dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/image_of_coins_FlipCoinActivity"
         app:layout_constraintBottom_toTopOf="@+id/time"
-        app:layout_constraintEnd_toStartOf="@+id/gameResult"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/image_of_coins_FlipCoinActivity" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageView
+        android:id="@+id/result_img"
+        android:layout_width="111dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gameResult"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/tick_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

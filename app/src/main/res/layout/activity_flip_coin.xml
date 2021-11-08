@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
+    android:background="@drawable/flip_coin_activity_bg"
     tools:context=".FlipCoinActivity">
 
 
@@ -24,60 +25,61 @@
         android:id="@+id/btn_heads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="43dp"
         android:text="@string/heads"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/showPicker" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_coin" />
 
     <Button
         android:id="@+id/btn_tails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="171dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="68dp"
         android:fadeScrollbars="false"
         android:text="@string/tails"
         android:textAlignment="center"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/btn_heads"
-        app:layout_constraintTop_toBottomOf="@+id/showPicker" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_coin" />
 
     <ImageView
         android:id="@+id/iv_coin"
         android:layout_width="320dp"
         android:layout_height="320dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="32dp"
+        android:contentDescription="@string/image_of_coins_FlipCoinActivity"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_heads"
-        app:srcCompat="@drawable/loonie_heads"
-        android:contentDescription="@string/image_of_coins_FlipCoinActivity" />
+        app:layout_constraintTop_toTopOf="@+id/resultMessage"
+        app:srcCompat="@drawable/loonie_heads" />
 
     <TextView
         android:id="@+id/resultMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="132dp"
         android:textAlignment="center"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_coin" />
+        app:layout_constraintTop_toBottomOf="@+id/showPicker" />
 
     <Button
         android:id="@+id/historyButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/history"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

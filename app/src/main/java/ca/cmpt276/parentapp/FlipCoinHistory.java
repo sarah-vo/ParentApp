@@ -36,8 +36,7 @@ public class FlipCoinHistory extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (manager.getListGames() == null || manager.getNumGames() == 0){
-            setContentView(R.layout.activity_flip_coin_history);
-            populateGameList();
+            setContentView(R.layout.flip_coin_empty_history);
         }
 
         else {
@@ -48,7 +47,13 @@ public class FlipCoinHistory extends AppCompatActivity {
 
     private void populateGameList(){
         //Building adapter
-        ArrayAdapter<FlipCoin> adapter = new CoinListAdapter(this, manager.getListGames());
+
+        ArrayList<FlipCoin> reverse_list = new ArrayList<>();
+        for (int i = manager.getNumGames() -1; i >= 0; i--){
+            reverse_list.add(manager.getGame(i));
+        }
+
+        ArrayAdapter<FlipCoin> adapter = new CoinListAdapter(this, reverse_list);
         ListView list = findViewById(R.id.gameListView);
         list.setAdapter(adapter);
     }

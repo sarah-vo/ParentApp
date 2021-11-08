@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp.timer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -34,6 +35,8 @@ public class TimerActivity extends AppCompatActivity {
     public static final String TIME_INITIAL_TAG = "INITIAL TIME TAG";
     public static final String TIME_LEFT_TAG = "INITIAL LEFT TAG";
 
+    ConstraintLayout timerLayout;
+
     private NumberPicker timer_hour, timer_minute, timer_second;
     private TextView hour_text, minute_text, second_text;
 
@@ -58,6 +61,8 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+
+        timerLayout = findViewById(R.id.timerLayout);
 
         initializeTimerScroll();
         initializeProgressView();
@@ -285,6 +290,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void setInterface_Running(){
+        timerLayout.setBackgroundResource(R.drawable.calming_green_scenery);
+
         start_button.setVisibility(View.GONE);
 
         timer_bar.setVisibility(View.VISIBLE);
@@ -305,6 +312,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void setInterface_Choose(){
+        timerLayout.setBackgroundResource(R.drawable.timer_background);
+
         start_button.setVisibility(View.VISIBLE);
 
         timer_bar.setVisibility(View.GONE);

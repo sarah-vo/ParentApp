@@ -313,11 +313,13 @@ public class FlipCoinActivity extends AppCompatActivity {
     public void enableButtons() {
         headButton.setEnabled(true);
         tailButton.setEnabled(true);
+        historyButton.setEnabled(true);
     }
 
     public void disableButtons(){
         headButton.setEnabled(false);
         tailButton.setEnabled(false);
+        historyButton.setEnabled(false);
     }
 
 }

@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public class FlipCoinManager {
     private static FlipCoinManager instance;
-    private ArrayList<FlipCoin> flipCoinGameList;
+    private final ArrayList<FlipCoin> flipCoinGameList;
     private int currentIndex;
 
     private FlipCoinManager(){

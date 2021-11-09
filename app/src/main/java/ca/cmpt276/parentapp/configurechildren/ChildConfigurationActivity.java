@@ -1,18 +1,14 @@
 package ca.cmpt276.parentapp.configurechildren;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,8 +18,6 @@ import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
-import ca.cmpt276.parentapp.model.FlipCoin;
-import ca.cmpt276.parentapp.model.FlipCoinManager;
 import ca.cmpt276.parentapp.model.childManager;
 
 public class ChildConfigurationActivity extends AppCompatActivity {
@@ -95,23 +89,6 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         removeChild(dataAdapter);
 
         super.onResume();
-
-        /*childrenList = manager.getChildList();
-        childName = new ArrayList<>();
-
-        spinner = findViewById(R.id.childrenSpinner);
-
-        dataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                manager.getChildrenNameList());
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(dataAdapter);
-        spinner.setSelection(0); //initial selection
-
-        addChild(dataAdapter);
-        editChild(dataAdapter);
-        removeChild(dataAdapter);*/
 
         super.onResume();
     }

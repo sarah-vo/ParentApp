@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public  class childManager {
     private static childManager instance;
-    private ArrayList<Child> childrenList;
+    private final ArrayList<Child> childrenList;
     public ArrayList<String> childrenName = new ArrayList<>();
 
     public static childManager getInstance(){

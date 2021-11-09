@@ -1,8 +1,5 @@
 package ca.cmpt276.parentapp.flipcoin;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
@@ -16,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
 
@@ -71,10 +71,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
-         //For testing
-//        childrenList.add(able);
-//        childrenList.add(betty);
-//        childrenList.add(peter);
 
         coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
@@ -221,7 +217,6 @@ public class FlipCoinActivity extends AppCompatActivity {
                     if (!emptyChildrenList){
 
                         //Set results onto the object and save that data
-                        //flipCoinGame.setFlipResult(coinResult);
                         flipCoinManager.addGame(flipCoinGame);
                         index = flipCoinManager.updateIndex(childrenList.size());
                         displayResultMessage();
@@ -323,7 +318,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void flipCoinImg(){
         disableButtons();
         coinResult = !emptyChildrenList ? flipCoinGame.flipCoin() : new FlipCoin().flipCoin();
-        //coinResult = new FlipCoin().flipCoin();
         if (coinResult == FlipCoin.CoinSide.HEADS){
             Log.i("CoinResult:", "HEADS");
             if (currentCoinSideInImg == FlipCoin.CoinSide.HEADS){

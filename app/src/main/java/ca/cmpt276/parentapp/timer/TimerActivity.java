@@ -1,14 +1,9 @@
 package ca.cmpt276.parentapp.timer;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +13,10 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
@@ -67,10 +66,6 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         timerLayout = findViewById(R.id.timerLayout);
-        /*toolbar = findViewById(R.id.timer_toolbar);
-        toolbar.setTitle("Timer");
-        setSupportActionBar(toolbar);
-*/
         initializeTimerScroll();
         initializeProgressView();
         setUpTimerButtons();
@@ -237,7 +232,6 @@ public class TimerActivity extends AppCompatActivity {
                 button.setPadding(0,0,0,0);
                 button.setOnClickListener(view -> setPickerValue(time_value));
                 button.setBackgroundResource(R.drawable.default_button_img);
-                //button.setAutoSizeTextTypeWithDefaults(1);
                 button.setText(getFormatTime(time_value));
 
                 button.setLayoutParams(new TableRow.LayoutParams(
@@ -434,17 +428,7 @@ public class TimerActivity extends AppCompatActivity {
 
     ///--------------------------Functions regarding Service -------------------------///
 
-   /* public static boolean isServiceRunningInForeground(Context context, Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                if (service.foreground) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }*/
+
 
     public boolean isTimerServiceRunning (){
         return TimerService.isServiceRunning;

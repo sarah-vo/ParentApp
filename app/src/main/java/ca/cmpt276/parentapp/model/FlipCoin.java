@@ -27,7 +27,7 @@ public class FlipCoin {
         TAILS
     }
 
-    public FlipCoin(){};
+    public FlipCoin(){}
 
     public FlipCoin(ArrayList<Child> childrenList){
         this.childrenList = childrenList;

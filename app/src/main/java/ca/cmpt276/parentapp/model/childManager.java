@@ -4,14 +4,22 @@ import java.util.ArrayList;
 
 public  class childManager {
     private static childManager instance;
-    private ArrayList<Child> childrenList = new ArrayList<>();
+    private ArrayList<Child> childrenList;
+
     public static childManager getInstance(){
         if(instance == null){
             instance = new childManager();
         }
-            return instance;
+        return instance;
     }
 
+    public static void setInstance(childManager manager){
+        instance = manager;
+    }
+
+    public childManager(){
+        childrenList = new ArrayList<>();
+    }
 
     public ArrayList<Child> getChildList(){return childrenList;}
 

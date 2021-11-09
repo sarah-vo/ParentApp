@@ -32,12 +32,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String SAVE_COIN_MANAGER = "SAVE_COIN_MANAGER";
 
-    // For testing
-    childManager manager = childManager.getInstance();
-    ArrayList<Child> childrenList = manager.getChildList();
-//    Child able = new Child("Able");
-//    Child betty = new Child("Betty");
-//    Child peter = new Child("Peter");
+    childManager manager;
+    ArrayList<Child> childrenList;
 
     FlipCoinManager flipCoinManager;
     FlipCoin flipCoinGame, newGame;
@@ -61,7 +57,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     boolean emptyChildrenList;
 
     Toolbar toolbar;
-
 
     TextView resultText;
 
@@ -112,12 +107,26 @@ public class FlipCoinActivity extends AppCompatActivity {
     private void loadData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
 
-        //Get the gridManager in json format
+        //Get the model in json format
         Gson gson = new Gson();
-        String json = sharedPreferences.getString(SAVE_COIN_MANAGER,null);
+        String coin_json = sharedPreferences.getString(SAVE_COIN_MANAGER,null);
+        String child_json = sharedPreferences.getString(childConfiguration.CHILD_LIST,null);
+
+        ///----------------------------- Get ChildManager data --------------------------------/////
+        //Covert the childManager into an Object and set the instance to the specified gameManager
+        manager = gson.fromJson(child_json, childManager.class);
+        childManager.setInstance(manager);
+
+        if(manager == null){
+            manager = childManager.getInstance();
+        }
+
+        childrenList = manager.getChildList();
+
+        ///----------------------------- Get FlipCoinManager data ----------------------------/////
 
         //Covert the gameManager into an Object and set the instance to the specified gameManager
-        flipCoinManager = gson.fromJson(json,FlipCoinManager.class);
+        flipCoinManager = gson.fromJson(coin_json,FlipCoinManager.class);
         FlipCoinManager.setInstance(flipCoinManager);
 
         if(flipCoinManager == null){
@@ -128,7 +137,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             flipCoinGame = new FlipCoin(childrenList);
 
             index = flipCoinManager.getCurrentIndex(childrenList.size());
-            flipCoinGame.setPicker(index);
+            flipCoinGame.setPicker(childrenList.get(index));
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
             showPicker.setText(message);
         }
@@ -136,6 +145,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             emptyChildrenList = true;
             showPicker.setText(R.string.no_configured_children);
         }
+
 
     }
 
@@ -210,13 +220,12 @@ public class FlipCoinActivity extends AppCompatActivity {
                         flipCoinManager.addGame(flipCoinGame);
                         index = flipCoinManager.updateIndex(childrenList.size());
                         displayResultMessage();
-                        flipCoinManager.getListGames().clear();
                         saveData();
 
                         //Create a new game
                         newGame = new FlipCoin(childrenList);
                         flipCoinGame = newGame;
-                        flipCoinGame.setPicker(index);
+                        flipCoinGame.setPicker(childrenList.get(index));
 
                         String message = getString(R.string.player_turn,
                                 flipCoinGame.getPicker().getName());
@@ -342,5 +351,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         tailButton.setEnabled(false);
         historyButton.setEnabled(false);
     }
+
 
 }

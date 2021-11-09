@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
+import ca.cmpt276.parentapp.model.childManager;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.timer.timerService;
 
@@ -16,11 +18,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         switchActivityFlipCoin();
         switchActivityTimeoutTimer();
         switchActivitySettings();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     void switchActivityFlipCoin(){

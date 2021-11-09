@@ -1,5 +1,8 @@
 package ca.cmpt276.parentapp;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
@@ -13,9 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
 
@@ -73,6 +73,8 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         initializeLayout();
         initializeAnimation();
+
+        this.setTitle("Flip Coin");
     }
 
     @Override
@@ -110,7 +112,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         //Get the model in json format
         Gson gson = new Gson();
         String coin_json = sharedPreferences.getString(SAVE_COIN_MANAGER,null);
-        String child_json = sharedPreferences.getString(childConfiguration.CHILD_LIST,null);
+        String child_json = sharedPreferences.getString(ChildConfigurationActivity.CHILD_LIST,null);
 
         ///----------------------------- Get ChildManager data --------------------------------/////
         //Covert the childManager into an Object and set the instance to the specified gameManager
@@ -351,6 +353,5 @@ public class FlipCoinActivity extends AppCompatActivity {
         tailButton.setEnabled(false);
         historyButton.setEnabled(false);
     }
-
 
 }

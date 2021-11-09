@@ -32,6 +32,7 @@ public class FlipCoinHistory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         manager = FlipCoinManager.getInstance();
+        this.setTitle("Coin Flips History");
     }
 
     @Override

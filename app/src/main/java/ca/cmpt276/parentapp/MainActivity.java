@@ -4,12 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 
-import ca.cmpt276.parentapp.model.childManager;
 import ca.cmpt276.parentapp.timer.TimerActivity;
-import ca.cmpt276.parentapp.timer.timerService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     void switchActivitySettings(){
         Button flipCoinButton = findViewById(R.id.settingsButton);
         flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, childConfiguration.class);//TODO: ADD CLASS HERE
+            Intent intent = new Intent(this, ChildConfigurationActivity.class);//TODO: ADD CLASS HERE
             startActivity(intent);
         });
     }

@@ -25,7 +25,7 @@ import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 import ca.cmpt276.parentapp.model.childManager;
 
-public class childConfiguration extends AppCompatActivity {
+public class ChildConfigurationActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
@@ -66,7 +66,7 @@ public class childConfiguration extends AppCompatActivity {
         addChild(dataAdapter);
         editChild(dataAdapter);
         removeChild(dataAdapter);
-
+        this.setTitle("Configure My Children");
     }
 
     @Override

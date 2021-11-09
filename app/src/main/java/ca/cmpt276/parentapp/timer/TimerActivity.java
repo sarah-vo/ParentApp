@@ -76,6 +76,7 @@ public class TimerActivity extends AppCompatActivity {
 
         populateDefaultTimeButton();
         updateViewInterface();
+        this.setTitle("Timeout Timer");
 
         //Check if there a timer service exist and on pause state
         if(isTimerServiceRunning() && timerService.isPaused){

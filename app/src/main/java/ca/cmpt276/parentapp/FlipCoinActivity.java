@@ -89,7 +89,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     protected void onDestroy() {
         flipCoinManager.resetIndex();
         saveData();
-        Log.i("OnDestroy", "kok");
         super.onDestroy();
     }
 

@@ -1,15 +1,9 @@
 package ca.cmpt276.parentapp.model;
 
-import android.util.Log;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Random;
-
-import ca.cmpt276.parentapp.R;
 
 public class FlipCoin {
 

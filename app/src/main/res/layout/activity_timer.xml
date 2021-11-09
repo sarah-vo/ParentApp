@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/timerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -75,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:text="hours"
+        android:text="@string/hours"
         app:layout_constraintBottom_toBottomOf="@+id/timer_hour"
         app:layout_constraintEnd_toStartOf="@+id/timer_minute"
         app:layout_constraintStart_toEndOf="@+id/timer_hour"
@@ -87,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:text="min"
+        android:text="@string/min"
         app:layout_constraintBottom_toBottomOf="@+id/timer_minute"
         app:layout_constraintStart_toEndOf="@+id/timer_minute"
         app:layout_constraintTop_toTopOf="@+id/timer_minute"
@@ -99,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="67dp"
-        android:text="sec"
+        android:text="@string/sec"
         app:layout_constraintBottom_toBottomOf="@+id/timer_second"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/timer_second"
@@ -110,44 +109,32 @@
         android:id="@+id/timer_pause_resume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="242dp"
-        android:layout_marginEnd="114dp"
-        android:layout_marginBottom="91dp"
-        android:text="@string/pause"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/button_rounded_corner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/timer_reset"
-        app:layout_constraintHorizontal_bias="0.478"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_bar" />
+        android:text="@string/pause"
+        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <android.widget.Button
         android:id="@+id/timer_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="91dp"
-        android:text="@string/reset"
+        android:layout_marginStart="32dp"
         android:background="@drawable/button_rounded_corner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_bar" />
+        android:text="@string/reset"
+        app:layout_constraintStart_toStartOf="@+id/guideline13"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <android.widget.Button
         android:id="@+id/timer_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginBottom="52dp"
-        android:text="@string/start"
         android:background="@drawable/button_rounded_corner"
+        android:text="@string/start"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/default_table" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <TableLayout
         android:id="@+id/default_table"
@@ -161,5 +148,26 @@
         app:layout_constraintTop_toBottomOf="@+id/timer_bar">
 
     </TableLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

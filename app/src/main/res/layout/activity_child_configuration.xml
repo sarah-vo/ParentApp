@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="20dp"
-        android:text="Add Child"
+        android:text="@string/add_child"
         app:layout_constraintBottom_toTopOf="@+id/EditChild"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -37,7 +37,8 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/TextInputEdit"
-        app:layout_constraintEnd_toStartOf="@+id/addChild" />
+        app:layout_constraintEnd_toStartOf="@+id/addChild"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/EditChild"

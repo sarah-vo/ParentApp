@@ -56,4 +56,8 @@
     <string name="edit_child">Edit Child</string>
     <string name="edit_child_name">Edit child name</string>
     <string name="delete_child">Delete Child</string>
+    <string name="hours">hours</string>
+    <string name="min">min</string>
+    <string name="sec">sec</string>
+    <string name="add_child">Add Child</string>
 </resources>

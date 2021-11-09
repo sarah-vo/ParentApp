@@ -27,7 +27,8 @@
             android:name=".flipcoin.FlipCoinActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".timer.TimerActivity"
             android:exported="true"

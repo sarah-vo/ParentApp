@@ -1,8 +1,5 @@
 package ca.cmpt276.parentapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorListenerAdapter;
@@ -17,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
+import ca.cmpt276.parentapp.model.childManager;
 
 public class FlipCoinActivity extends AppCompatActivity {
 
@@ -32,10 +33,11 @@ public class FlipCoinActivity extends AppCompatActivity {
     public static final String SAVE_COIN_MANAGER = "SAVE_COIN_MANAGER";
 
     // For testing
-    ArrayList<Child> childrenList = new ArrayList<>();
-    Child able = new Child("Able");
-    Child betty = new Child("Betty");
-    Child peter = new Child("Peter");
+    childManager manager = childManager.getInstance();
+    ArrayList<Child> childrenList = manager.getChildList();
+//    Child able = new Child("Able");
+//    Child betty = new Child("Betty");
+//    Child peter = new Child("Peter");
 
     FlipCoinManager flipCoinManager;
     FlipCoin flipCoinGame, newGame;
@@ -68,9 +70,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
          //For testing
-        childrenList.add(able);
-        childrenList.add(betty);
-        childrenList.add(peter);
+//        childrenList.add(able);
+//        childrenList.add(betty);
+//        childrenList.add(peter);
 
         coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
@@ -208,6 +210,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                         flipCoinManager.addGame(flipCoinGame);
                         index = flipCoinManager.updateIndex(childrenList.size());
                         displayResultMessage();
+                        flipCoinManager.getListGames().clear();
                         saveData();
 
                         //Create a new game

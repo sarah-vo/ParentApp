@@ -158,10 +158,6 @@ public class FlipCoinActivity extends AppCompatActivity {
         coinImg = findViewById(R.id.iv_coin);
         showPicker = findViewById(R.id.showPicker);
 
-        /*toolbar = findViewById(R.id.flip_coin_toolbar);
-        toolbar.setTitle("Flip Coin");
-        setSupportActionBar(toolbar);
-*/
         setUpButtons();
     }
 

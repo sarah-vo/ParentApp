@@ -47,10 +47,6 @@ public class FlipCoinHistory extends AppCompatActivity {
             populateGameList();
         }
 
-        /*toolbar = findViewById(R.id.coin_history_toolbar);
-        toolbar.setTitle("Flip Coin History");
-        setSupportActionBar(toolbar);*/
-
     }
 
     private void populateGameList(){

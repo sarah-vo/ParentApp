@@ -1,5 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -28,9 +30,11 @@ public class FlipCoinManager {
 
     ///--------------------------Functions for updating index-------------------------///
 
+
     //numChildren = current number of children saved in the app
     public int getCurrentIndex(int numChildren) {
-        if (currentIndex == -1) {
+        if (currentIndex == -1 || currentIndex >= numChildren) {
+            currentIndex = -1;
             updateIndex(numChildren);
         }
         return currentIndex;
@@ -45,6 +49,10 @@ public class FlipCoinManager {
             currentIndex = (currentIndex + 1) % numChildren;
         }
         return currentIndex;
+    }
+
+    public void resetIndex(){
+        currentIndex = -1;
     }
 
     ///--------------------------Functions to update Game-------------------------///

@@ -19,7 +19,7 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        FlipCoin currentGame = getItem(position);
+        FlipCoin currentGame = getItem(getCount() - 1 - position);
 
         View itemView = convertView;
         if(itemView == null){

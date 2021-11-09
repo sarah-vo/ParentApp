@@ -42,6 +42,10 @@ public class FlipCoin {
         picker = childrenList.get(index);
     }
 
+    public void setPicker(Child picker){
+        this.picker = picker;
+    }
+
     public Child getPicker(){
         return picker;
     }

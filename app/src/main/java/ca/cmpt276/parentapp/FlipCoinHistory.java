@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import ca.cmpt276.parentapp.timer.TimerActivity;
 
 public class FlipCoinHistory extends AppCompatActivity {
     FlipCoinManager manager;
+    Toolbar toolbar;
 
     public static Intent makeIntent(Context context){
         return new Intent(context, FlipCoinHistory.class);
@@ -43,17 +45,18 @@ public class FlipCoinHistory extends AppCompatActivity {
             setContentView(R.layout.activity_flip_coin_history);
             populateGameList();
         }
+
+        /*toolbar = findViewById(R.id.coin_history_toolbar);
+        toolbar.setTitle("Flip Coin History");
+        setSupportActionBar(toolbar);*/
+
     }
 
     private void populateGameList(){
         //Building adapter
 
-        ArrayList<FlipCoin> reverse_list = new ArrayList<>();
-        for (int i = manager.getNumGames() -1; i >= 0; i--){
-            reverse_list.add(manager.getGame(i));
-        }
-
-        ArrayAdapter<FlipCoin> adapter = new CoinListAdapter(this, reverse_list);
+        ArrayAdapter<FlipCoin> adapter = new CoinListAdapter(this,
+                manager.getListGames());
         ListView list = findViewById(R.id.gameListView);
         list.setAdapter(adapter);
     }

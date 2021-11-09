@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--<include
+        android:id="@+id/main_toolbar"
+        layout="@layout/custom_toolbar"/>-->
+
     <Button
         android:id="@+id/coinFlipButton"
         android:layout_width="0dp"

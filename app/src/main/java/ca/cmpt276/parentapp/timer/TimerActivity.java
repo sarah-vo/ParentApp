@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp.timer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityManager;
@@ -49,6 +50,8 @@ public class TimerActivity extends AppCompatActivity {
 
     Intent service_intent;
 
+    Toolbar toolbar;
+
     private int initial_time = 0;
     private int time_left = initial_time;
     private boolean isTimerRunning;
@@ -63,7 +66,10 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
 
         timerLayout = findViewById(R.id.timerLayout);
-
+        /*toolbar = findViewById(R.id.timer_toolbar);
+        toolbar.setTitle("Timer");
+        setSupportActionBar(toolbar);
+*/
         initializeTimerScroll();
         initializeProgressView();
         setUpTimerButtons();

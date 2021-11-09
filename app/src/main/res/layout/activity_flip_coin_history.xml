@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/flip_coin_activity_bg">
 
+    <!--<include
+        android:id="@+id/coin_history_toolbar"
+        layout="@layout/custom_toolbar"/>-->
+
     <ListView
         android:id="@+id/gameListView"
         android:layout_width="409dp"

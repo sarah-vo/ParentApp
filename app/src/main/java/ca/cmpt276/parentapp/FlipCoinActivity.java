@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
@@ -57,6 +58,8 @@ public class FlipCoinActivity extends AppCompatActivity {
     int maxRepeat = 6;
     boolean emptyChildrenList;
 
+    Toolbar toolbar;
+
 
     TextView resultText;
 
@@ -71,9 +74,23 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
-        loadData();
         initializeLayout();
         initializeAnimation();
+    }
+
+    @Override
+    protected void onResume() {
+        loadData();
+        enableButtons();
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        flipCoinManager.resetIndex();
+        saveData();
+        Log.i("OnDestroy", "kok");
+        super.onDestroy();
     }
 
     //Save current data of the gameManager using SharedPreferences
@@ -106,25 +123,9 @@ public class FlipCoinActivity extends AppCompatActivity {
             flipCoinManager = FlipCoinManager.getInstance();
         }
 
-    }
-
-    ///--------------------------Functions for initialization-------------------------///
-
-    private void initializeHistoryButton() {
-        Button historyButton = findViewById(R.id.historyButton);
-        historyButton.setOnClickListener(View -> {
-            Intent intent = FlipCoinHistory.makeIntent(this);
-            startActivity(intent);
-        });
-    }
-
-    private void initializeLayout() {
-        resultText = findViewById(R.id.resultMessage);
-        coinImg = findViewById(R.id.iv_coin);
-        showPicker = findViewById(R.id.showPicker);
-
         if (childrenList.size() > 0) {
             flipCoinGame = new FlipCoin(childrenList);
+
             index = flipCoinManager.getCurrentIndex(childrenList.size());
             flipCoinGame.setPicker(index);
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
@@ -133,10 +134,21 @@ public class FlipCoinActivity extends AppCompatActivity {
         else {
             emptyChildrenList = true;
             showPicker.setText(R.string.no_configured_children);
-            coinImg = findViewById(R.id.iv_coin);
         }
 
-        initializeHistoryButton();
+    }
+
+    ///--------------------------Functions for initialization-------------------------///
+
+    private void initializeLayout() {
+        resultText = findViewById(R.id.resultMessage);
+        coinImg = findViewById(R.id.iv_coin);
+        showPicker = findViewById(R.id.showPicker);
+
+        /*toolbar = findViewById(R.id.flip_coin_toolbar);
+        toolbar.setTitle("Flip Coin");
+        setSupportActionBar(toolbar);
+*/
         setUpButtons();
     }
 
@@ -178,7 +190,6 @@ public class FlipCoinActivity extends AppCompatActivity {
                 }
 
                 else{
-                    enableButtons();
 
                     try {
                         coinFlipSound.stop();
@@ -188,19 +199,21 @@ public class FlipCoinActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
 
+                    enableButtons();
+
                     //Only update if there are children in the list
                     if (!emptyChildrenList){
 
                         //Set results onto the object and save that data
                         //flipCoinGame.setFlipResult(coinResult);
                         flipCoinManager.addGame(flipCoinGame);
+                        index = flipCoinManager.updateIndex(childrenList.size());
                         displayResultMessage();
                         saveData();
 
                         //Create a new game
                         newGame = new FlipCoin(childrenList);
                         flipCoinGame = newGame;
-                        index = flipCoinManager.updateIndex(childrenList.size());
                         flipCoinGame.setPicker(index);
 
                         String message = getString(R.string.player_turn,
@@ -224,6 +237,8 @@ public class FlipCoinActivity extends AppCompatActivity {
         historyButton = findViewById(R.id.historyButton);
 
         headButton.setOnClickListener(view -> {
+            disableButtons();
+
             if (!emptyChildrenList) {
                 String message = getString(R.string.player_choice,
                         flipCoinGame.getPicker().getName(),
@@ -239,6 +254,8 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
 
         tailButton.setOnClickListener(view -> {
+            disableButtons();
+
             if (!emptyChildrenList) {
                 String message = getString(R.string.player_choice,
                                             flipCoinGame.getPicker().getName(),
@@ -254,6 +271,8 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
 
         historyButton.setOnClickListener(View -> {
+            disableButtons();
+
             Intent intent = FlipCoinHistory.makeIntent(this);
             startActivity(intent);
         });

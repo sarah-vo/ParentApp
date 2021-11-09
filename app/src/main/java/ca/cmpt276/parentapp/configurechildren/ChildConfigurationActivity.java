@@ -26,9 +26,6 @@ import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 import ca.cmpt276.parentapp.model.childManager;
 
-/**
- *Usage: add, edit, and remove child from list. Also passes childList to flip coin activities
- */
 public class ChildConfigurationActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFERENCE = "Shared Preference";
@@ -126,7 +123,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         saveData();
         super.onDestroy();
     }
-    //uses AlertDialog to confirm if user wants to add a child
+
     private void addChild(ArrayAdapter<String> dataAdapter) {
         Button button = findViewById(R.id.addChild);
         button.setOnClickListener(View ->{
@@ -158,7 +155,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
 
     }
 
-    //uses AlertDialog to confirm if user wants to remove a child
+    //Put AlertDialog to make sure if user wants to delete this child.
     private void removeChild(ArrayAdapter<String> dataAdapter) {
         Button button = findViewById(R.id.DeleteChild);
         button.setOnClickListener(View -> {
@@ -178,7 +175,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
             alert.show();
         });
     }
-    //uses AlertDialog to confirm if user wants to edit a child
+
     private void editChild(ArrayAdapter<String> dataAdapter) {
         Button button = findViewById(R.id.EditChild);
         button.setOnClickListener(View -> {

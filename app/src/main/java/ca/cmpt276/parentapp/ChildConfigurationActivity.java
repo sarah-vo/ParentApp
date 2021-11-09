@@ -55,7 +55,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
             childName.add(childrenList.get(i).getName());
         }
 
-        dataAdapter = new ArrayAdapter<String>(this,
+        dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 childName);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,10 +94,31 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         removeChild(dataAdapter);
 
         super.onResume();
+
+        /*childrenList = manager.getChildList();
+        childName = new ArrayList<>();
+
+        spinner = findViewById(R.id.childrenSpinner);
+
+        dataAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                manager.getChildrenNameList());
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(dataAdapter);
+        spinner.setSelection(0); //initial selection
+
+        addChild(dataAdapter);
+        editChild(dataAdapter);
+        removeChild(dataAdapter);*/
+
+        super.onResume();
     }
 
     @Override
     protected void onDestroy() {
+        /*manager.getChildrenNameList().clear();
+        manager.getChildList().clear();*/
         saveData();
         super.onDestroy();
     }
@@ -106,11 +127,11 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         Button button = findViewById(R.id.addChild);
         button.setOnClickListener(View ->{
             EditText addText = findViewById(R.id.TextInputAdd);
+            String newName = addText.getText().toString();
             if(!TextUtils.isEmpty(addText.getText().toString())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.confirm_add_child)
+                builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
-                            String newName = addText.getText().toString();
                             manager.addChildren(newName);
                             childName.add(newName);
                             dataAdapter.notifyDataSetChanged();
@@ -137,8 +158,9 @@ public class ChildConfigurationActivity extends AppCompatActivity {
     private void removeChild(ArrayAdapter<String> dataAdapter) {
         Button button = findViewById(R.id.DeleteChild);
         button.setOnClickListener(View -> {
+            String name = childName.get(spinnerPosition);
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.confirm_delete_child)
+            builder.setMessage(getString(R.string.confirm_delete_child, name))
                     .setPositiveButton(R.string.yes_delete_child, (dialog, which) -> {
                         manager.removeChildren(spinner.getSelectedItemPosition());
                         childName.remove(spinner.getSelectedItemPosition());
@@ -157,11 +179,12 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         Button button = findViewById(R.id.EditChild);
         button.setOnClickListener(View -> {
             EditText editText = findViewById(R.id.TextInputEdit);
+            String newName = editText.getText().toString();
+            String oldName = childName.get(spinnerPosition);
             if (!TextUtils.isEmpty(editText.getText().toString())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.confirm_edit_child)
+                builder.setMessage(getString(R.string.confirm_edit_child, oldName, newName))
                         .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
-                            String newName = editText.getText().toString();
 
                             manager.editChildren(newName, spinner.getSelectedItemPosition());
                             childName.set(spinner.getSelectedItemPosition(), newName);

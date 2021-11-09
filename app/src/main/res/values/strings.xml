@@ -24,17 +24,17 @@
     <string name="result">Result</string>
     <string name="history">History</string>
     <string name="image_of_coins_FlipCoinActivity">Image of coins</string>
-    <string name="confirm_delete_child">Are you sure you want to delete \"%1s\" from the list?</string>
+    <string name="confirm_delete_child">Are you sure you want to delete \"%1$s\" from the list?</string>
     <string name="yes_delete_child">Yes</string>
     <string name="no_delete_child">No</string>
     <string name="empty_value">Name Field is empty! Please fill it up before editing your child\'s name.</string>
     <string name="OK">OK</string>
     <string name="yes_edit_child">Yes</string>
     <string name="no_edit_child">No</string>
-    <string name="confirm_add_child">Are you sure you want to add \"%1s\" to the list?</string>
+    <string name="confirm_add_child">Are you sure you want to add \"%1$s\" to the list?</string>
     <string name="yes_add_child">Yes</string>
     <string name="no_add_child">No</string>
-    <string name="confirm_edit_child">Are you sure you want to edit \"%1s\" to \"%2s\"?</string>
+    <string name="confirm_edit_child">Are you sure you want to edit \"%1$s\" to \"%2$s\"?</string>
 
     <string name="player_choice">%1$s chose %2$s </string>
 
@@ -43,6 +43,7 @@
     <string name="result_flipCoin">result of flipCoin</string>
     <string name="main_menu">Main Menu</string>
     <string name="title_activity_main2">MainActivity2</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

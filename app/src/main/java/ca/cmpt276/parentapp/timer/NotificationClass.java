@@ -4,6 +4,10 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
+/**
+ * Notification Class that will be played directly when app is launched
+ * Creates that channel id needed to send a notification
+ */
 public class NotificationClass extends Application {
     public static final String NOTIFICATION_TIMER_ENDED_CHANNEL = "Timer Ended Channel";
     public static final String NOTIFICATION_TIMER_FOREGROUND_CHANNEL = "Timer Foreground Channel";

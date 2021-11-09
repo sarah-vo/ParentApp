@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.flipcoin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,10 +22,17 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ca.cmpt276.parentapp.R;
+import ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 import ca.cmpt276.parentapp.model.childManager;
+/**
+ * Generate flip coin activity screen. Displays which child's turn to pick, allows user to
+ * click on "HEADS" or "TAILS" button to flip the coin, displays a image view of coin and change to
+ * corresponding images indicates sides, and user can launch history screen through "History" button.
+ */
 
 public class FlipCoinActivity extends AppCompatActivity {
 

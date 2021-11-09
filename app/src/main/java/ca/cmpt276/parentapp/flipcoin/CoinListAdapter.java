@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.flipcoin;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,8 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.FlipCoin;
 
+/**
+ *An adapter used to show the list of flipCoin games onto a listView
+ */
 public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
 
     public CoinListAdapter(Context context, ArrayList<FlipCoin> coinList){

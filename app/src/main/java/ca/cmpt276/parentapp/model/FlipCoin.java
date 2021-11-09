@@ -5,6 +5,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Model of flip coin activity. Each time user start the activity an object is created which
+ * store relative information with it.
+ */
+
 public class FlipCoin {
 
     private final LocalDateTime localDateTime = LocalDateTime.now();

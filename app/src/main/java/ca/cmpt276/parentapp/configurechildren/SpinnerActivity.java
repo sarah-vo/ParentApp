@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.configurechildren;
 
 import android.app.Activity;
 import android.view.View;

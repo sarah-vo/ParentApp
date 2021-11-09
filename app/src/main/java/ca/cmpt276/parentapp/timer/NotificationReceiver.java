@@ -9,6 +9,9 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.io.IOException;
 
+/**
+ * NotificationClass to stop the alarm when the stop button is pressed from the timer notification
+ */
 public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
@@ -16,10 +19,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         int notification_id = intent.getIntExtra(TimerActivity.NOTIFY_ID,1);
 
-        if (timerService.alarm_sound != null && timerService.alarm_sound.isPlaying()){
+        if (TimerService.alarm_sound != null && TimerService.alarm_sound.isPlaying()){
             try {
-                timerService.alarm_sound.stop();
-                timerService.alarm_sound.prepare();
+                TimerService.alarm_sound.stop();
+                TimerService.alarm_sound.prepare();
             } catch (IOException e) {
                 Toast.makeText(context,"Error in playing alarm",Toast.LENGTH_SHORT).show();
             }

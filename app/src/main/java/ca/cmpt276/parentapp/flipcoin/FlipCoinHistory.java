@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp;
+package ca.cmpt276.parentapp.flipcoin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -6,20 +6,16 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-
+import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
-import ca.cmpt276.parentapp.timer.TimerActivity;
 
+/**
+ * Display the history of coin flips with information including date, picker, flip result, and if the picker won.
+ */
 public class FlipCoinHistory extends AppCompatActivity {
     FlipCoinManager manager;
     Toolbar toolbar;

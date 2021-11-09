@@ -16,15 +16,15 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".ChildConfigurationActivity"
+            android:name=".configurechildren.ChildConfigurationActivity"
             android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".FlipCoinHistory"
-            android:parentActivityName=".FlipCoinActivity"
+            android:name=".flipcoin.FlipCoinHistory"
+            android:parentActivityName=".flipcoin.FlipCoinActivity"
             android:exported="false" />
         <activity
-            android:name=".FlipCoinActivity"
+            android:name=".flipcoin.FlipCoinActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".timer.timerService" />
+        <service android:name=".timer.TimerService" />
 
         <receiver android:name=".timer.NotificationReceiver" />
     </application>

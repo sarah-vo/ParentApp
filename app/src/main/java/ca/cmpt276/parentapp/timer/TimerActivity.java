@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -26,6 +24,9 @@ import java.util.ArrayList;
 import ca.cmpt276.parentapp.CustomButton;
 import ca.cmpt276.parentapp.R;
 
+/**
+ *Timer layout that will update its layout based on the value of the Timer Service
+ */
 public class TimerActivity extends AppCompatActivity {
 
     private static final int MAX_HOUR = 24;
@@ -79,9 +80,9 @@ public class TimerActivity extends AppCompatActivity {
         this.setTitle("Timeout Timer");
 
         //Check if there a timer service exist and on pause state
-        if(isTimerServiceRunning() && timerService.isPaused){
-            time_left = timerService.timer_intent.getIntExtra(timerService.TIME_LEFT_SERVICE_TAG,3000);
-            initial_time = timerService.timer_intent.getIntExtra(timerService.TIME_INITIAL_SERVICE_TAG,9000);
+        if(isTimerServiceRunning() && TimerService.isPaused){
+            time_left = TimerService.timer_intent.getIntExtra(TimerService.TIME_LEFT_SERVICE_TAG,3000);
+            initial_time = TimerService.timer_intent.getIntExtra(TimerService.TIME_INITIAL_SERVICE_TAG,9000);
             isTimerRunning = false;
 
             pause_resume_button.setText(getString(R.string.resume));
@@ -112,7 +113,7 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(b_receiver,new IntentFilter(timerService.COUNTDOWN_BR));
+        registerReceiver(b_receiver,new IntentFilter(TimerService.COUNTDOWN_BR));
     }
 
     ///--------------------------Functions for initialization-------------------------///
@@ -341,8 +342,8 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void updateGUI(Intent intent){
-        time_left = intent.getIntExtra(timerService.TIME_LEFT_SERVICE_TAG,10);
-        initial_time = intent.getIntExtra(timerService.TIME_INITIAL_SERVICE_TAG,900);
+        time_left = intent.getIntExtra(TimerService.TIME_LEFT_SERVICE_TAG,10);
+        initial_time = intent.getIntExtra(TimerService.TIME_INITIAL_SERVICE_TAG,900);
 
         timer_bar.setMax(initial_time);
         timer_bar.setProgress(Math.abs(time_left - initial_time));
@@ -357,7 +358,7 @@ public class TimerActivity extends AppCompatActivity {
         timer_bar.setMax(initial_time);
         timer_bar.setProgress(Math.abs(time_left - initial_time));
 
-        service_intent = new Intent(this,timerService.class);
+        service_intent = new Intent(this, TimerService.class);
         service_intent.putExtra(TIME_INITIAL_TAG,initial_time);
         service_intent.putExtra(TIME_LEFT_TAG,time_left);
 
@@ -377,8 +378,8 @@ public class TimerActivity extends AppCompatActivity {
 
     private void pauseTimer() {
         if (isTimerServiceRunning()){
-            Intent intent = new Intent(this,timerService.class);
-            intent.putExtra(timerService.SERVICE_PAUSE,true);
+            Intent intent = new Intent(this, TimerService.class);
+            intent.putExtra(TimerService.SERVICE_PAUSE,true);
             startForegroundService(intent);
         }
         isTimerRunning = false;
@@ -390,8 +391,8 @@ public class TimerActivity extends AppCompatActivity {
         }
 
         else{
-            Intent intent = new Intent(this,timerService.class);
-            intent.putExtra(timerService.SERVICE_DESTROY,true);
+            Intent intent = new Intent(this, TimerService.class);
+            intent.putExtra(TimerService.SERVICE_DESTROY,true);
             startForegroundService(intent);
 
         }
@@ -446,7 +447,7 @@ public class TimerActivity extends AppCompatActivity {
     }*/
 
     public boolean isTimerServiceRunning (){
-        return timerService.isServiceRunning;
+        return TimerService.isServiceRunning;
     }
 
 }

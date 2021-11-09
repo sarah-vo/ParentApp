@@ -2,6 +2,10 @@ package ca.cmpt276.parentapp.model;
 
 import java.util.ArrayList;
 
+/**
+ * A list of Child objects which stores all children configured in the app.
+ */
+
 public  class childManager {
     private static childManager instance;
     private ArrayList<Child> childrenList;

@@ -17,7 +17,7 @@ import androidx.core.app.NotificationManagerCompat;
 import ca.cmpt276.parentapp.R;
 
 
-public class timerService extends Service {
+public class TimerService extends Service {
     private NotificationManagerCompat notify_manager;
     public static MediaPlayer alarm_sound;
 
@@ -136,7 +136,7 @@ public class timerService extends Service {
 
     ///--------------------------Functions for Playing Sounds-------------------------///
     private void initializeAlarmSound(){
-        alarm_sound = MediaPlayer.create(timerService.this,R.raw.alarm_sound);
+        alarm_sound = MediaPlayer.create(TimerService.this,R.raw.alarm_sound);
         alarm_sound.setLooping(false);
     }
 
@@ -194,7 +194,7 @@ public class timerService extends Service {
                 build();
 
         //end service that maintains foreground for timer
-        stopService(new Intent(this, timerService.class));
+        stopService(new Intent(this, TimerService.class));
         notify_manager.notify(id,notify);
     }
 }

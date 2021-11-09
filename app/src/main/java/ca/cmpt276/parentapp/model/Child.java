@@ -1,5 +1,9 @@
 package ca.cmpt276.parentapp.model;
 
+/**
+ * Represent children in the app. Each child is an object.
+ */
+
 public class Child {
     String name;
 

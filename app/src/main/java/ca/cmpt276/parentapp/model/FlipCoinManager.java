@@ -5,7 +5,11 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * Store a list of FlipCoin objects. Supports singleton access and includes methods to
+ * edit and retrieve elements from the list. Also store a currentIndex variable use to
+ * indicate the index of the picking child.
+ */
 public class FlipCoinManager {
     private static FlipCoinManager instance;
     private ArrayList<FlipCoin> flipCoinGameList;

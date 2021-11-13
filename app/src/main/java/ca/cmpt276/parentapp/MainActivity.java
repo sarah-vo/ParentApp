@@ -1,13 +1,13 @@
 package ca.cmpt276.parentapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
-import ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
+import ca.cmpt276.parentapp.newConfig.configActivity;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 
 /**
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     void switchActivitySettings(){
         Button flipCoinButton = findViewById(R.id.settingsButton);
         flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, ChildConfigurationActivity.class);
+            Intent intent = new Intent(this, configActivity.class);
             startActivity(intent);
         });
     }

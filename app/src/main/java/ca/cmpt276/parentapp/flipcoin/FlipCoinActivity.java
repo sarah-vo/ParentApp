@@ -9,11 +9,14 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -44,7 +47,6 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     FlipCoinManager flipCoinManager;
     FlipCoin flipCoinGame, newGame;
-    int index;
 
     FlipCoin.CoinSide currentCoinSideInImg = FlipCoin.CoinSide.HEADS; //Initial coin side in image
     FlipCoin.CoinSide coinResult;
@@ -63,8 +65,6 @@ public class FlipCoinActivity extends AppCompatActivity {
     int maxRepeat = 6;
     boolean emptyChildrenList;
 
-    Toolbar toolbar;
-
     TextView resultText;
 
     @Override
@@ -77,21 +77,58 @@ public class FlipCoinActivity extends AppCompatActivity {
         initializeLayout();
         initializeAnimation();
 
+        loadData();
+
         this.setTitle("Flip Coin");
     }
 
     @Override
     protected void onResume() {
-        loadData();
+        if (childrenList.size() > 0 && flipCoinManager.getCurrentPlayer() != null) {
+            flipCoinGame = new FlipCoin();
+
+            if(flipCoinManager.isNewEpoch()){
+                flipCoinManager.shufflePlayer();
+            }
+
+            flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
+
+            String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
+            showPicker.setText(message);
+        }
+        else {
+            //emptyChildrenList = true;
+            showPicker.setText(R.string.no_configured_children);
+        }
+
         enableButtons();
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        flipCoinManager.resetIndex();
+        flipCoinManager.resetEpoch();
         saveData();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.flip_coin_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.queue:
+                Intent i = FlipCoinQueue.makeIntent(this);
+                startActivity(i);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     //Save current data of the gameManager using SharedPreferences
@@ -139,18 +176,24 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
 
         if (childrenList.size() > 0) {
-            flipCoinGame = new FlipCoin(childrenList);
+            flipCoinGame = new FlipCoin();
 
-            index = flipCoinManager.getCurrentIndex(childrenList.size());
-            flipCoinGame.setPicker(childrenList.get(index));
+            if(flipCoinManager.isNewEpoch()){
+                flipCoinManager.setPlayerList(childrenList);
+                flipCoinManager.shufflePlayer();
+            }
+
+            flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
+
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
             showPicker.setText(message);
         }
         else {
-            emptyChildrenList = true;
+            //emptyChildrenList = true;
             showPicker.setText(R.string.no_configured_children);
         }
 
+        flipCoinManager.updateEpoch();
 
     }
 
@@ -206,26 +249,32 @@ public class FlipCoinActivity extends AppCompatActivity {
                     try {
                         coinFlipSound.stop();
                         coinFlipSound.prepare();
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         Toast.makeText(FlipCoinActivity.this, "Error in ending sound",
                                 Toast.LENGTH_SHORT).show();
                     }
 
                     enableButtons();
 
+                    Log.i("ss", "outside");
+
                     //Only update if there are children in the list
-                    if (!emptyChildrenList){
+                    if (!flipCoinManager.isEmpty()){
+                        Log.i("ss", "inside");
 
                         //Set results onto the object and save that data
-                        flipCoinManager.addGame(flipCoinGame);
-                        index = flipCoinManager.updateIndex(childrenList.size());
+                        if (!flipCoinManager.isOverrideDefaultEmpty()){
+                            flipCoinManager.addGame(flipCoinGame);
+                        }
+                        flipCoinManager.updateQueue();
+                        flipCoinManager.updateEpoch();
                         displayResultMessage();
                         saveData();
 
                         //Create a new game
-                        newGame = new FlipCoin(childrenList);
+                        newGame = new FlipCoin();
                         flipCoinGame = newGame;
-                        flipCoinGame.setPicker(childrenList.get(index));
+                        flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
 
                         String message = getString(R.string.player_turn,
                                 flipCoinGame.getPicker().getName());
@@ -250,7 +299,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         headButton.setOnClickListener(view -> {
             disableButtons();
 
-            if (!emptyChildrenList) {
+            if (!flipCoinManager.isEmpty() && !flipCoinManager.isOverrideDefaultEmpty()) {
                 String message = getString(R.string.player_choice,
                         flipCoinGame.getPicker().getName(),
                         FlipCoin.CoinSide.HEADS.toString());
@@ -267,7 +316,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         tailButton.setOnClickListener(view -> {
             disableButtons();
 
-            if (!emptyChildrenList) {
+            if (!flipCoinManager.isEmpty() && !flipCoinManager.isOverrideDefaultEmpty()) {
                 String message = getString(R.string.player_choice,
                                             flipCoinGame.getPicker().getName(),
                                             FlipCoin.CoinSide.TAILS.toString());
@@ -317,7 +366,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void flipCoinImg(){
         disableButtons();
-        coinResult = !emptyChildrenList ? flipCoinGame.flipCoin() : new FlipCoin().flipCoin();
+        coinResult = !flipCoinManager.isEmpty() ? flipCoinGame.flipCoin() : new FlipCoin().flipCoin();
         if (coinResult == FlipCoin.CoinSide.HEADS){
             Log.i("CoinResult:", "HEADS");
             if (currentCoinSideInImg == FlipCoin.CoinSide.HEADS){

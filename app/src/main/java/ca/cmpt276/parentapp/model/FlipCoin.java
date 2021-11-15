@@ -16,7 +16,6 @@ public class FlipCoin {
     private final String localDateTime_formatted = DateTimeFormatter.ofPattern("MMM dd @ HH:mm a")
                                                 .format(localDateTime);
 
-    private ArrayList<Child> childrenList;
     private Child picker;
     private CoinSide flipResult;
     private CoinSide pickerChoice;
@@ -29,17 +28,9 @@ public class FlipCoin {
 
     public FlipCoin(){}
 
-    public FlipCoin(ArrayList<Child> childrenList){
-        this.childrenList = childrenList;
-    }
-
     public String getCreatedTime() {return localDateTime_formatted;}
 
     ///--------------------------Functions to update player Information-------------------------///
-
-    public void setPicker(int index){
-        picker = childrenList.get(index);
-    }
 
     public void setPicker(Child picker){
         this.picker = picker;

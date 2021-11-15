@@ -16,11 +16,12 @@ public class FlipCoinManager {
     private final ArrayList<FlipCoin> flipCoinGameList;
     private ArrayList<Child> childrenList;
 
-    private int currentIndex;
+    private boolean epoch;
+    private boolean override_default_empty;
 
     private FlipCoinManager(){
         flipCoinGameList = new ArrayList<FlipCoin>();
-        currentIndex = -1;
+        override_default_empty = false;
     }
 
     ///--------------------------Functions for instances-------------------------///
@@ -45,18 +46,51 @@ public class FlipCoinManager {
         return childrenList;
     }
 
+    public int getNumPlayer(){
+        return childrenList.size();
+    }
+
+    public boolean isEmpty(){
+        return childrenList.size() == 0;
+    }
 
     //numChildren = current number of children saved in the app
     public Child getCurrentPlayer() {
+        if(childrenList == null || override_default_empty){
+            return null;
+        }
         return childrenList.get(0);
     }
 
     public void updateQueue(){
         if (childrenList != null && childrenList.size() > 0) {
+            if (override_default_empty){
+                override_default_empty = false;
+                return;
+            }
             Child child = childrenList.get(0);
             childrenList.remove(0);
             childrenList.add(child);
         }
+    }
+
+    public void overrideDefault(int index){
+
+        if(childrenList == null || index < 0 || index >= childrenList.size()){
+            throw new IndexOutOfBoundsException();
+        }
+
+        Child child = childrenList.get(index);
+        childrenList.remove(index);
+        childrenList.add(0, child);
+    }
+
+    public void overrideDefault(Child child){
+        if (!childrenList.contains(child)){
+            throw new IllegalArgumentException("Child does not exist!");
+        }
+        childrenList.remove(child);
+        childrenList.add(0, child);
     }
 
     public void shufflePlayer(){
@@ -65,19 +99,24 @@ public class FlipCoinManager {
         }
     }
 
-    /*public int updateIndex(int numChildren){
-        if (currentIndex == -1) {
-            Random rand = new Random();
-            currentIndex = rand.nextInt(numChildren);
-        }
-        else {
-            currentIndex = (currentIndex + 1) % numChildren;
-        }
-        return currentIndex;
-    }*/
+    public void setDefaultEmpty(){
+        override_default_empty = true;
+    }
 
-    public void resetIndex(){
-        currentIndex = -1;
+    public boolean isOverrideDefaultEmpty(){
+        return override_default_empty;
+    }
+
+    public void resetEpoch(){
+        epoch = true;
+    }
+
+    public void updateEpoch(){
+        epoch = false;
+    }
+
+    public boolean isNewEpoch(){
+        return epoch;
     }
 
     ///--------------------------Functions to update Game-------------------------///

@@ -3,6 +3,7 @@ package ca.cmpt276.parentapp.model;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -13,6 +14,8 @@ import java.util.Random;
 public class FlipCoinManager {
     private static FlipCoinManager instance;
     private final ArrayList<FlipCoin> flipCoinGameList;
+    private ArrayList<Child> childrenList;
+
     private int currentIndex;
 
     private FlipCoinManager(){
@@ -32,19 +35,37 @@ public class FlipCoinManager {
         return instance;
     }
 
-    ///--------------------------Functions for updating index-------------------------///
+    ///--------------------------Functions for updating Queue-------------------------///
+
+    public void setPlayerList(ArrayList<Child> childrenList){
+        this.childrenList = childrenList;
+    }
+
+    public ArrayList<Child> getPlayerList(){
+        return childrenList;
+    }
 
 
     //numChildren = current number of children saved in the app
-    public int getCurrentIndex(int numChildren) {
-        if (currentIndex == -1 || currentIndex >= numChildren) {
-            currentIndex = -1;
-            updateIndex(numChildren);
-        }
-        return currentIndex;
+    public Child getCurrentPlayer() {
+        return childrenList.get(0);
     }
 
-    public int updateIndex(int numChildren){
+    public void updateQueue(){
+        if (childrenList != null && childrenList.size() > 0) {
+            Child child = childrenList.get(0);
+            childrenList.remove(0);
+            childrenList.add(child);
+        }
+    }
+
+    public void shufflePlayer(){
+        if (childrenList != null){
+            Collections.shuffle(childrenList);
+        }
+    }
+
+    /*public int updateIndex(int numChildren){
         if (currentIndex == -1) {
             Random rand = new Random();
             currentIndex = rand.nextInt(numChildren);
@@ -53,7 +74,7 @@ public class FlipCoinManager {
             currentIndex = (currentIndex + 1) % numChildren;
         }
         return currentIndex;
-    }
+    }*/
 
     public void resetIndex(){
         currentIndex = -1;

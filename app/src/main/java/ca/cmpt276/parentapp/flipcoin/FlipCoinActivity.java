@@ -139,10 +139,14 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
 
         if (childrenList.size() > 0) {
-            flipCoinGame = new FlipCoin(childrenList);
+            flipCoinGame = new FlipCoin();
 
-            index = flipCoinManager.getCurrentIndex(childrenList.size());
-            flipCoinGame.setPicker(childrenList.get(index));
+            //index = flipCoinManager.getCurrentPlayer(childrenList.size());
+            flipCoinManager.setPlayerList(childrenList);
+            flipCoinManager.shufflePlayer();
+
+            flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
+
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
             showPicker.setText(message);
         }
@@ -150,7 +154,6 @@ public class FlipCoinActivity extends AppCompatActivity {
             emptyChildrenList = true;
             showPicker.setText(R.string.no_configured_children);
         }
-
 
     }
 
@@ -218,14 +221,15 @@ public class FlipCoinActivity extends AppCompatActivity {
 
                         //Set results onto the object and save that data
                         flipCoinManager.addGame(flipCoinGame);
-                        index = flipCoinManager.updateIndex(childrenList.size());
+                        //index = flipCoinManager.updateIndex(childrenList.size());
+                        flipCoinManager.updateQueue();
                         displayResultMessage();
                         saveData();
 
                         //Create a new game
-                        newGame = new FlipCoin(childrenList);
+                        newGame = new FlipCoin();
                         flipCoinGame = newGame;
-                        flipCoinGame.setPicker(childrenList.get(index));
+                        flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
 
                         String message = getString(R.string.player_turn,
                                 flipCoinGame.getPicker().getName());

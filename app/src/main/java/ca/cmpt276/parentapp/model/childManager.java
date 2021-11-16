@@ -1,7 +1,6 @@
 package ca.cmpt276.parentapp.model;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 
 import java.util.ArrayList;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 public  class childManager {
     private static childManager instance;
     private final ArrayList<Child> childrenList;
-    public ArrayList<String> childrenName = new ArrayList<>();
+    //public ArrayList<String> childrenName = new ArrayList<>();
 
     public static childManager getInstance(){
         if(instance == null){
@@ -33,7 +32,7 @@ public  class childManager {
 
     public void addChildren(String name){
         childrenList.add(new Child(name));
-        childrenName.add(name);
+        //childrenName.add(name);
     }
 
     public void addChildren(String name, Bitmap newPortrait){
@@ -42,22 +41,22 @@ public  class childManager {
 
     public void removeChildren(int index){
         childrenList.remove(index);
-        childrenName.remove(index);
+        //childrenName.remove(index);
     }
 
-    public ArrayList<String> getChildrenNameList(){
-        return childrenName;
-    }
+//    public ArrayList<String> getChildrenNameList(){
+//        return childrenName;
+//    }
 
     public void editChildrenName(String name, int index){
         childrenList.get(index).editName(name);
-        childrenName.set(index, name);
+        //childrenName.set(index, name);
     }
 
 
-    public String getName(int pos) {
-        return childrenName.get(pos);
-    }
+//    public String getName(int pos) {
+//        return childrenName.get(pos);
+//    }
 
     public Child getChild(int pos){return childrenList.get(pos);}
 }

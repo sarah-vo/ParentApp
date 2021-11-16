@@ -6,4 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".newConfig.modifyDeleteChildren">
 
+    <ImageView
+        android:id="@+id/modifyPortrait"
+        android:layout_width="131dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modifyToolBar"
+        tools:srcCompat="@drawable/add_icon" />
+
+    <EditText
+        android:id="@+id/modifyChildName"
+        android:layout_width="242dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="@string/change_your_child_name_here"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modifyToolBar" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/modifyToolBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:minHeight="?attr/actionBarSize"
+        android:title="@string/add_a_child"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

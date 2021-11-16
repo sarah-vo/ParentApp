@@ -1,5 +1,8 @@
 package ca.cmpt276.parentapp.model;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 /**
@@ -33,6 +36,10 @@ public  class childManager {
         childrenName.add(name);
     }
 
+    public void addChildren(String name, Bitmap newPortrait){
+        childrenList.add(new Child(name, newPortrait));
+    }
+
     public void removeChildren(int index){
         childrenList.remove(index);
         childrenName.remove(index);
@@ -42,14 +49,17 @@ public  class childManager {
         return childrenName;
     }
 
-    public void editChildren(String name, int index){
+    public void editChildrenName(String name, int index){
         childrenList.get(index).editName(name);
         childrenName.set(index, name);
     }
 
+
     public String getName(int pos) {
         return childrenName.get(pos);
     }
+
+    public Child getChild(int pos){return childrenList.get(pos);}
 }
 
 

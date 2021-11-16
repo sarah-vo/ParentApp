@@ -8,15 +8,18 @@ import android.graphics.Bitmap;
 
 public class Child {
     String name;
-    Bitmap portrait;
+    Bitmap portrait = null;
 
-    public Child(String name){
-        this.name = name;
+    public Child(String newName){
+        this.name = newName;
     }
+
+    public Child(String newName, Bitmap newPortrait){name = newName; portrait = newPortrait;}
 
     public Bitmap getPortrait(){return portrait;}
 
     public void setPortrait(Bitmap newPortrait){portrait = newPortrait;}
+
 
     public void setName(String name){
         this.name = name;

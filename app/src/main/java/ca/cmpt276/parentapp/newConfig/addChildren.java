@@ -1,36 +1,35 @@
 package ca.cmpt276.parentapp.newConfig;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.canhub.cropper.CropImage;
-import com.canhub.cropper.CropImageView;
-import com.canhub.cropper.PickImageContract;
-import com.canhub.cropper.PickImageContractOptions;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.childManager;
-import com.canhub.cropper.*;
 
 
 
 public class addChildren extends AppCompatActivity {
     childManager manager = childManager.getInstance();
+    Bitmap newPortrait = null;
+    ImageView imageview = null;
 
-    private final ActivityResultLauncher<PickImageContractOptions> pickImage =
-            registerForActivityResult(new PickImageContract(), presenter::onPickImageResult);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +40,54 @@ public class addChildren extends AppCompatActivity {
         setContentView(R.layout.activity_add_children);
         Toolbar myToolbar = findViewById(R.id.addToolbar);
         setSupportActionBar(myToolbar);
+
         addImage();
+
 
     }
 
+    //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
+    private void addImage() {
+        imageview = findViewById(R.id.addPortrait);
+        imageview.setImageResource(R.drawable.add_icon);
+        imageview.setOnClickListener(View -> {
+            ImagePicker.with(this)
+                    .cropSquare()
+                    .start();
+        });
+    }
+    //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+
+            //Getting URI and converting it to bitmap
+            Uri fileUri = data.getData();
+            try {
+                if(  fileUri !=null   ){
+                    newPortrait = MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri);
+                }
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            //setting bitmap to imageview and child's portrait variable
+            imageview.setImageBitmap(newPortrait);
+
+            //error handling
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //configure save button
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.save_icon,menu);
+        getMenuInflater().inflate(R.menu.add_toolbar_icons,menu);
         return super.onCreateOptionsMenu(menu);
     }@Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -58,7 +98,7 @@ public class addChildren extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
-                            manager.addChildren(newName);
+                            manager.addChildren(newName,newPortrait);
                             Intent intent = new Intent(this, configActivity.class);
                             startActivity(intent);;
                         })
@@ -76,31 +116,6 @@ public class addChildren extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-private void addImage() {
-        ImageView imageview = findViewById(R.id.addPortrait);
-    imageview.setOnClickListener(View ->{
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(this);
-    });
-
-}
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                Bitmap resultUri = result.getOriginalBitmap();
-                ImageView imageView = findViewById(R.id.portrait);
-                imageView.setImageBitmap(resultUri);
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
-        }
     }
 }
 

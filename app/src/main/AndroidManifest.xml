@@ -2,10 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ca.cmpt276.parentapp">
-
+    <!--permission for camera/gallery-->
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
+    <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS"/>
+
+    <!--permission for timer notification-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -20,11 +25,14 @@
         tools:ignore="AllowBackup">
         <activity
             android:name=".newConfig.modifyDeleteChildren"
-            android:exported="false" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false"
+            android:parentActivityName=".newConfig.configActivity"/>
         <activity
             android:name=".newConfig.addChildren"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".newConfig.configActivity"/>
         <activity
             android:name=".newConfig.configActivity"
             android:exported="false"
@@ -58,13 +66,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.canhub.cropper.CropImageView"
-            android:theme="@style/Base.Theme.AppCompat"
-            tools:ignore="Instantiatable" />
+<!--        uCrop library for cropping images-->
+
 
         <service android:name=".timer.TimerService" />
 
+
         <receiver android:name=".timer.NotificationReceiver" />
+
     </application>
 
 </manifest>

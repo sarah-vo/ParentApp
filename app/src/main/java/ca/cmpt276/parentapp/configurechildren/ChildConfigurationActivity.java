@@ -164,7 +164,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
                 builder.setMessage(getString(R.string.confirm_edit_child, oldName, newName))
                         .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
 
-                            manager.editChildren(newName, spinner.getSelectedItemPosition());
+                            manager.editChildrenName(newName, spinner.getSelectedItemPosition());
                             childName.set(spinner.getSelectedItemPosition(), newName);
                             dataAdapter.notifyDataSetChanged();
 

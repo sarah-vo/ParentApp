@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-
 import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import ca.cmpt276.parentapp.R;
@@ -29,7 +28,8 @@ public class modifyDeleteChildren extends AppCompatActivity {
     childManager manager = childManager.getInstance();
     int position;
     Child child;
-    ImageView imageview;
+    ImageView portraitImageView;
+    EditText nameEditText;
 
 
     @Override
@@ -41,29 +41,43 @@ public class modifyDeleteChildren extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.modifyToolBar);
         setSupportActionBar(myToolbar);
 
-        //retrieve position from previous activity
+        fillPositionAndChild();
+        fillPortraitAndNameField();
+        changeImage();
+
+    }
+
+    private void fillPositionAndChild() {
         Intent intent = getIntent();
         position = intent.getIntExtra("Child Position",-1);
         if(position == -1){
             throw new IllegalArgumentException("Error in passing child position from configActivity!");
         }
         child = manager.getChild(position);
+    }
 
-        changeImage();
-
+    private void fillPortraitAndNameField() {
+        portraitImageView = findViewById(R.id.modifyPortrait);
+        if(child.getPortrait() != null){
+            portraitImageView.setImageBitmap(child.getPortrait());
+        }
+        else{
+            portraitImageView.setImageResource(R.drawable.add_icon);
+        }
+        nameEditText = findViewById(R.id.modifyChildName);
+        if(child.getName() != null){
+            nameEditText.setText(child.getName());
+        }
+        else{
+            throw new IllegalArgumentException("Error in reading child's name!");
+        }
     }
 
 
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
     private void changeImage() {
-        imageview = findViewById(R.id.modifyPortrait);
-        if(child.getPortrait() != null){
-            imageview.setImageBitmap(child.getPortrait());
-        }
-        else{
-            imageview.setImageResource(R.drawable.add_icon);
-        }
-        imageview.setOnClickListener(View -> ImagePicker.with(this)
+
+        portraitImageView.setOnClickListener(View -> ImagePicker.with(this)
                 .cropSquare()
                 .start()
         );
@@ -88,7 +102,7 @@ public class modifyDeleteChildren extends AppCompatActivity {
 
             //setting bitmap to imageview and child's portrait variable
             child.setPortrait(newPortrait);
-            imageview.setImageBitmap(newPortrait);
+            portraitImageView.setImageBitmap(newPortrait);
 
             //error handling
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
@@ -110,11 +124,10 @@ public class modifyDeleteChildren extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //SAVE BUTTON CONFIG
         if (item.getItemId() == R.id.action_save){
-            EditText editText = findViewById(R.id.modifyChildName);
-            String newName = editText.getText().toString();
+            String newName = nameEditText.getText().toString();
             String oldName = child.getName();
 
-            if (!TextUtils.isEmpty(editText.getText().toString())) {
+            if (!TextUtils.isEmpty(nameEditText.getText().toString())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.confirm_edit_child, oldName, newName))
                         .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {

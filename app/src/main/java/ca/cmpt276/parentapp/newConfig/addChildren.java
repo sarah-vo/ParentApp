@@ -35,26 +35,21 @@ public class addChildren extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         //setting up toolbar
         setContentView(R.layout.activity_add_children);
         Toolbar myToolbar = findViewById(R.id.addToolbar);
         setSupportActionBar(myToolbar);
 
         addImage();
-
-
     }
 
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
     private void addImage() {
         imageview = findViewById(R.id.addPortrait);
         imageview.setImageResource(R.drawable.add_icon);
-        imageview.setOnClickListener(View -> {
-            ImagePicker.with(this)
-                    .cropSquare()
-                    .start();
-        });
+        imageview.setOnClickListener(View -> ImagePicker.with(this)
+                .cropSquare()
+                .start());
     }
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
     @Override
@@ -100,7 +95,7 @@ public class addChildren extends AppCompatActivity {
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
                             manager.addChildren(newName,newPortrait);
                             Intent intent = new Intent(this, configActivity.class);
-                            startActivity(intent);;
+                            startActivity(intent);
                         })
                         .setNegativeButton(R.string.no_add_child, (dialog, which) -> {
                         }/*do nothing*/);

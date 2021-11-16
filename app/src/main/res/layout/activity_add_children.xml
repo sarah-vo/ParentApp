@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".newConfig.addChildren">
 
-    <!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/addToolbar"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="?attr/colorPrimary"-->
-<!--        android:minHeight="?attr/actionBarSize"-->
-<!--        android:theme="?attr/actionBarTheme"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ImageView
         android:id="@+id/addPortrait"
@@ -25,20 +15,24 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addToolbar"
-        tools:srcCompat="@drawable/add_icon" />
+        tools:srcCompat="@drawable/add_icon"
+        android:contentDescription="@string/portrait_description" />
 
-    <EditText
-        android:id="@+id/childNameAdd"
-        android:layout_width="235dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="12dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="259dp"
+        android:layout_height="49dp"
         android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/add_your_child_name_here"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/addPortrait"
-        app:layout_constraintTop_toBottomOf="@+id/addToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/addToolbar">
+
+        <EditText
+            android:id="@+id/childNameAdd"
+            android:layout_width="246dp"
+            android:layout_height="38dp"
+            android:autofillHints="hello"
+            android:hint="@string/add_your_child_name_here"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/addToolbar"

@@ -1,5 +1,6 @@
 package ca.cmpt276.parentapp.newConfig;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ public class listViewAdapter extends ArrayAdapter<Child> {
         super(context, R.layout.activity_config, childList);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Child child = getItem(position);
@@ -39,7 +41,7 @@ public class listViewAdapter extends ArrayAdapter<Child> {
 
             //name
             TextView name = itemView.findViewById(R.id.name);
-            name.setText(child.getName());
+            name.setText("Name: " + child.getName());
         }
 
         return itemView;

@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -36,7 +35,7 @@ import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.childManager;
 
 public class modifyDeleteChildren extends AppCompatActivity {
-    childManager manager = childManager.getInstance();
+    final childManager manager = childManager.getInstance();
     Child child;
     int position;
     ImageView portraitImageView;
@@ -45,37 +44,37 @@ public class modifyDeleteChildren extends AppCompatActivity {
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //setting up toolbar
         setContentView(R.layout.activity_modify_delete_children);
         Toolbar myToolbar = findViewById(R.id.modifyToolBar);
-        callBackConfig();
         setSupportActionBar(myToolbar);
         fillPositionAndChild();
         fillPortraitAndNameField();
         editImage();
     }
 
-    private void callBackConfig() {
-        Intent intent = new Intent(this, configActivity.class);
-        // This callback will only be called when MyFragment is at least Started.
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                startActivity(new Intent(intent));
-            }
-        };
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.backPressedWarning)
+                .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
+                    super.onBackPressed();
+                    startActivity(new Intent(this, configActivity.class));
+                })
+                .setNegativeButton(R.string.no_edit_child, (dialog, which) -> {
+                    /*do nothing*/
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void fillPositionAndChild() {
         Intent intent = getIntent();
-        position = intent.getIntExtra("Child Position",-1);
-        if(position == -1){
+        position = intent.getIntExtra("Child Position", -1);
+        if (position == -1) {
             throw new IllegalArgumentException("Error in passing child position from configActivity!");
         }
         child = manager.getChild(position);

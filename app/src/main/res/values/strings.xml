@@ -69,4 +69,6 @@
     <string name="change_your_child_name_here">Change your child name here</string>
     <string name="portrait_description">Portrait</string>
     <string name="name_example">Name: Sarah</string>
+    <string name="backPressedWarning">Are you sure you want to exit? All changes unsaved will be discarded.</string>
+    <string name="add_more_child">Add more child</string>
 </resources>

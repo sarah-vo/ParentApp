@@ -25,10 +25,6 @@ public class MainActivity extends AppCompatActivity {
         switchActivitySettings();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);

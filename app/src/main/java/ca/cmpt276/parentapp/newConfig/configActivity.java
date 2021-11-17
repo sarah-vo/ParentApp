@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import ca.cmpt276.parentapp.MainActivity;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.childManager;
@@ -29,17 +30,35 @@ public class configActivity extends AppCompatActivity {
         setContentView(R.layout.activity_config);
         buildChildList();
         buildFloatingButton();
-        deleteAllButton();
+        deleteAllDEBUGButton();
+        addChildrenDEBUGButton();
     }
 
-    /** FOR DEBUG PURPOSES **/
-    private void deleteAllButton() {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
+    private void deleteAllDEBUGButton() {
         Button button = findViewById(R.id.deleteAllChildButton);
         button.setOnClickListener(View ->{
             manager.getChildList().clear();
             adapter.notifyDataSetChanged();
             saveData();
         });
+    }
+
+    private void addChildrenDEBUGButton(){
+        Button button = findViewById(R.id.createChildren);
+        button.setOnClickListener(View ->{
+            int i = (manager.getChildList().isEmpty())?(0):(manager.getChildList().size());
+            manager.addChildren(Integer.toString(i));
+            adapter.notifyDataSetChanged();
+        });
+
+
     }
 
     @Override

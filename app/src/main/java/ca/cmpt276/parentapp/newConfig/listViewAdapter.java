@@ -2,6 +2,7 @@ package ca.cmpt276.parentapp.newConfig;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class listViewAdapter extends ArrayAdapter<Child> {
             //name
             TextView name = itemView.findViewById(R.id.name);
             name.setText("Name: " + child.getName());
+            Log.d("Name", child.getName());
         }
 
         return itemView;

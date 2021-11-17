@@ -27,11 +27,6 @@ public class Child {
 
     public void setPortrait(String newPortraitPath){portraitPath = newPortraitPath;}
 
-
-    public void setName(String name){
-        this.name = name;
-    }
-
     public String getName(){
         return this.name;
     }

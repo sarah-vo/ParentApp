@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,7 +36,7 @@ import ca.cmpt276.parentapp.model.childManager;
 
 
 public class addChildren extends AppCompatActivity{
-    childManager manager = childManager.getInstance();
+    final childManager manager = childManager.getInstance();
     ImageView imageview = null;
     String photoPath = null;
     public static final String SHARED_PREFERENCE = "Shared Preference";
@@ -54,19 +53,23 @@ public class addChildren extends AppCompatActivity{
         setContentView(R.layout.activity_add_children);
         Toolbar myToolbar = findViewById(R.id.addToolbar);
         setSupportActionBar(myToolbar);
-        callBackConfig();
         addImage();
     }
 
-    private void callBackConfig() {
-        Intent intent = new Intent(this, configActivity.class);
-        // This callback will only be called when MyFragment is at least Started.
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                startActivity(new Intent(intent));
-            }
-        };
+    @Override
+    public void onBackPressed() {
+        //confirm if user wanted to exit
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.backPressedWarning)
+                .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
+                    super.onBackPressed();
+                    startActivity(new Intent(this, configActivity.class));
+                })
+                .setNegativeButton(R.string.no_edit_child, (dialog, which) -> {
+                    /*do nothing*/
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
@@ -75,8 +78,8 @@ public class addChildren extends AppCompatActivity{
         imageview.setImageResource(R.drawable.add_icon);
         imageview.setOnClickListener(View -> ImagePicker.with(this)
                 .cropSquare()
-                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
                 .start());
     }
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
@@ -144,17 +147,6 @@ public class addChildren extends AppCompatActivity{
         Date date = new Date();
         return String.valueOf(date.getTime());
     }
-
-
-
-
-
-
-
-
-
-
-
 
     //configure save button
     @Override

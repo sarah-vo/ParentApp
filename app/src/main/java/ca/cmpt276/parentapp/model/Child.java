@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 /**
  * Represent children in the app. Each child is an object.
@@ -8,17 +9,23 @@ import android.graphics.Bitmap;
 
 public class Child {
     String name;
-    Bitmap portrait = null;
+    String portraitPath;
 
     public Child(String newName){
         this.name = newName;
     }
 
-    public Child(String newName, Bitmap newPortrait){name = newName; portrait = newPortrait;}
+    public Child(String newName, String newPortraitPath){
+        name = newName;
+        portraitPath = newPortraitPath;
+    }
 
-    public Bitmap getPortrait(){return portrait;}
+    public Bitmap getPortrait(){
+        return BitmapFactory.decodeFile(portraitPath);}
 
-    public void setPortrait(Bitmap newPortrait){portrait = newPortrait;}
+    public String getPortraitPath(){return portraitPath;}
+
+    public void setPortrait(String newPortraitPath){portraitPath = newPortraitPath;}
 
 
     public void setName(String name){

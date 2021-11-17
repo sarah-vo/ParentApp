@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ public class configActivity extends AppCompatActivity {
     childManager manager = childManager.getInstance();
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
+    ArrayAdapter<Child> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +29,43 @@ public class configActivity extends AppCompatActivity {
         setContentView(R.layout.activity_config);
         buildChildList();
         buildFloatingButton();
+        deleteAllButton();
+    }
+
+    /** FOR DEBUG PURPOSES **/
+    private void deleteAllButton() {
+        Button button = findViewById(R.id.deleteAllChildButton);
+        button.setOnClickListener(View ->{
+            manager.getChildList().clear();
+            adapter.notifyDataSetChanged();
+            saveData();
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        loadData();
+        buildChildList();
+        buildFloatingButton();
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        saveData();
+        super.onDestroy();
     }
 
 
-
     private void buildChildList() {
-        ArrayAdapter<Child> adapter = new listViewAdapter(this, manager.getChildList());
+        adapter = new listViewAdapter(this, manager.getChildList());
         ListView list = findViewById(R.id.childListView);
         list.setAdapter(adapter);
         list.setOnItemClickListener((parent, viewClicked, position, id) -> {
             Intent intent = new Intent(this, modifyDeleteChildren.class);
             intent.putExtra("Child Position",position);
             startActivity(intent);
+            saveData();
         });
     }
 
@@ -47,11 +74,12 @@ public class configActivity extends AppCompatActivity {
         button.setOnClickListener(View ->{
             Intent intent = new Intent(this, addChildren.class);
             startActivity(intent);
+            saveData();
         });
     }
 
     //Save current data of the gameManager using SharedPreferences
-    private void saveData(){
+    void saveData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -84,4 +112,5 @@ public class configActivity extends AppCompatActivity {
             Log.i("numChild_load", manager.getChildList().size() + "");
         }
     }
+
 }

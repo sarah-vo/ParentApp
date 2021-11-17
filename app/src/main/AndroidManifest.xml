@@ -36,7 +36,8 @@
         <activity
             android:name=".newConfig.configActivity"
             android:exported="false"
-            android:label="Configure children" />
+            android:label="Configure children"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".configurechildren.ChildConfigurationActivity"
             android:exported="false"

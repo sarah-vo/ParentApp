@@ -1,7 +1,5 @@
 package ca.cmpt276.parentapp.model;
 
-import android.graphics.Bitmap;
-
 import java.util.ArrayList;
 
 /**
@@ -9,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public  class childManager {
+    private static final int EMPTY_CHILD_LIST = -999;
     private static childManager instance;
     private final ArrayList<Child> childrenList;
     //public ArrayList<String> childrenName = new ArrayList<>();
@@ -32,33 +31,35 @@ public  class childManager {
 
     public void addChildren(String name){
         childrenList.add(new Child(name));
-        //childrenName.add(name);
     }
 
-    public void addChildren(String name, Bitmap newPortrait){
-        childrenList.add(new Child(name, newPortrait));
+    public void addChildren(String name, String newPhotoPath){
+        childrenList.add(new Child(name, newPhotoPath));
     }
 
     public void removeChildren(int index){
         childrenList.remove(index);
-        //childrenName.remove(index);
     }
 
-//    public ArrayList<String> getChildrenNameList(){
-//        return childrenName;
-//    }
 
     public void editChildrenName(String name, int index){
         childrenList.get(index).editName(name);
-        //childrenName.set(index, name);
     }
 
-
-//    public String getName(int pos) {
-//        return childrenName.get(pos);
-//    }
+    public void editChildrenPortraitPath(String newPath, int position){
+        childrenList.get(position).setPortrait(newPath);
+    }
 
     public Child getChild(int pos){return childrenList.get(pos);}
+
+    public int getChildPosition(){
+        if (!childrenList.isEmpty()){
+            return childrenList.size()-1;
+        }
+        else{
+            return EMPTY_CHILD_LIST;
+        }
+    }
 }
 
 

@@ -2,33 +2,48 @@ package ca.cmpt276.parentapp.newConfig;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.gson.Gson;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.childManager;
 
 
 
-public class addChildren extends AppCompatActivity {
+public class addChildren extends AppCompatActivity{
     childManager manager = childManager.getInstance();
-    Bitmap newPortrait = null;
     ImageView imageview = null;
+    String photoPath = null;
+    public static final String SHARED_PREFERENCE = "Shared Preference";
+    public static final String CHILD_LIST = "Child List";
+    private static final int EMPTY_CHILD_LIST = -999;
+
 
 
     @Override
@@ -39,8 +54,19 @@ public class addChildren extends AppCompatActivity {
         setContentView(R.layout.activity_add_children);
         Toolbar myToolbar = findViewById(R.id.addToolbar);
         setSupportActionBar(myToolbar);
-
+        callBackConfig();
         addImage();
+    }
+
+    private void callBackConfig() {
+        Intent intent = new Intent(this, configActivity.class);
+        // This callback will only be called when MyFragment is at least Started.
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                startActivity(new Intent(intent));
+            }
+        };
     }
 
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
@@ -49,6 +75,8 @@ public class addChildren extends AppCompatActivity {
         imageview.setImageResource(R.drawable.add_icon);
         imageview.setOnClickListener(View -> ImagePicker.with(this)
                 .cropSquare()
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .start());
     }
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
@@ -61,7 +89,9 @@ public class addChildren extends AppCompatActivity {
             Uri fileUri = data.getData();
             try {
                 if(  fileUri !=null   ){
-                    newPortrait = MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri);
+                    photoPath = saveAndReturnPhotoDir(
+                            MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
+                            getNewChildPosition());
                 }
             }
             catch (Exception e) {
@@ -69,7 +99,7 @@ public class addChildren extends AppCompatActivity {
             }
 
             //setting bitmap to imageview and child's portrait variable
-            imageview.setImageBitmap(newPortrait);
+            imageview.setImageBitmap(BitmapFactory.decodeFile(photoPath));
 
             //error handling
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
@@ -77,7 +107,54 @@ public class addChildren extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
+
+
     }
+
+    String saveAndReturnPhotoDir(Bitmap bitmap,int position){
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        String fileName = "portraitChild"+position+time();
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        File file = new File(directory, fileName + ".jpg");
+        if (!file.exists()) {
+            Log.d("path", file.toString());
+            FileOutputStream fos;
+            try {
+                fos = new FileOutputStream(file);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                fos.flush();
+                fos.close();
+            } catch (java.io.IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return file.getPath();
+    }
+
+    /**ONLY FOR saveAndReturnPhotoDir. NOT TO BE USED USED FOR ANYTHING ELSE**/
+    int getNewChildPosition(){
+        if(manager.getChildPosition() == EMPTY_CHILD_LIST){
+            return 0;
+        }
+        else{
+            return manager.getChildPosition()+1;
+        }
+    }
+    String time(){
+        Date date = new Date();
+        return String.valueOf(date.getTime());
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     //configure save button
     @Override
@@ -93,9 +170,11 @@ public class addChildren extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
-                            manager.addChildren(newName,newPortrait);
+                            manager.addChildren(newName,photoPath);
                             Intent intent = new Intent(this, configActivity.class);
                             startActivity(intent);
+                            saveData();
+
                         })
                         .setNegativeButton(R.string.no_add_child, (dialog, which) -> {
                         }/*do nothing*/);
@@ -111,6 +190,18 @@ public class addChildren extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+    void saveData(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        //Convert gridManager to json format
+        Gson gson = new Gson();
+        String json = gson.toJson(manager);
+
+        //Save the json
+        editor.putString(CHILD_LIST,json);
+        editor.apply();
     }
 }
 

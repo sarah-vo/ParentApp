@@ -64,42 +64,42 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         this.setTitle("Configure My Children");
     }
 
-    @Override
-    protected void onResume() {
-        loadData();
-
-        childrenList = manager.getChildList();
-        childName = new ArrayList<>();
-
-        spinner = findViewById(R.id.childrenSpinner);
-        for(int i = 0; i < childrenList.size(); i++){
-            childName.add(childrenList.get(i).getName());
-        }
-
-        dataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                childName);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(dataAdapter);
-        spinner.setSelection(0); //initial selection
-
-        addChild(dataAdapter);
-        editChild(dataAdapter);
-        removeChild(dataAdapter);
-
-        super.onResume();
-
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        /*manager.getChildrenNameList().clear();
-        manager.getChildList().clear();*/
-        saveData();
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onResume() {
+//        loadData();
+//
+//        childrenList = manager.getChildList();
+//        childName = new ArrayList<>();
+//
+//        spinner = findViewById(R.id.childrenSpinner);
+//        for(int i = 0; i < childrenList.size(); i++){
+//            childName.add(childrenList.get(i).getName());
+//        }
+//
+//        dataAdapter = new ArrayAdapter<>(this,
+//                android.R.layout.simple_spinner_dropdown_item,
+//                childName);
+//        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        spinner.setAdapter(dataAdapter);
+//        spinner.setSelection(0); //initial selection
+//
+//        addChild(dataAdapter);
+//        editChild(dataAdapter);
+//        removeChild(dataAdapter);
+//
+//        super.onResume();
+//
+//        super.onResume();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        /*manager.getChildrenNameList().clear();
+//        manager.getChildList().clear();*/
+//        saveData();
+//        super.onDestroy();
+//    }
 
     private void addChild(ArrayAdapter<String> dataAdapter) {
         Button button = findViewById(R.id.addChild);
@@ -114,7 +114,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
                             childName.add(newName);
                             dataAdapter.notifyDataSetChanged();
 
-                            saveData();
+                            //saveData();
                         })
                         .setNegativeButton(R.string.no_add_child, (dialog, which) -> {
                         }/*do nothing*/);
@@ -144,7 +144,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
                         childName.remove(spinner.getSelectedItemPosition());
                         dataAdapter.notifyDataSetChanged();
 
-                        saveData();
+                        //saveData();
                     })
                     .setNegativeButton(R.string.no_delete_child, (dialog, which) -> {
                     }/*do nothing*/);
@@ -168,7 +168,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
                             childName.set(spinner.getSelectedItemPosition(), newName);
                             dataAdapter.notifyDataSetChanged();
 
-                            saveData();
+                           // saveData();
                         })
                         .setNegativeButton(R.string.no_edit_child, (dialog, which) -> {
                         }/*do nothing*/);

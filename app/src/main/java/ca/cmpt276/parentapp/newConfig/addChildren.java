@@ -34,7 +34,7 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.childManager;
 
 
-
+/**Function that allows user to add child**/
 public class addChildren extends AppCompatActivity{
     final childManager manager = childManager.getInstance();
     ImageView imageview = null;
@@ -162,6 +162,7 @@ public class addChildren extends AppCompatActivity{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
+
                             manager.addChildren(newName,photoPath);
                             Intent intent = new Intent(this, configActivity.class);
                             startActivity(intent);

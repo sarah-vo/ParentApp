@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 
+/**Function that generates a list view for configActivity based on information gathered from childManager**/
 public class listViewAdapter extends ArrayAdapter<Child> {
     public listViewAdapter(Context context , ArrayList<Child> childList) {
         super(context, R.layout.activity_config, childList);

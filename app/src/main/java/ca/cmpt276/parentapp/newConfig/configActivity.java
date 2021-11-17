@@ -18,6 +18,7 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.childManager;
 
+/**Function that allows user to add/edit child information.**/
 public class configActivity extends AppCompatActivity {
     childManager manager = childManager.getInstance();
     public static final String SHARED_PREFERENCE = "Shared Preference";
@@ -40,27 +41,6 @@ public class configActivity extends AppCompatActivity {
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
-    private void deleteAllDEBUGButton() {
-        Button button = findViewById(R.id.deleteAllChildButton);
-        button.setOnClickListener(View ->{
-            manager.getChildList().clear();
-            adapter.notifyDataSetChanged();
-            saveData();
-        });
-    }
-
-    private void addChildrenDEBUGButton(){
-        Button button = findViewById(R.id.createChildren);
-        button.setOnClickListener(View ->{
-            int i = (manager.getChildList().isEmpty())?(0):(manager.getChildList().size());
-            manager.addChildren(Integer.toString(i));
-            adapter.notifyDataSetChanged();
-        });
-
-
-    }
-
     @Override
     protected void onResume() {
         loadData();
@@ -74,7 +54,6 @@ public class configActivity extends AppCompatActivity {
         saveData();
         super.onDestroy();
     }
-
 
     private void buildChildList() {
         adapter = new listViewAdapter(this, manager.getChildList());
@@ -130,6 +109,27 @@ public class configActivity extends AppCompatActivity {
         else{
             Log.i("numChild_load", manager.getChildList().size() + "");
         }
+    }
+
+    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
+    private void deleteAllDEBUGButton() {
+        Button button = findViewById(R.id.deleteAllChildButton);
+        button.setOnClickListener(View ->{
+            manager.getChildList().clear();
+            adapter.notifyDataSetChanged();
+            saveData();
+        });
+    }
+    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
+    private void addChildrenDEBUGButton(){
+        Button button = findViewById(R.id.createChildren);
+        button.setOnClickListener(View ->{
+            int i = (manager.getChildList().isEmpty())?(0):(manager.getChildList().size());
+            manager.addChildren(Integer.toString(i), null);
+            adapter.notifyDataSetChanged();
+        });
+
+
     }
 
 }

@@ -34,6 +34,7 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.childManager;
 
+/**Function that allows user to edit/delete child and their name/picture**/
 public class modifyDeleteChildren extends AppCompatActivity {
     final childManager manager = childManager.getInstance();
     Child child;

@@ -24,17 +24,17 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".newConfig.modifyDeleteChildren"
+            android:name=".newConfig.ModifyDeleteChildren"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false"
-            android:parentActivityName=".newConfig.configActivity"/>
+            android:parentActivityName=".newConfig.ConfigActivity"/>
         <activity
-            android:name=".newConfig.addChildren"
+            android:name=".newConfig.AddChildren"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false"
-            android:parentActivityName=".newConfig.configActivity"/>
+            android:parentActivityName=".newConfig.ConfigActivity"/>
         <activity
-            android:name=".newConfig.configActivity"
+            android:name=".newConfig.ConfigActivity"
             android:exported="false"
             android:label="Configure children"
             android:parentActivityName=".MainActivity"/>

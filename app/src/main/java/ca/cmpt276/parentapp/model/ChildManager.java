@@ -6,34 +6,36 @@ import java.util.ArrayList;
  * A list of Child objects which stores all children configured in the app.
  */
 
-public  class childManager {
+public  class ChildManager {
     private static final int EMPTY_CHILD_LIST = -999;
-    private static childManager instance;
+    private static ChildManager instance;
     private final ArrayList<Child> childrenList;
     //public ArrayList<String> childrenName = new ArrayList<>();
 
-    public static childManager getInstance(){
+    public static ChildManager getInstance() {
         if(instance == null){
-            instance = new childManager();
+            instance = new ChildManager();
         }
         return instance;
     }
 
-    public static void setInstance(childManager manager){
+    public static void setInstance(ChildManager manager) {
         instance = manager;
     }
 
-    public childManager(){
+    public ChildManager() {
         childrenList = new ArrayList<>();
     }
 
-    public ArrayList<Child> getChildList(){return childrenList;}
+    public ArrayList<Child> getChildList() {
+        return childrenList;
+    }
 
-    public void addChildren(String name){
+    public void addChildren(String name) {
         childrenList.add(new Child(name));
     }
 
-    public void addChildren(String name, String newPhotoPath){
+    public void addChildren(String name, String newPhotoPath) {
         childrenList.add(new Child(name, newPhotoPath));
     }
 
@@ -42,18 +44,20 @@ public  class childManager {
     }
 
 
-    public void editChildrenName(String name, int index){
-        childrenList.get(index).editName(name);
+    public void editChildrenName(String name, int index) {
+        childrenList.get(index).childName(name);
     }
 
-    public void editChildrenPortraitPath(String newPath, int position){
+    public void editChildrenPortraitPath(String newPath, int position) {
         childrenList.get(position).setPortrait(newPath);
     }
 
-    public Child getChild(int pos){return childrenList.get(pos);}
+    public Child getChild(int pos) {
+        return childrenList.get(pos);
+    }
 
-    public int getChildPosition(){
-        if (!childrenList.isEmpty()){
+    public int getChildPosition() {
+        if (!childrenList.isEmpty()) {
             return childrenList.size()-1;
         }
         else{

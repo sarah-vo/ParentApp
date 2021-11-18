@@ -32,11 +32,11 @@ import java.util.Date;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
-import ca.cmpt276.parentapp.model.childManager;
+import ca.cmpt276.parentapp.model.ChildManager;
 
 /**Function that allows user to edit/delete child and their name/picture**/
-public class modifyDeleteChildren extends AppCompatActivity {
-    final childManager manager = childManager.getInstance();
+public class ModifyDeleteChildren extends AppCompatActivity {
+    final ChildManager manager = ChildManager.getInstance();
     Child child;
     int position;
     ImageView portraitImageView;
@@ -63,7 +63,7 @@ public class modifyDeleteChildren extends AppCompatActivity {
         builder.setMessage(R.string.backPressedWarning)
                 .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
                     super.onBackPressed();
-                    startActivity(new Intent(this, configActivity.class));
+                    startActivity(new Intent(this, ConfigActivity.class));
                 })
                 .setNegativeButton(R.string.no_edit_child, (dialog, which) -> {
                     /*do nothing*/
@@ -91,7 +91,7 @@ public class modifyDeleteChildren extends AppCompatActivity {
             portraitImageView.setImageResource(R.drawable.add_icon);
         }
         nameEditText = findViewById(R.id.modifyChildName);
-        nameEditText.setText(child.getName());
+        nameEditText.setText(child.getChildName());
     }
 
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
@@ -174,7 +174,7 @@ public class modifyDeleteChildren extends AppCompatActivity {
         //SAVE BUTTON CONFIG
         if (item.getItemId() == R.id.action_save){
             String newName = nameEditText.getText().toString();
-            String oldName = child.getName();
+            String oldName = child.getChildName();
 
             if (!TextUtils.isEmpty(nameEditText.getText().toString())) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -199,7 +199,7 @@ public class modifyDeleteChildren extends AppCompatActivity {
         }
         //DELETE BUTTON
         else if(item.getItemId() == R.id.action_delete){
-            String name = child.getName();
+            String name = child.getChildName();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
             builder.setMessage(getString(R.string.confirm_delete_child, name))
@@ -221,7 +221,7 @@ public class modifyDeleteChildren extends AppCompatActivity {
         manager.removeChildren(position);
         deletePhoto();
         saveData();
-        Intent intent = new Intent(this, configActivity.class);
+        Intent intent = new Intent(this, ConfigActivity.class);
         startActivity(intent);
     }
 
@@ -229,7 +229,7 @@ public class modifyDeleteChildren extends AppCompatActivity {
         manager.editChildrenName(newName, position);
         saveData();
         manager.editChildrenPortraitPath(photoPath,position);
-        Intent intent = new Intent(this, configActivity.class);
+        Intent intent = new Intent(this, ConfigActivity.class);
         startActivity(intent);
     }
 

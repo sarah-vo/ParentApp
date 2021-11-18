@@ -8,30 +8,35 @@ import android.graphics.BitmapFactory;
  */
 
 public class Child {
-    String name;
+    String childName;
     String portraitPath;
 
-    public Child(String newName){
-        this.name = newName;
+    public Child(String childName) {
+        this.childName = childName;
     }
 
-    public Child(String newName, String newPortraitPath){
-        name = newName;
+    public Child(String childName, String newPortraitPath) {
+        this.childName = childName;
         portraitPath = newPortraitPath;
     }
 
-    public Bitmap getPortrait(){
-        return BitmapFactory.decodeFile(portraitPath);}
-
-    public String getPortraitPath(){return portraitPath;}
-
-    public void setPortrait(String newPortraitPath){portraitPath = newPortraitPath;}
-
-    public String getName(){
-        return this.name;
+    public Bitmap getPortrait() {
+        return BitmapFactory.decodeFile(portraitPath);
     }
 
-    public void editName(String newName){
-        name = newName;
+    public String getPortraitPath() {
+        return portraitPath;
+    }
+
+    public void setPortrait(String newPortraitPath) {
+        portraitPath = newPortraitPath;
+    }
+
+    public String getChildName() {
+        return this.childName;
+    }
+
+    public void childName(String newName) {
+        childName = newName;
     }
 }

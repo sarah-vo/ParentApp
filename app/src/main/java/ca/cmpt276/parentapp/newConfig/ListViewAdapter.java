@@ -16,8 +16,8 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 
 /**Function that generates a list view for configActivity based on information gathered from childManager**/
-public class listViewAdapter extends ArrayAdapter<Child> {
-    public listViewAdapter(Context context , ArrayList<Child> childList) {
+public class ListViewAdapter extends ArrayAdapter<Child> {
+    public ListViewAdapter(Context context , ArrayList<Child> childList) {
         super(context, R.layout.activity_config, childList);
     }
 
@@ -43,8 +43,8 @@ public class listViewAdapter extends ArrayAdapter<Child> {
 
             //name
             TextView name = itemView.findViewById(R.id.name);
-            name.setText("Name: " + child.getName());
-            Log.d("Name", child.getName());
+            name.setText("Name: " + child.getChildName());
+            Log.d("Name", child.getChildName());
         }
 
         return itemView;

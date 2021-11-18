@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
-import ca.cmpt276.parentapp.newConfig.configActivity;
+import ca.cmpt276.parentapp.newConfig.ConfigActivity;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 
 /**
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     void switchActivitySettings(){
         Button flipCoinButton = findViewById(R.id.settingsButton);
         flipCoinButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, configActivity.class);
+            Intent intent = new Intent(this, ConfigActivity.class);
             startActivity(intent);
         });
     }

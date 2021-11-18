@@ -31,13 +31,13 @@ import java.io.FileOutputStream;
 import java.util.Date;
 
 import ca.cmpt276.parentapp.R;
-import ca.cmpt276.parentapp.model.childManager;
+import ca.cmpt276.parentapp.model.ChildManager;
 
 
 /**Function that allows user to add child**/
-public class addChildren extends AppCompatActivity{
-    final childManager manager = childManager.getInstance();
-    ImageView imageview = null;
+public class AddChildren extends AppCompatActivity{
+    final ChildManager manager = ChildManager.getInstance();
+    ImageView imageView = null;
     String photoPath = null;
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
@@ -60,12 +60,12 @@ public class addChildren extends AppCompatActivity{
     public void onBackPressed() {
         //confirm if user wanted to exit
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.backPressedWarning)
-                .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
+        builder.setMessage(R.string.backPressedWarning).setPositiveButton
+                (R.string.yes_edit_child, (dialog, which) -> {
                     super.onBackPressed();
-                    startActivity(new Intent(this, configActivity.class));
-                })
-                .setNegativeButton(R.string.no_edit_child, (dialog, which) -> {
+                    startActivity(new Intent(this, ConfigActivity.class));
+                }).setNegativeButton
+                    (R.string.no_edit_child, (dialog, which) -> {
                     /*do nothing*/
                 });
         AlertDialog alert = builder.create();
@@ -74,9 +74,9 @@ public class addChildren extends AppCompatActivity{
 
     //implementation by Dhaval URL: https://github.com/Dhaval2404/ImagePicker
     private void addImage() {
-        imageview = findViewById(R.id.addPortrait);
-        imageview.setImageResource(R.drawable.add_icon);
-        imageview.setOnClickListener(View -> ImagePicker.with(this)
+        imageView = findViewById(R.id.addPortrait);
+        imageView.setImageResource(R.drawable.add_icon);
+        imageView.setOnClickListener(View -> ImagePicker.with(this)
                 .cropSquare()
                 .compress(1024)            //Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)    //Final image resolution will be less than 1080 x 1080(Optional)
@@ -91,7 +91,7 @@ public class addChildren extends AppCompatActivity{
             //Getting URI and converting it to bitmap
             Uri fileUri = data.getData();
             try {
-                if(  fileUri !=null   ){
+                if(fileUri !=null){
                     photoPath = saveAndReturnPhotoDir(
                             MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
                             getNewChildPosition());
@@ -102,7 +102,7 @@ public class addChildren extends AppCompatActivity{
             }
 
             //setting bitmap to imageview and child's portrait variable
-            imageview.setImageBitmap(BitmapFactory.decodeFile(photoPath));
+            imageView.setImageBitmap(BitmapFactory.decodeFile(photoPath));
 
             //error handling
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
@@ -114,7 +114,7 @@ public class addChildren extends AppCompatActivity{
 
     }
 
-    String saveAndReturnPhotoDir(Bitmap bitmap,int position){
+    String saveAndReturnPhotoDir(Bitmap bitmap,int position) {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
         String fileName = "portraitChild"+position+time();
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
@@ -135,15 +135,15 @@ public class addChildren extends AppCompatActivity{
     }
 
     /**ONLY FOR saveAndReturnPhotoDir. NOT TO BE USED USED FOR ANYTHING ELSE**/
-    int getNewChildPosition(){
+    int getNewChildPosition() {
         if(manager.getChildPosition() == EMPTY_CHILD_LIST){
             return 0;
         }
-        else{
+        else {
             return manager.getChildPosition()+1;
         }
     }
-    String time(){
+    String time() {
         Date date = new Date();
         return String.valueOf(date.getTime());
     }
@@ -153,7 +153,9 @@ public class addChildren extends AppCompatActivity{
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.add_toolbar_icons,menu);
         return super.onCreateOptionsMenu(menu);
-    }@Override
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_save){
             EditText addText = findViewById(R.id.childNameAdd);
@@ -164,7 +166,7 @@ public class addChildren extends AppCompatActivity{
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
 
                             manager.addChildren(newName,photoPath);
-                            Intent intent = new Intent(this, configActivity.class);
+                            Intent intent = new Intent(this, ConfigActivity.class);
                             startActivity(intent);
                             saveData();
 
@@ -184,7 +186,8 @@ public class addChildren extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-    void saveData(){
+
+    void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 

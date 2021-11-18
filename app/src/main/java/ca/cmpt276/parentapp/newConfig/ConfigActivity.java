@@ -16,11 +16,11 @@ import com.google.gson.Gson;
 import ca.cmpt276.parentapp.MainActivity;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
-import ca.cmpt276.parentapp.model.childManager;
+import ca.cmpt276.parentapp.model.ChildManager;
 
 /**Function that allows user to add/edit child information.**/
-public class configActivity extends AppCompatActivity {
-    childManager manager = childManager.getInstance();
+public class ConfigActivity extends AppCompatActivity {
+    ChildManager manager = ChildManager.getInstance();
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
     ArrayAdapter<Child> adapter;
@@ -56,11 +56,11 @@ public class configActivity extends AppCompatActivity {
     }
 
     private void buildChildList() {
-        adapter = new listViewAdapter(this, manager.getChildList());
+        adapter = new ListViewAdapter(this, manager.getChildList());
         ListView list = findViewById(R.id.childListView);
         list.setAdapter(adapter);
         list.setOnItemClickListener((parent, viewClicked, position, id) -> {
-            Intent intent = new Intent(this, modifyDeleteChildren.class);
+            Intent intent = new Intent(this, ModifyDeleteChildren.class);
             intent.putExtra("Child Position",position);
             startActivity(intent);
             saveData();
@@ -70,7 +70,7 @@ public class configActivity extends AppCompatActivity {
     private void buildFloatingButton() {
         FloatingActionButton button = findViewById(R.id.configFloatingButton);
         button.setOnClickListener(View ->{
-            Intent intent = new Intent(this, addChildren.class);
+            Intent intent = new Intent(this, AddChildren.class);
             startActivity(intent);
             saveData();
         });
@@ -99,11 +99,11 @@ public class configActivity extends AppCompatActivity {
         String json = sharedPreferences.getString(CHILD_LIST,null);
 
         //Covert the gameManager into an Object and set the instance to the specified gameManager
-        manager = gson.fromJson(json, childManager.class);
-        childManager.setInstance(manager);
+        manager = gson.fromJson(json, ChildManager.class);
+        ChildManager.setInstance(manager);
 
         if(manager == null){
-            manager = childManager.getInstance();
+            manager = ChildManager.getInstance();
         }
 
         else{

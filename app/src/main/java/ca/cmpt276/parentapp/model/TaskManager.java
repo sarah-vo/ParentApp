@@ -3,8 +3,8 @@ package ca.cmpt276.parentapp.model;
 import java.util.ArrayList;
 
 public  class TaskManager {
-    private static TaskManager instance;
     private final ArrayList<Task> taskList;
+    private static TaskManager instance;
 
     public static TaskManager getInstance(){
         if(instance == null){
@@ -21,8 +21,6 @@ public  class TaskManager {
         taskList = new ArrayList<>();
     }
 
-    public ArrayList<Task> getTaskList() {return taskList;}
-
     public void addTask(String name){
         taskList.add(new Task(name));
     }
@@ -35,8 +33,12 @@ public  class TaskManager {
         taskList.get(index).editTaskName(taskName);
     }
 
-    public String getName(int pos) {
+    public String getTaskName(int pos) {
         return taskList.get(pos).getTaskName();
+    }
+
+    public ArrayList<Task> getTaskList() {
+        return taskList;
     }
 }
 

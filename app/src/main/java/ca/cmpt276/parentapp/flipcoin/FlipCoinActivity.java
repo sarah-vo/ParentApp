@@ -27,7 +27,7 @@ import ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
-import ca.cmpt276.parentapp.model.childManager;
+import ca.cmpt276.parentapp.model.ChildManager;
 /**
  * Generate flip coin activity screen. Displays which child's turn to pick, allows user to
  * click on "HEADS" or "TAILS" button to flip the coin, displays a image view of coin and change to
@@ -39,7 +39,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String SAVE_COIN_MANAGER = "SAVE_COIN_MANAGER";
 
-    childManager manager;
+    ChildManager manager;
     ArrayList<Child> childrenList;
 
     FlipCoinManager flipCoinManager;
@@ -119,11 +119,11 @@ public class FlipCoinActivity extends AppCompatActivity {
 
         ///----------------------------- Get ChildManager data --------------------------------/////
         //Covert the childManager into an Object and set the instance to the specified gameManager
-        manager = gson.fromJson(child_json, childManager.class);
-        childManager.setInstance(manager);
+        manager = gson.fromJson(child_json, ChildManager.class);
+        ChildManager.setInstance(manager);
 
         if(manager == null){
-            manager = childManager.getInstance();
+            manager = ChildManager.getInstance();
         }
 
         childrenList = manager.getChildList();

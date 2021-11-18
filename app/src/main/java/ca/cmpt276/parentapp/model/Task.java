@@ -4,7 +4,7 @@ public class Task {
 
         String taskName;
 
-        public Task(String taskName){
+        public Task(String taskName) {
             this.taskName = taskName;
         }
 
@@ -16,7 +16,7 @@ public class Task {
             return this.taskName;
         }
 
-        public void editName(String newTaskName) {
+        public void editTaskName(String newTaskName) {
             taskName = newTaskName;
         }
 

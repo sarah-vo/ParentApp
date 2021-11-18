@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public  class TaskManager {
     private static TaskManager instance;
     private final ArrayList<Task> taskList;
-    public ArrayList<String> taskName = new ArrayList<>();
 
     public static TaskManager getInstance(){
         if(instance == null){
@@ -26,25 +25,18 @@ public  class TaskManager {
 
     public void addTask(String name){
         taskList.add(new Task(name));
-        taskName.add(name);
     }
 
     public void removeTask(int index){
         taskList.remove(index);
-        taskName.remove(index);
     }
 
-    public ArrayList<String> getTaskNameList(){
-        return taskName;
-    }
-
-    public void editChildren(String name, int index){
-        taskList.get(index).editName(name);
-        taskName.set(index, name);
+    public void editTask(String taskName, int index){
+        taskList.get(index).editTaskName(taskName);
     }
 
     public String getName(int pos) {
-        return taskName.get(pos);
+        return taskList.get(pos).getTaskName();
     }
 }
 

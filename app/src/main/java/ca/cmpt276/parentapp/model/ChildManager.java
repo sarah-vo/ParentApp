@@ -12,7 +12,7 @@ public  class ChildManager {
     public ArrayList<String> childrenName = new ArrayList<>();
 
     public static ChildManager getInstance(){
-        if(instance == null){
+        if(instance == null) {
             instance = new ChildManager();
         }
         return instance;

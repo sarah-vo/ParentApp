@@ -29,7 +29,7 @@ public  class TaskManager {
         taskList.remove(index);
     }
 
-    public void editTask(String taskName, int index){
+    public void editTask(String taskName, int index) {
         taskList.get(index).editTaskName(taskName);
     }
 

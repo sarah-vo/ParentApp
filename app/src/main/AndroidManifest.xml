@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ca.cmpt276.parentapp">
+    <!--permission for camera/gallery-->
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS"/>
 
+    <!--permission for timer notification-->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -16,13 +24,28 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".newConfig.ModifyDeleteChildren"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false"
+            android:parentActivityName=".newConfig.ConfigActivity"/>
+        <activity
+            android:name=".newConfig.AddChildren"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false"
+            android:parentActivityName=".newConfig.ConfigActivity"/>
+        <activity
+            android:name=".newConfig.ConfigActivity"
+            android:exported="false"
+            android:label="Configure children"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".configurechildren.ChildConfigurationActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".flipcoin.FlipCoinHistory"
-            android:parentActivityName=".flipcoin.FlipCoinActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".flipcoin.FlipCoinActivity" />
         <activity
             android:name=".flipcoin.FlipCoinActivity"
             android:exported="true"
@@ -32,8 +55,8 @@
         <activity
             android:name=".timer.TimerActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -45,9 +68,12 @@
             </intent-filter>
         </activity>
 
+
         <service android:name=".timer.TimerService" />
 
+
         <receiver android:name=".timer.NotificationReceiver" />
+
     </application>
 
 </manifest>

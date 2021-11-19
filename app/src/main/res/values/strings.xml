@@ -60,4 +60,15 @@
     <string name="min">min</string>
     <string name="sec">sec</string>
     <string name="add_child">Add Child</string>
+    <string name="title_activity_config">configActivity</string>
+    <string name="save">save</string>
+    <string name="save_button">Save button</string>
+    <string name="add_your_child_name_here">Add your child name here</string>
+    <string name="add_a_child">Add a child</string>
+    <string name="delete_button">Delete button</string>
+    <string name="change_your_child_name_here">Change your child name here</string>
+    <string name="portrait_description">Portrait</string>
+    <string name="name_example">Name: Sarah</string>
+    <string name="backPressedWarning">Are you sure you want to exit? All changes unsaved will be discarded.</string>
+    <string name="add_more_child">Add more child</string>
 </resources>

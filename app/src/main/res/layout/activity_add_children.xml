@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".newConfig.AddChildren">
+
+
+    <ImageView
+        android:id="@+id/addPortrait"
+        android:layout_width="131dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addToolbar"
+        tools:srcCompat="@drawable/add_icon"
+        android:contentDescription="@string/portrait_description" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="259dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/addPortrait"
+        app:layout_constraintTop_toBottomOf="@+id/addToolbar">
+
+        <EditText
+            android:id="@+id/childNameAdd"
+            android:layout_width="246dp"
+            android:layout_height="38dp"
+            android:autofillHints="hello"
+            android:hint="@string/add_your_child_name_here"
+            android:inputType="textPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/addToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:minHeight="?attr/actionBarSize"
+        android:title="@string/add_a_child"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+

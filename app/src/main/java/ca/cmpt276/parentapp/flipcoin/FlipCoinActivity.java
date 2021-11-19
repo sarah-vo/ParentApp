@@ -23,11 +23,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
-import ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
-import ca.cmpt276.parentapp.model.childManager;
+import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.newConfig.ConfigActivity;
+
 /**
  * Generate flip coin activity screen. Displays which child's turn to pick, allows user to
  * click on "HEADS" or "TAILS" button to flip the coin, displays a image view of coin and change to
@@ -39,7 +40,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String SAVE_COIN_MANAGER = "SAVE_COIN_MANAGER";
 
-    childManager manager;
+    ChildManager manager;
     ArrayList<Child> childrenList;
 
     FlipCoinManager flipCoinManager;
@@ -115,15 +116,15 @@ public class FlipCoinActivity extends AppCompatActivity {
         //Get the model in json format
         Gson gson = new Gson();
         String coin_json = sharedPreferences.getString(SAVE_COIN_MANAGER,null);
-        String child_json = sharedPreferences.getString(ChildConfigurationActivity.CHILD_LIST,null);
+        String child_json = sharedPreferences.getString(ConfigActivity.CHILD_LIST,null);
 
         ///----------------------------- Get ChildManager data --------------------------------/////
         //Covert the childManager into an Object and set the instance to the specified gameManager
-        manager = gson.fromJson(child_json, childManager.class);
-        childManager.setInstance(manager);
+        manager = gson.fromJson(child_json, ChildManager.class);
+        ChildManager.setInstance(manager);
 
         if(manager == null){
-            manager = childManager.getInstance();
+            manager = ChildManager.getInstance();
         }
 
         childrenList = manager.getChildList();
@@ -143,7 +144,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
             index = flipCoinManager.getCurrentIndex(childrenList.size());
             flipCoinGame.setPicker(childrenList.get(index));
-            String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
+            String message = getString(R.string.player_turn,flipCoinGame.getPicker().getChildName());
             showPicker.setText(message);
         }
         else {
@@ -228,7 +229,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                         flipCoinGame.setPicker(childrenList.get(index));
 
                         String message = getString(R.string.player_turn,
-                                flipCoinGame.getPicker().getName());
+                                flipCoinGame.getPicker().getChildName());
                         showPicker.setText(message);
                     }
 
@@ -252,7 +253,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
             if (!emptyChildrenList) {
                 String message = getString(R.string.player_choice,
-                        flipCoinGame.getPicker().getName(),
+                        flipCoinGame.getPicker().getChildName(),
                         FlipCoin.CoinSide.HEADS.toString());
                 showPicker.setText(message);
                 flipCoinGame.setPickerChoice(FlipCoin.CoinSide.HEADS);
@@ -269,7 +270,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
             if (!emptyChildrenList) {
                 String message = getString(R.string.player_choice,
-                                            flipCoinGame.getPicker().getName(),
+                                            flipCoinGame.getPicker().getChildName(),
                                             FlipCoin.CoinSide.TAILS.toString());
                 showPicker.setText(message);
                 flipCoinGame.setPickerChoice(FlipCoin.CoinSide.TAILS);

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 /**
  * Store a list of FlipCoin objects. Supports singleton access and includes methods to
@@ -20,7 +19,7 @@ public class FlipCoinManager {
     private boolean override_default_empty;
 
     private FlipCoinManager(){
-        flipCoinGameList = new ArrayList<FlipCoin>();
+        flipCoinGameList = new ArrayList<>();
         override_default_empty = false;
     }
 
@@ -36,7 +35,7 @@ public class FlipCoinManager {
         return instance;
     }
 
-    ///--------------------------Functions for updating Queue-------------------------///
+    ///-------------------------Functions for managing player information--------=--------------///
 
     public void setPlayerList(ArrayList<Child> childrenList){
         this.childrenList = childrenList;
@@ -54,13 +53,14 @@ public class FlipCoinManager {
         return childrenList.size() == 0;
     }
 
-    //numChildren = current number of children saved in the app
     public Child getCurrentPlayer() {
         if(childrenList == null || override_default_empty){
             return null;
         }
         return childrenList.get(0);
     }
+
+    ///--------------------------Functions for updating Queue-------------------------///
 
     public void updateQueue(){
         if (childrenList != null && childrenList.size() > 0) {
@@ -99,8 +99,8 @@ public class FlipCoinManager {
         }
     }
 
-    public void setDefaultEmpty(){
-        override_default_empty = true;
+    public void setDefaultEmpty(boolean flag){
+        override_default_empty = flag;
     }
 
     public boolean isOverrideDefaultEmpty(){

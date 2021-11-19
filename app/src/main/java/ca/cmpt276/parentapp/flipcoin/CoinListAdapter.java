@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp.flipcoin;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +32,21 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
         }
 
         if (currentGame.getFlipResult() != null){
-            // Result:
-            TextView gameResult =  itemView.findViewById(R.id.gameResult);
-            gameResult.setText(formatResult(currentGame));
+            //Picker:
+            TextView coinPicker = itemView.findViewById(R.id.flipcoin_history_picker);
+            String format_picker = "Picker: " + currentGame.getPicker().getName();
+            coinPicker.setText(format_picker);
+
+            //Result:
+            TextView coinResult = itemView.findViewById(R.id.flipcoin_history_result);
+            String format_result = "Result: " + currentGame.getFlipResult().toString();
+            coinResult.setText(format_result);
+
+            Log.i("ss", currentGame.getFlipResult().toString());
+
+            //Player Profile
+            ImageView player_profile = itemView.findViewById(R.id.flipCoin_history_profile);
+            //TODO: SET CHILD PHOTO PROFILE HERE
 
             // P1 info
             ImageView coinDetails =  itemView.findViewById(R.id.coinDetails);

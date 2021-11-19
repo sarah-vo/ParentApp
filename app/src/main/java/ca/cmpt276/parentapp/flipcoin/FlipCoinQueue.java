@@ -3,10 +3,8 @@ package ca.cmpt276.parentapp.flipcoin;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import ca.cmpt276.parentapp.R;
-import ca.cmpt276.parentapp.childAdapter;
-import ca.cmpt276.parentapp.model.Child;
+import ca.cmpt276.parentapp.FlipCoin_Queue_Adapter;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
-import ca.cmpt276.parentapp.model.childManager;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,7 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class FlipCoinQueue extends AppCompatActivity {
-    childAdapter childAdapter;
+    FlipCoin_Queue_Adapter flipCoin_queue_adapter;
     FlipCoinManager coin_manager;
 
     //Create an intent for this activity
@@ -38,7 +36,7 @@ public class FlipCoinQueue extends AppCompatActivity {
 
         Button default_none = findViewById(R.id.default_empty_btn);
         default_none.setOnClickListener(view ->{
-            coin_manager.setDefaultEmpty();
+            coin_manager.setDefaultEmpty(true);
             finish();
         });
     }
@@ -47,9 +45,9 @@ public class FlipCoinQueue extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        childAdapter = new childAdapter(FlipCoinQueue.this,coin_manager.getPlayerList());
+        flipCoin_queue_adapter = new FlipCoin_Queue_Adapter(FlipCoinQueue.this,coin_manager.getPlayerList());
         ListView gameList = findViewById(R.id.flipCoinQueue);
-        gameList.setAdapter(childAdapter);
+        gameList.setAdapter(flipCoin_queue_adapter);
 
         setClickGameList();
     }
@@ -61,8 +59,6 @@ public class FlipCoinQueue extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 addConfirmationDialog_Override(position);
-                /*coin_manager.overrideDefault(position);
-                childAdapter.notifyDataSetChanged();*/
             }
         });
     }
@@ -76,7 +72,7 @@ public class FlipCoinQueue extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         coin_manager.overrideDefault(position);
-                        childAdapter.notifyDataSetChanged();
+                        flipCoin_queue_adapter.notifyDataSetChanged();
                         Toast.makeText(FlipCoinQueue.this,
                                 "Default child overridden successfully",
                                 Toast.LENGTH_SHORT).show();

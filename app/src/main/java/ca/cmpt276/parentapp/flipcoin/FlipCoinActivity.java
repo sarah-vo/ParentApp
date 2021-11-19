@@ -54,7 +54,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     ObjectAnimator animStage1, animStage2;
     Button headButton, tailButton;
-    ImageView coinImg;
+    ImageView coinImg, player_profile;
     TextView showPicker;
 
     Button historyButton;
@@ -71,6 +71,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flip_coin);
+        this.setTitle("Flip Coin");
 
         coinFlipSound = MediaPlayer.create(this, R.raw.coin_flip_sound);
 
@@ -78,26 +79,18 @@ public class FlipCoinActivity extends AppCompatActivity {
         initializeAnimation();
 
         loadData();
-
-        this.setTitle("Flip Coin");
     }
 
     @Override
     protected void onResume() {
         if (childrenList.size() > 0 && flipCoinManager.getCurrentPlayer() != null) {
             flipCoinGame = new FlipCoin();
-
-            if(flipCoinManager.isNewEpoch()){
-                flipCoinManager.shufflePlayer();
-            }
-
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
 
-            String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
+            String message = getString(R.string.player_turn,flipCoinManager.getCurrentPlayer().getName());
             showPicker.setText(message);
         }
         else {
-            //emptyChildrenList = true;
             showPicker.setText(R.string.no_configured_children);
         }
 
@@ -175,21 +168,24 @@ public class FlipCoinActivity extends AppCompatActivity {
             flipCoinManager = FlipCoinManager.getInstance();
         }
 
+        flipCoinManager.setDefaultEmpty(false);
+        flipCoinManager.setPlayerList(childrenList);
+        if(flipCoinManager.isNewEpoch()){
+            flipCoinManager.shufflePlayer();
+        }
+
         if (childrenList.size() > 0) {
             flipCoinGame = new FlipCoin();
 
-            if(flipCoinManager.isNewEpoch()){
-                flipCoinManager.setPlayerList(childrenList);
-                flipCoinManager.shufflePlayer();
-            }
 
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
+            //TODO: SET CHILD PROFILE PHOTO HERE
+            //player_profile.setImageBitmap(flipCoinManager.getCurrentPlayer()....);
 
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
             showPicker.setText(message);
         }
         else {
-            //emptyChildrenList = true;
             showPicker.setText(R.string.no_configured_children);
         }
 
@@ -203,6 +199,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         resultText = findViewById(R.id.resultMessage);
         coinImg = findViewById(R.id.iv_coin);
         showPicker = findViewById(R.id.showPicker);
+        player_profile = findViewById(R.id.flipCoin_profile);
 
         setUpButtons();
     }
@@ -256,11 +253,8 @@ public class FlipCoinActivity extends AppCompatActivity {
 
                     enableButtons();
 
-                    Log.i("ss", "outside");
-
                     //Only update if there are children in the list
                     if (!flipCoinManager.isEmpty()){
-                        Log.i("ss", "inside");
 
                         //Set results onto the object and save that data
                         if (!flipCoinManager.isOverrideDefaultEmpty()){
@@ -275,6 +269,8 @@ public class FlipCoinActivity extends AppCompatActivity {
                         newGame = new FlipCoin();
                         flipCoinGame = newGame;
                         flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
+                        //TODO: SET CHILD PROFILE PHOTO HERE
+                        //player_profile.setImageBitmap(flipCoinManager.getCurrentPlayer()....);
 
                         String message = getString(R.string.player_turn,
                                 flipCoinGame.getPicker().getName());

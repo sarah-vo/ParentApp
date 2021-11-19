@@ -8,9 +8,10 @@
     <string name="resume">Resume</string>
     <string name="reset">Reset</string>
 
-    <string name="no_configured_children">There are no configured children, but you can sill play with the coin!</string>
+    <string name="no_configured_children">No configured children!</string>
+    <string name="override_current_empty">Current child queue is overridden to be empty!</string>
     <string name="current_setting">Current Settings: %1$d Row x %2$d Column, %3$d Total Virus</string>
-    <string name="player_turn">It\'s %1$s\'s turn! Pick a side.</string>
+    <string name="player_turn">It\'s %1$s\'s turn!\nPick a side.</string>
 
     <string name="flip_coin">Flip coin</string>
     <string name="timeout_timer">Timeout Timer</string>
@@ -61,4 +62,7 @@
     <string name="sec">sec</string>
     <string name="add_child">Add Child</string>
     <string name="queue">QUEUE</string>
+    <string name="format_name">Name: %1$s</string>
+    <string name="format_picker">Picker: %1$s</string>
+    <string name="format_result">Result: %1$s</string>
 </resources>

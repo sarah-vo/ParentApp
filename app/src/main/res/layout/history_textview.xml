@@ -6,24 +6,14 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/gameResult"
-        android:layout_width="182dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/game_result"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/coinDetails"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/time"
         android:layout_width="match_parent"
         android:layout_height="21dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:text="@string/time"
         app:layout_constraintEnd_toEndOf="@+id/coinDetails"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coinDetails" />
 
@@ -42,14 +32,54 @@
 
     <ImageView
         android:id="@+id/result_img"
-        android:layout_width="111dp"
-        android:layout_height="56dp"
-        android:layout_marginStart="3dp"
+        android:layout_width="81dp"
+        android:layout_height="66dp"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/result_flipCoin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gameResult"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/tick_icon"
-        android:contentDescription="@string/result_flipCoin" />
+        app:srcCompat="@drawable/tick_icon" />
+
+    <TextView
+        android:id="@+id/flipcoin_history_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="9dp"
+        android:text="Picker"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/flipcoin_history_result"
+        app:layout_constraintEnd_toStartOf="@+id/result_img"
+        app:layout_constraintStart_toEndOf="@+id/flipCoin_history_profile"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/flipcoin_history_result"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="8dp"
+        android:text="Result"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/time"
+        app:layout_constraintEnd_toStartOf="@+id/result_img"
+        app:layout_constraintStart_toEndOf="@+id/flipCoin_history_profile"
+        app:layout_constraintTop_toBottomOf="@+id/flipcoin_history_picker" />
+
+    <ImageView
+        android:id="@+id/flipCoin_history_profile"
+        android:layout_width="63dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginBottom="21dp"
+        app:layout_constraintBottom_toTopOf="@+id/time"
+        app:layout_constraintStart_toEndOf="@+id/coinDetails"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/default_profile" />
 </androidx.constraintlayout.widget.ConstraintLayout>

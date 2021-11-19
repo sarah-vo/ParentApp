@@ -1,6 +1,7 @@
 package ca.cmpt276.parentapp.whoseturn;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
     }
 
     private void displayTask() {
-        String[] tasks = {"First bath" + "\nName", "Put pop can into can cooler" + "\nName"};
+        String[] tasks = {"First bath\nChild Name", "Put pop can into can cooler\nChild Name"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -50,7 +51,9 @@ public class WhoseTurnActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView textView = (TextView) view;
-
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                MessageFragment taskDialog = new MessageFragment();
+                taskDialog.show(fragmentManager, "MessageDialog");
             }
         });
     }

@@ -63,4 +63,5 @@
     <string name="create_new_task">Create new Task</string>
     <string name="task_name">Task Name</string>
     <string name="done_button_text">Done</string>
+    <string name="tasks_button">Tasks</string>
 </resources>

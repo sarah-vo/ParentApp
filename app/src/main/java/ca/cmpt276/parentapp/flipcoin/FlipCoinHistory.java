@@ -18,7 +18,6 @@ import ca.cmpt276.parentapp.model.FlipCoinManager;
  */
 public class FlipCoinHistory extends AppCompatActivity {
     FlipCoinManager manager;
-    Toolbar toolbar;
 
     public static Intent makeIntent(Context context){
         return new Intent(context, FlipCoinHistory.class);
@@ -47,7 +46,6 @@ public class FlipCoinHistory extends AppCompatActivity {
 
     private void populateGameList(){
         //Building adapter
-
         ArrayAdapter<FlipCoin> adapter = new CoinListAdapter(this,
                 manager.getListGames());
         ListView list = findViewById(R.id.gameListView);

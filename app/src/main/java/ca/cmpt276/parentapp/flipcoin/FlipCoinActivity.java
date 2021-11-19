@@ -18,11 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
-
-import java.io.IOException;
 import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
@@ -64,7 +61,6 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     int rotationCount = 0;
     int maxRepeat = 6;
-    boolean emptyChildrenList;
 
     TextView resultText;
 
@@ -87,8 +83,9 @@ public class FlipCoinActivity extends AppCompatActivity {
         if (childrenList.size() > 0 && flipCoinManager.getCurrentPlayer() != null) {
             flipCoinGame = new FlipCoin();
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
+            player_profile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
 
-            String message = getString(R.string.player_turn,flipCoinManager.getCurrentPlayer().getName());
+            String message = getString(R.string.player_turn,flipCoinManager.getCurrentPlayer().getChildName());
             showPicker.setText(message);
         }
         else {
@@ -107,22 +104,19 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.flip_coin_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
-            case R.id.queue:
-                Intent i = FlipCoinQueue.makeIntent(this);
-                startActivity(i);
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.queue) {
+            Intent i = FlipCoinQueue.makeIntent(this);
+            startActivity(i);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     //Save current data of the gameManager using SharedPreferences
@@ -178,12 +172,10 @@ public class FlipCoinActivity extends AppCompatActivity {
         if (childrenList.size() > 0) {
             flipCoinGame = new FlipCoin();
 
-
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-            //TODO: SET CHILD PROFILE PHOTO HERE
-            //player_profile.setImageBitmap(flipCoinManager.getCurrentPlayer()....);
+            player_profile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
 
-            String message = getString(R.string.player_turn,flipCoinGame.getPicker().getName());
+            String message = getString(R.string.player_turn,flipCoinGame.getPicker().getChildName());
             showPicker.setText(message);
         }
         else {
@@ -270,8 +262,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                         newGame = new FlipCoin();
                         flipCoinGame = newGame;
                         flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-                        //TODO: SET CHILD PROFILE PHOTO HERE
-                        //player_profile.setImageBitmap(flipCoinManager.getCurrentPlayer()....);
+                        player_profile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
 
                         String message = getString(R.string.player_turn,
                                 flipCoinGame.getPicker().getChildName());
@@ -350,7 +341,6 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     private void displayMessageForEmpty(FlipCoin.CoinSide pickerChoice,
                                         FlipCoin.CoinSide flipResult) {
-
         if (pickerChoice == flipResult){
             resultText.setText(getString(R.string.win_text,
                     flipResult.toString()));

@@ -34,7 +34,7 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
         if (currentGame.getFlipResult() != null){
             //Picker:
             TextView coinPicker = itemView.findViewById(R.id.flipcoin_history_picker);
-            String format_picker = "Picker: " + currentGame.getPicker().getName();
+            String format_picker = "Picker: " + currentGame.getPicker().getChildName();
             coinPicker.setText(format_picker);
 
             //Result:
@@ -46,7 +46,7 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
 
             //Player Profile
             ImageView player_profile = itemView.findViewById(R.id.flipCoin_history_profile);
-            //TODO: SET CHILD PHOTO PROFILE HERE
+            player_profile.setImageBitmap(currentGame.getPicker().getPortrait());
 
             // P1 info
             ImageView coinDetails =  itemView.findViewById(R.id.coinDetails);

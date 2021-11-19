@@ -44,7 +44,6 @@ public class ListViewAdapter extends ArrayAdapter<Child> {
             //name
             TextView name = itemView.findViewById(R.id.name);
             name.setText("Name: " + child.getChildName());
-            Log.d("Name", child.getChildName());
         }
 
         return itemView;

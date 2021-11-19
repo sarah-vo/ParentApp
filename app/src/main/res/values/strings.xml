@@ -60,4 +60,7 @@
     <string name="min">min</string>
     <string name="sec">sec</string>
     <string name="add_child">Add Child</string>
+    <string name="create_new_task">Create new Task</string>
+    <string name="task_name">Task Name</string>
+    <string name="done_button_text">Done</string>
 </resources>

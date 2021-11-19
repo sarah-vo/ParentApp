@@ -63,7 +63,6 @@ public class ModifyDeleteChildren extends AppCompatActivity {
         builder.setMessage(R.string.backPressedWarning)
                 .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
                     super.onBackPressed();
-                    startActivity(new Intent(this, ConfigActivity.class));
                 })
                 .setNegativeButton(R.string.no_edit_child, (dialog, which) -> {
                     /*do nothing*/

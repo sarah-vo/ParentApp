@@ -1,25 +1,42 @@
 package ca.cmpt276.parentapp.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 /**
  * Represent children in the app. Each child is an object.
  */
 
 public class Child {
-    String name;
+    String childName;
+    String portraitPath;
 
-    public Child(String name){
-        this.name = name;
+    public Child(String childName) {
+        this.childName = childName;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public Child(String childName, String newPortraitPath) {
+        this.childName = childName;
+        portraitPath = newPortraitPath;
     }
 
-    public String getName(){
-        return this.name;
+    public Bitmap getPortrait() {
+        return BitmapFactory.decodeFile(portraitPath);
     }
 
-    public void editName(String newName){
-        name = newName;
+    public String getPortraitPath() {
+        return portraitPath;
+    }
+
+    public void setPortrait(String newPortraitPath) {
+        portraitPath = newPortraitPath;
+    }
+
+    public String getChildName() {
+        return this.childName;
+    }
+
+    public void childName(String newName) {
+        childName = newName;
     }
 }

@@ -65,7 +65,7 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
     private String formatResult(FlipCoin currentGame) {
 
         return "Result: " + currentGame.getFlipResult().toString()+
-                         "\nPicker: " + currentGame.getPicker().getName();
+                         "\nPicker: " + currentGame.getPicker().getChildName();
     }
 
     private int getCoinImageId(FlipCoin currentGame){

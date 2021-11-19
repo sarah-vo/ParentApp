@@ -16,13 +16,20 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".whoseturn.AddTask"
+            android:exported="true" />
+        <activity
+            android:name=".whoseturn.WhoseTurnActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".configurechildren.ChildConfigurationActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".flipcoin.FlipCoinHistory"
-            android:parentActivityName=".flipcoin.FlipCoinActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".flipcoin.FlipCoinActivity" />
         <activity
             android:name=".flipcoin.FlipCoinActivity"
             android:exported="true"
@@ -32,8 +39,8 @@
         <activity
             android:name=".timer.TimerActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

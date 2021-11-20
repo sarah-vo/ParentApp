@@ -95,11 +95,11 @@ public class AddChildren extends AppCompatActivity{
                             MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
                             getNewChildPosition());
                 }
+
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
-
             //setting bitmap to imageview and child's portrait variable
             imageView.setImageBitmap(BitmapFactory.decodeFile(photoPath));
 
@@ -109,8 +109,6 @@ public class AddChildren extends AppCompatActivity{
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     String saveAndReturnPhotoDir(Bitmap bitmap,int position) {
@@ -147,6 +145,8 @@ public class AddChildren extends AppCompatActivity{
         return String.valueOf(date.getTime());
     }
 
+
+
     //configure save button
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
@@ -164,10 +164,9 @@ public class AddChildren extends AppCompatActivity{
                 builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
 
-                            manager.addChildren(newName,photoPath);
-                            Intent intent = new Intent(this, ConfigActivity.class);
-                            startActivity(intent);
+                            manager.addChildren(newName,photoPath, this.getResources());
                             saveData();
+                            finish();
 
                         })
                         .setNegativeButton(R.string.no_add_child, (dialog, which) -> {

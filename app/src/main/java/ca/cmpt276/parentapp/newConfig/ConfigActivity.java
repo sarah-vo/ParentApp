@@ -25,6 +25,8 @@ public class ConfigActivity extends AppCompatActivity {
     public static final String CHILD_LIST = "Child List";
     ArrayAdapter<Child> adapter;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,11 +127,12 @@ public class ConfigActivity extends AppCompatActivity {
         Button button = findViewById(R.id.createChildren);
         button.setOnClickListener(View ->{
             int i = (manager.getChildList().isEmpty())?(0):(manager.getChildList().size());
-            manager.addChildren(Integer.toString(i), null);
+            manager.addChildren(Integer.toString(i), null, this.getResources());
             adapter.notifyDataSetChanged();
         });
 
 
     }
+
 
 }

@@ -2,7 +2,6 @@ package ca.cmpt276.parentapp.newConfig;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,7 @@ public class ListViewAdapter extends ArrayAdapter<Child> {
                 imageView.setImageBitmap(child.getPortrait());
             }
             else{
-                imageView.setImageResource(R.drawable.default_portrait);
+                //imageView.setImageResource(R.drawable.default_portrait);
             }
 
             //name

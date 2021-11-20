@@ -50,9 +50,12 @@ public class FlipCoinActivity extends AppCompatActivity {
     FlipCoin.CoinSide coinResult;
     FlipCoin.CoinSide pickerChoice;
 
-    ObjectAnimator animStage1, animStage2;
-    Button headButton, tailButton;
-    ImageView coinImg, player_profile;
+    ObjectAnimator animStage1;
+    ObjectAnimator animStage2;
+    Button headButton;
+    Button tailButton;
+    ImageView coinImg;
+    ImageView playerProfile;
     TextView showPicker;
 
     Button historyButton;
@@ -83,7 +86,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         if (childrenList.size() > 0 && flipCoinManager.getCurrentPlayer() != null) {
             flipCoinGame = new FlipCoin();
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-            player_profile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+            playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
 
             String message = getString(R.string.player_turn,flipCoinManager.getCurrentPlayer().getChildName());
             showPicker.setText(message);
@@ -120,7 +123,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     //Save current data of the gameManager using SharedPreferences
-    private void saveData(){
+    private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -134,7 +137,7 @@ public class FlipCoinActivity extends AppCompatActivity {
     }
 
     //Load data from saved state
-    private void loadData(){
+    private void loadData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);
 
         //Get the model in json format
@@ -147,7 +150,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         manager = gson.fromJson(child_json, ChildManager.class);
         ChildManager.setInstance(manager);
 
-        if(manager == null){
+        if(manager == null) {
             manager = ChildManager.getInstance();
         }
 
@@ -159,7 +162,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         flipCoinManager = gson.fromJson(coin_json,FlipCoinManager.class);
         FlipCoinManager.setInstance(flipCoinManager);
 
-        if(flipCoinManager == null){
+        if(flipCoinManager == null) {
             flipCoinManager = FlipCoinManager.getInstance();
         }
 
@@ -173,7 +176,7 @@ public class FlipCoinActivity extends AppCompatActivity {
             flipCoinGame = new FlipCoin();
 
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-            player_profile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+            playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
 
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getChildName());
             showPicker.setText(message);
@@ -192,12 +195,12 @@ public class FlipCoinActivity extends AppCompatActivity {
         resultText = findViewById(R.id.resultMessage);
         coinImg = findViewById(R.id.iv_coin);
         showPicker = findViewById(R.id.showPicker);
-        player_profile = findViewById(R.id.flipCoin_profile);
+        playerProfile = findViewById(R.id.flipCoin_profile);
 
         setUpButtons();
     }
 
-    private void initializeAnimation(){
+    private void initializeAnimation() {
         animStage1 = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipx1);
         animStage2 = (ObjectAnimator) AnimatorInflater.loadAnimator(this, R.animator.flipx2);
 
@@ -262,7 +265,7 @@ public class FlipCoinActivity extends AppCompatActivity {
                         newGame = new FlipCoin();
                         flipCoinGame = newGame;
                         flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-                        player_profile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+                        playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
 
                         String message = getString(R.string.player_turn,
                                 flipCoinGame.getPicker().getChildName());
@@ -279,7 +282,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         });
     }
 
-    private void setUpButtons(){
+    private void setUpButtons() {
         headButton = findViewById(R.id.btn_heads);
         tailButton = findViewById(R.id.btn_tails);
         historyButton = findViewById(R.id.historyButton);
@@ -351,7 +354,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
     }
 
-    private void flipCoinImg(){
+    private void flipCoinImg() {
         disableButtons();
         coinResult = !flipCoinManager.isEmpty() ? flipCoinGame.flipCoin() : new FlipCoin().flipCoin();
         if (coinResult == FlipCoin.CoinSide.HEADS){

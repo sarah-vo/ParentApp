@@ -14,12 +14,13 @@ import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 
 /**
- * Display the history of coin flips with information including date, picker, flip result, and if the picker won.
+ * Display the history of coin flips with information including
+ * date, picker, flip result, and if the picker won.
  */
 public class FlipCoinHistory extends AppCompatActivity {
     FlipCoinManager manager;
 
-    public static Intent makeIntent(Context context){
+    public static Intent makeIntent(Context context) {
         return new Intent(context, FlipCoinHistory.class);
     }
 
@@ -33,7 +34,7 @@ public class FlipCoinHistory extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (manager.getListGames() == null || manager.getNumGames() == 0){
+        if (manager.getListGames() == null || manager.getNumGames() == 0) {
             setContentView(R.layout.flip_coin_empty_history);
         }
 
@@ -44,7 +45,7 @@ public class FlipCoinHistory extends AppCompatActivity {
 
     }
 
-    private void populateGameList(){
+    private void populateGameList() {
         //Building adapter
         ArrayAdapter<FlipCoin> adapter = new CoinListAdapter(this,
                 manager.getListGames());

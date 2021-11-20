@@ -17,8 +17,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class FlipCoinQueue extends AppCompatActivity {
-    FlipCoin_Queue_Adapter flipCoin_queue_adapter;
-    FlipCoinManager coin_manager;
+    FlipCoin_Queue_Adapter flipCoinQueueAdapter;
+    FlipCoinManager coinManager;
 
     //Create an intent for this activity
     public static Intent makeIntent(Context context){
@@ -32,11 +32,11 @@ public class FlipCoinQueue extends AppCompatActivity {
 
         this.setTitle("Flip Coin Queue");
 
-        coin_manager = FlipCoinManager.getInstance();
+        coinManager = FlipCoinManager.getInstance();
 
         Button default_none = findViewById(R.id.default_empty_btn);
         default_none.setOnClickListener(view ->{
-            coin_manager.setDefaultEmpty(true);
+            coinManager.setDefaultEmpty(true);
             finish();
         });
     }
@@ -45,9 +45,10 @@ public class FlipCoinQueue extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        flipCoin_queue_adapter = new FlipCoin_Queue_Adapter(FlipCoinQueue.this,coin_manager.getPlayerList());
+        flipCoinQueueAdapter = new FlipCoin_Queue_Adapter(FlipCoinQueue.this,
+                                                            coinManager.getPlayerList());
         ListView gameList = findViewById(R.id.flipCoinQueue);
-        gameList.setAdapter(flipCoin_queue_adapter);
+        gameList.setAdapter(flipCoinQueueAdapter);
 
         setClickGameList();
     }
@@ -71,8 +72,8 @@ public class FlipCoinQueue extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        coin_manager.overrideDefault(position);
-                        flipCoin_queue_adapter.notifyDataSetChanged();
+                        coinManager.overrideDefault(position);
+                        flipCoinQueueAdapter.notifyDataSetChanged();
                         Toast.makeText(FlipCoinQueue.this,
                                 "Default child overridden successfully",
                                 Toast.LENGTH_SHORT).show();

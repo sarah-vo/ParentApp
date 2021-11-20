@@ -22,7 +22,6 @@
             android:name=".whoseturn.WhoseTurnActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".configurechildren.ChildConfigurationActivity"
             android:exported="false"

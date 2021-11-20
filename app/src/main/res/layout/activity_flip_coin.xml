@@ -22,7 +22,8 @@
         app:layout_constraintBottom_toTopOf="@+id/resultMessage"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toEndOf="@+id/flipCoin_profile"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btn_heads"
@@ -47,26 +48,24 @@
         android:id="@+id/iv_coin"
         android:layout_width="320dp"
         android:layout_height="320dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="25dp"
         android:contentDescription="@string/image_of_coins_FlipCoinActivity"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toTopOf="@+id/resultMessage"
+        app:layout_constraintTop_toBottomOf="@+id/resultMessage"
         app:srcCompat="@drawable/loonie_heads" />
 
     <TextView
         android:id="@+id/resultMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="317dp"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/flipCoin_profile"
-        app:layout_constraintTop_toBottomOf="@+id/showPicker"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/flipCoin_profile"
         tools:text="message" />
 
     <Button
@@ -103,8 +102,8 @@
 
     <ImageView
         android:id="@+id/flipCoin_profile"
-        android:layout_width="94dp"
-        android:layout_height="82dp"
+        android:layout_width="76dp"
+        android:layout_height="59dp"
         android:layout_marginStart="55dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"

@@ -222,16 +222,14 @@ public class ModifyDeleteChildren extends AppCompatActivity {
         manager.removeChildren(position);
         deletePhoto();
         saveData();
-        Intent intent = new Intent(this, ConfigActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     private void editChildInfo(String newName) {
         manager.editChildrenName(newName, position);
         manager.editChildrenPortraitPath(photoPath,position);
         saveData();
-        /*Intent intent = new Intent(this, ConfigActivity.class);
-        startActivity(intent);*/
+        finish();
     }
 
     private void deletePhoto() {

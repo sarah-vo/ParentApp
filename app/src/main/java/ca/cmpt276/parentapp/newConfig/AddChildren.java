@@ -165,9 +165,8 @@ public class AddChildren extends AppCompatActivity{
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
 
                             manager.addChildren(newName,photoPath);
-                            Intent intent = new Intent(this, ConfigActivity.class);
-                            startActivity(intent);
                             saveData();
+                            finish();
 
                         })
                         .setNegativeButton(R.string.no_add_child, (dialog, which) -> {

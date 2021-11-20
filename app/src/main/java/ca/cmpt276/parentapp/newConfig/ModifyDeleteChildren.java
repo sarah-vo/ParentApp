@@ -168,7 +168,8 @@ public class ModifyDeleteChildren extends AppCompatActivity {
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.modify_toolbar_icons,menu);
         return super.onCreateOptionsMenu(menu);
-    }@Override
+    }
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //SAVE BUTTON CONFIG
         if (item.getItemId() == R.id.action_save){
@@ -180,11 +181,12 @@ public class ModifyDeleteChildren extends AppCompatActivity {
                 builder.setMessage(getString(R.string.confirm_edit_child, oldName, newName))
                         .setPositiveButton(R.string.yes_edit_child, (dialog, which) -> {
                             editChildInfo(newName);
+                            finish();
+
                         })
                         .setNegativeButton(R.string.no_edit_child, (dialog, which) -> {
                             /*do nothing*/
                         });
-
                 AlertDialog alert = builder.create();
                 alert.show();
             }
@@ -226,10 +228,10 @@ public class ModifyDeleteChildren extends AppCompatActivity {
 
     private void editChildInfo(String newName) {
         manager.editChildrenName(newName, position);
-        saveData();
         manager.editChildrenPortraitPath(photoPath,position);
-        Intent intent = new Intent(this, ConfigActivity.class);
-        startActivity(intent);
+        saveData();
+        /*Intent intent = new Intent(this, ConfigActivity.class);
+        startActivity(intent);*/
     }
 
     private void deletePhoto() {

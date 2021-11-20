@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.517555266579974" />
+        <entry key="..\:/SFU/12. Fall 2021/CMPT 276/Project/ParentApp/app/src/main/res/layout/activity_add_task.xml" value="0.33" />
+        <entry key="..\:/SFU/12. Fall 2021/CMPT 276/Project/ParentApp/app/src/main/res/layout/activity_flip_coin.xml" value="0.25" />
+        <entry key="..\:/SFU/12. Fall 2021/CMPT 276/Project/ParentApp/app/src/main/res/layout/activity_flip_coin_history.xml" value="0.3625" />
+        <entry key="..\:/SFU/12. Fall 2021/CMPT 276/Project/ParentApp/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/georg/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/custom_button.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/georg/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/default_buttom_img.xml" value="0.15625" />
         <entry key="..\:/Users/georg/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/default_button_2.xml" value="0.15625" />
@@ -20,14 +24,16 @@
         <entry key="app/src/main/res/drawable/main_menu_button.xml" value="0.39794871794871794" />
         <entry key="app/src/main/res/drawable/timer.xml" value="0.39794871794871794" />
         <entry key="app/src/main/res/layout/activity_add_children.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_add_task.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_child_configuration.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_config.xml" value="0.2755208333333333" />
-        <entry key="app/src/main/res/layout/activity_flip_coin.xml" value="0.3880208333333333" />
+        <entry key="app/src/main/res/layout/activity_flip_coin.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_flip_coin_history.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_modify_delete_children.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_timer.xml" value="0.33177083333333335" />
+        <entry key="app/src/main/res/layout/activity_whose_turn.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/config_listview.xml" value="0.2755208333333333" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/flip_coin_empty_history.xml" value="0.3880208333333333" />

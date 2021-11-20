@@ -1,11 +1,13 @@
 package ca.cmpt276.parentapp.flipcoin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -29,6 +31,15 @@ public class FlipCoinHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         manager = FlipCoinManager.getInstance();
         this.setTitle("Coin Flips History");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

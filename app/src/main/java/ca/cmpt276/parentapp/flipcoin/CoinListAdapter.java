@@ -43,8 +43,6 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
             String formatResult = "Result: " + currentGame.getFlipResult().toString();
             coinResult.setText(formatResult);
 
-            Log.i("ss", currentGame.getFlipResult().toString());
-
             //Player Profile
             ImageView playerProfile = itemView.findViewById(R.id.flipCoin_history_profile);
             playerProfile.setImageBitmap(currentGame.getPicker().getPortrait());
@@ -61,12 +59,6 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
         }
 
         return itemView;
-    }
-
-    private String formatResult(FlipCoin currentGame) {
-
-        return "Result: " + currentGame.getFlipResult().toString()+
-                         "\nPicker: " + currentGame.getPicker().getChildName();
     }
 
     private int getCoinImageId(FlipCoin currentGame){

@@ -83,6 +83,7 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
         if (childrenList.size() > 0 && flipCoinManager.getCurrentPlayer() != null) {
             flipCoinGame = new FlipCoin();
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
@@ -93,6 +94,7 @@ public class FlipCoinActivity extends AppCompatActivity {
         }
         else {
             showPicker.setText(R.string.no_configured_children);
+            playerProfile.setImageBitmap(null);
         }
 
         enableButtons();

@@ -1,5 +1,6 @@
 package ca.cmpt276.parentapp.flipcoin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import ca.cmpt276.parentapp.R;
@@ -7,11 +8,10 @@ import ca.cmpt276.parentapp.FlipCoin_Queue_Adapter;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -39,6 +39,17 @@ public class FlipCoinQueue extends AppCompatActivity {
             coinManager.setDefaultEmpty(true);
             finish();
         });
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -53,14 +64,16 @@ public class FlipCoinQueue extends AppCompatActivity {
         setClickGameList();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     //Function to edit default player when clicked
     private void setClickGameList(){
         ListView list = findViewById(R.id.flipCoinQueue);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                addConfirmationDialog_Override(position);
-            }
+        list.setOnItemClickListener((parent, viewClicked, position, id) -> {
+            addConfirmationDialog_Override(position);
         });
     }
 
@@ -69,22 +82,14 @@ public class FlipCoinQueue extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to override the default with this child?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        coinManager.overrideDefault(position);
-                        flipCoinQueueAdapter.notifyDataSetChanged();
-                        Toast.makeText(FlipCoinQueue.this,
-                                "Default child overridden successfully",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                .setPositiveButton("Yes", (dialogInterface, i) -> {
+                    coinManager.overrideDefault(position);
+                    flipCoinQueueAdapter.notifyDataSetChanged();
+                    Toast.makeText(FlipCoinQueue.this,
+                            "Default child overridden successfully",
+                            Toast.LENGTH_SHORT).show();
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

@@ -1,9 +1,9 @@
 package ca.cmpt276.parentapp.configuretasks;
 
 import androidx.appcompat.app.AppCompatActivity;
+import ca.cmpt276.parentapp.R;
 
 import android.os.Bundle;
-import ca.cmpt276.parentapp.R;
 
 public class AddTaskActivity extends AppCompatActivity {
 

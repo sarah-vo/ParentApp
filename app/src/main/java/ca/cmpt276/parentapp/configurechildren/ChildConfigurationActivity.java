@@ -18,14 +18,14 @@ import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
-import ca.cmpt276.parentapp.model.childManager;
+import ca.cmpt276.parentapp.model.ChildManager;
 
 public class ChildConfigurationActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
 
-    childManager manager;
+    ChildManager manager;
 
     ArrayList<Child> childrenList;
     ArrayList<String> childName;
@@ -41,7 +41,7 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_configuration);
 
-        manager = childManager.getInstance();
+        manager = ChildManager.getInstance();
         childrenList = manager.getChildList();
         childName = new ArrayList<>();
 
@@ -208,11 +208,11 @@ public class ChildConfigurationActivity extends AppCompatActivity {
         String json = sharedPreferences.getString(CHILD_LIST,null);
 
         //Covert the gameManager into an Object and set the instance to the specified gameManager
-        manager = gson.fromJson(json, childManager.class);
-        childManager.setInstance(manager);
+        manager = gson.fromJson(json, ChildManager.class);
+        ChildManager.setInstance(manager);
 
         if(manager == null){
-            manager = childManager.getInstance();
+            manager = ChildManager.getInstance();
         }
 
         else{

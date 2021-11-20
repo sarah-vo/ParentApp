@@ -6,23 +6,23 @@ import java.util.ArrayList;
  * A list of Child objects which stores all children configured in the app.
  */
 
-public  class childManager {
-    private static childManager instance;
+public  class ChildManager {
+    private static ChildManager instance;
     private final ArrayList<Child> childrenList;
     public ArrayList<String> childrenName = new ArrayList<>();
 
-    public static childManager getInstance(){
-        if(instance == null){
-            instance = new childManager();
+    public static ChildManager getInstance(){
+        if(instance == null) {
+            instance = new ChildManager();
         }
         return instance;
     }
 
-    public static void setInstance(childManager manager){
+    public static void setInstance(ChildManager manager){
         instance = manager;
     }
 
-    public childManager(){
+    public ChildManager(){
         childrenList = new ArrayList<>();
     }
 

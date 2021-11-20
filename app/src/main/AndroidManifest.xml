@@ -16,8 +16,13 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".configuretasks.AddTaskActivity"
-            android:exported="false" />
+            android:name=".whoseturn.AddTask"
+            android:exported="true" />
+        <activity
+            android:name=".whoseturn.WhoseTurnActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
+
         <activity
             android:name=".configurechildren.ChildConfigurationActivity"
             android:exported="false"

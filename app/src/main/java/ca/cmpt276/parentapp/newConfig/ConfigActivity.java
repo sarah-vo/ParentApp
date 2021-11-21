@@ -127,7 +127,7 @@ public class ConfigActivity extends AppCompatActivity {
         Button button = findViewById(R.id.createChildren);
         button.setOnClickListener(View ->{
             int i = (manager.getChildList().isEmpty())?(0):(manager.getChildList().size());
-            manager.addChildren(Integer.toString(i), null, this.getResources());
+            manager.addChildren(Integer.toString(i), null, true);
             adapter.notifyDataSetChanged();
         });
 

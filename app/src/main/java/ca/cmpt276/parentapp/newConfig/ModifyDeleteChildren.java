@@ -83,7 +83,7 @@ public class ModifyDeleteChildren extends AppCompatActivity {
 
     private void fillPortraitAndNameField() {
         portraitImageView = findViewById(R.id.modifyPortrait);
-        if(child.getPortrait() != null){
+        if(!child.isDefaultPicture()){
             portraitImageView.setImageBitmap(child.getPortrait());
         }
         else{
@@ -120,6 +120,7 @@ public class ModifyDeleteChildren extends AppCompatActivity {
                     photoPath = saveAndReturnPhotoDir(
                             MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
                             manager.getChildPosition());
+                    child.setDefaultPicture(true);
                 }
             }
             catch (Exception e) {

@@ -1,10 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import ca.cmpt276.parentapp.R;
 
 /**
  * Represent children in the app. Each child is an object.
@@ -13,25 +10,20 @@ import ca.cmpt276.parentapp.R;
 public class Child {
     String childName;
     String portraitPath;
-    Resources resources;
+    boolean isDefaultPicture;
 
     public Child(String childName) {
         this.childName = childName;
     }
 
-    public Child(String childName, String newPortraitPath, Resources newResources) {
+    public Child(String childName, String newPortraitPath, boolean isDefaultPicture) {
         this.childName = childName;
         portraitPath = newPortraitPath;
-        resources = newResources;
+        this.isDefaultPicture = isDefaultPicture;
     }
 
     public Bitmap getPortrait() {
-            if(portraitPath != null){
-                return BitmapFactory.decodeFile(portraitPath);
-            }
-            else{
-                return BitmapFactory.decodeResource(resources, R.drawable.default_portrait);
-            }
+        return BitmapFactory.decodeFile(portraitPath);
     }
 
     public String getPortraitPath() {
@@ -48,5 +40,12 @@ public class Child {
 
     public void childName(String newName) {
         childName = newName;
+    }
+    public boolean isDefaultPicture() {
+        return isDefaultPicture;
+    }
+
+    public void setDefaultPicture(boolean defaultPicture) {
+        isDefaultPicture = defaultPicture;
     }
 }

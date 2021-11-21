@@ -1,7 +1,5 @@
 package ca.cmpt276.parentapp.model;
 
-import android.content.res.Resources;
-
 import java.util.ArrayList;
 
 /**
@@ -33,8 +31,8 @@ public  class ChildManager {
     }
 
 
-    public void addChildren(String name, String newPhotoPath, Resources newResources) {
-        childrenList.add(new Child(name, newPhotoPath, newResources));
+    public void addChildren(String name, String newPhotoPath, boolean isDefaultPicture) {
+        childrenList.add(new Child(name, newPhotoPath, isDefaultPicture));
     }
 
     public void removeChildren(int index){
@@ -62,6 +60,14 @@ public  class ChildManager {
             return EMPTY_CHILD_LIST;
         }
     }
+
+//    public boolean isDefaultPicture(int pos){
+//        return childrenList.get(pos).isDefaultPicture()]
+//    }
+//
+//    public void setDefaultPicture(int pos, boolean newBoolean){
+//        childrenList.get(pos).setDefaultPicture(newBoolean);
+//    }
 }
 
 

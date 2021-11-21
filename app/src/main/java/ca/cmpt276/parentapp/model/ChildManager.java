@@ -50,6 +50,10 @@ public  class ChildManager {
     public String getName(int pos) {
         return childrenName.get(pos);
     }
+
+    public int numberOfChildren() {
+        return childrenName.size();
+    }
 }
 
 

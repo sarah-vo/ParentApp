@@ -6,8 +6,8 @@ public  class TaskManager {
     private final ArrayList<Task> taskList;
     private static TaskManager instance;
 
-    public static TaskManager getInstance(){
-        if(instance == null){
+    public static TaskManager getInstance() {
+        if(instance == null) {
             instance = new TaskManager();
         }
         return instance;
@@ -21,12 +21,16 @@ public  class TaskManager {
         taskList = new ArrayList<>();
     }
 
-    public void addTask(Task task){
+    public void addTask(Task task) {
         taskList.add(task);
     }
 
-    public void removeTask(int index){
+    public void removeTask(int index) {
         taskList.remove(index);
+    }
+
+    public Task getTask(int index) {
+        return taskList.get(index);
     }
 
     public ArrayList<Task> getTaskList() {

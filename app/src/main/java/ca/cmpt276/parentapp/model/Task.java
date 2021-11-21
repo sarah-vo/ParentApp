@@ -1,11 +1,13 @@
 package ca.cmpt276.parentapp.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.Random;
 
 public class Task {
 
     private String taskName;
-    private int whoseTurn = -1;
+    private int whoseTurnIndex = -1;
 
     public Task(String taskName) {
         this.taskName = taskName;
@@ -15,26 +17,42 @@ public class Task {
         return this.taskName;
     }
 
-    public void editTaskName(String newTaskName) {
+    public void setTaskName(String newTaskName) {
         taskName = newTaskName;
     }
 
-    private int setWhoseTurn(int numChildren) {
-        if (whoseTurn == -1) {
+    public int getWhoseTurn(int numChildren) {
+        if (whoseTurnIndex == -1) {
             Random rand = new Random();
-            whoseTurn = rand.nextInt(numChildren);
-        }
-        else if (whoseTurn >= numChildren) {
-            whoseTurn = 0;
+            whoseTurnIndex = rand.nextInt(numChildren);
         }
         else {
-            whoseTurn = (whoseTurn + 1) % numChildren;
+            whoseTurnIndex = whoseTurnIndex % numChildren;
         }
-        return whoseTurn;
+        return whoseTurnIndex;
     }
 
-    private int getWhoseTurn() {
-        return whoseTurn;
+    public void passTurnToNextChild() {
+        whoseTurnIndex++;
     }
 
+    public String getCurrentTurnChild() {
+        ChildManager childrenManager = ChildManager.getInstance();
+        int numChildren = childrenManager.numberOfChildren();
+        String name;
+        if (numChildren == 0) {
+            name = "No child yet";
+        }
+        else {
+            name = childrenManager.getName(getWhoseTurn(numChildren));
+        }
+
+        return name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return taskName + "\nNext turn: " + getCurrentTurnChild();
+    }
 }

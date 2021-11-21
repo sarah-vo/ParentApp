@@ -1,13 +1,19 @@
 package ca.cmpt276.parentapp;
 
+import static ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity.CHILD_LIST;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.google.gson.Gson;
+
 import ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
+import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.whoseturn.WhoseTurnActivity;
 
@@ -21,10 +27,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getChildrenListFromSharedPreferences();
         switchActivityFlipCoin();
         switchActivityTimeoutTimer();
         switchActivitySettings();
         switchActivityWhoseTurn();
+    }
+
+    private void getChildrenListFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
+
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("Child List",null);
+
+        ChildManager childrenManager = gson.fromJson(json, ChildManager.class);
+        ChildManager.setInstance(childrenManager);
+
+        if(childrenManager == null){
+            childrenManager = ChildManager.getInstance();
+        }
     }
 
     @Override
@@ -57,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void switchActivityWhoseTurn() {
-        Button btnWhoseTurn = findViewById(R.id.button);
+        Button btnWhoseTurn = findViewById(R.id.taskButton);
         btnWhoseTurn.setOnClickListener(View -> {
             Intent intent = new Intent(this, WhoseTurnActivity.class);
             startActivity(intent);

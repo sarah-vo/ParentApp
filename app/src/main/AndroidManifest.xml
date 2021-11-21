@@ -16,6 +16,10 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".whoseturn.EditTask"
+            android:parentActivityName=".whoseturn.WhoseTurnActivity"
+            android:exported="true" />
+        <activity
             android:name=".whoseturn.AddTask"
             android:exported="true" />
         <activity

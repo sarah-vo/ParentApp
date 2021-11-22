@@ -33,10 +33,10 @@ public class EditTask extends AppCompatActivity {
     }
 
     private void setupText() {
-        EditText etTaskName = (EditText) findViewById(R.id.etTaskName);
-        etTaskName.setText(task.getTaskName());
+        EditText editTaskName = findViewById(R.id.etTaskName);
+        editTaskName.setText(task.getTaskName());
 
-        etTaskName.addTextChangedListener(new TextWatcher() {
+        editTaskName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -49,24 +49,25 @@ public class EditTask extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String newTask = etTaskName.getText().toString();
+                String newTask = editTaskName.getText().toString();
                 task.setTaskName(newTask);
             }
         });
 
-        TextView tvChildName = (TextView) findViewById(R.id.tvChildName);
+        TextView tvChildName = findViewById(R.id.tvChildName);
         tvChildName.setText(task.getCurrentTurnChild());
     }
 
     private void setupButton() {
-        Button btnComplete = (Button) findViewById(R.id.btnComplete);
-        Button btnCancel = (Button) findViewById(R.id.btnCancel);
+        Button buttonComplete = findViewById(R.id.buttotn_complete);
+        Button buttonCancel = findViewById(R.id.button_cancel);
 
-        btnComplete.setOnClickListener(View -> {
+        buttonComplete.setOnClickListener(View -> {
             task.passTurnToNextChild();
             finish();
         });
-        btnCancel.setOnClickListener(View -> {
+
+        buttonCancel.setOnClickListener(View -> {
             finish();
         });
     }

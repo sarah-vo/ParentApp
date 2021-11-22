@@ -18,7 +18,7 @@ public class Task {
     }
 
     public void setTaskName(String newTaskName) {
-        taskName = newTaskName;
+        this.taskName = newTaskName;
     }
 
     public int getWhoseTurn(int numChildren) {

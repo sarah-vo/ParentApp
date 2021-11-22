@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void switchActivityWhoseTurn() {
-        Button btnWhoseTurn = findViewById(R.id.taskButton);
-        btnWhoseTurn.setOnClickListener(View -> {
+        Button whoseTurnButton = findViewById(R.id.taskButton);
+        whoseTurnButton.setOnClickListener(View -> {
             Intent intent = new Intent(this, WhoseTurnActivity.class);
             startActivity(intent);
         });

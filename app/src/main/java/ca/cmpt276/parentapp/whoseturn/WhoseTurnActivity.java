@@ -1,17 +1,14 @@
 package ca.cmpt276.parentapp.whoseturn;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -19,22 +16,21 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
-import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
-import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
 
 public class WhoseTurnActivity extends AppCompatActivity {
     TaskManager taskManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whose_turn);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            Intent i = new Intent(this, AddTask.class);
+        FloatingActionButton mAddTaskButton = findViewById(R.id.add_task_button);
+        mAddTaskButton.setOnClickListener(view -> {
+            Intent i = new Intent(this, AddTaskActivity.class);
             startActivity(i);
         });
 

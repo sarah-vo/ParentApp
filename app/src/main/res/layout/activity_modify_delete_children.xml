@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".newConfig.ModifyDeleteChildren">
+
+    <ImageView
+        android:id="@+id/modifyPortrait"
+        android:layout_width="131dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modifyToolBar"
+        tools:srcCompat="@drawable/add_icon"
+        android:contentDescription="@string/portrait_description" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/modifyToolBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_500"
+        android:minHeight="?attr/actionBarSize"
+        android:title="@string/add_a_child"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="259dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toEndOf="@+id/modifyPortrait"
+        app:layout_constraintTop_toBottomOf="@+id/modifyToolBar">
+
+        <EditText
+            android:id="@+id/modifyChildName"
+            android:layout_width="246dp"
+            android:layout_height="38dp"
+            android:hint="@string/change_your_child_name_here"
+            android:inputType="textPersonName"
+            android:importantForAutofill="no" />
+    </com.google.android.material.textfield.TextInputLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

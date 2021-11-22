@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.newConfig.ConfigActivity;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.whoseturn.WhoseTurnActivity;
 
@@ -48,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);
@@ -70,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void switchActivitySettings(){
-        Button settingsButton = findViewById(R.id.settingsButton);
-        settingsButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, ChildConfigurationActivity.class);
+        Button flipCoinButton = findViewById(R.id.settingsButton);
+        flipCoinButton.setOnClickListener(View -> {
+            Intent intent = new Intent(this, ConfigActivity.class);
             startActivity(intent);
         });
     }

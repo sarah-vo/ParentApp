@@ -3,7 +3,7 @@ package ca.cmpt276.parentapp.model;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 
 /**
  * Store a list of FlipCoin objects. Supports singleton access and includes methods to
@@ -13,11 +13,14 @@ import java.util.Random;
 public class FlipCoinManager {
     private static FlipCoinManager instance;
     private final ArrayList<FlipCoin> flipCoinGameList;
-    private int currentIndex;
+    private ArrayList<Child> childrenList;
+
+    private boolean epoch;
+    private boolean override_default_empty;
 
     private FlipCoinManager(){
-        flipCoinGameList = new ArrayList<FlipCoin>();
-        currentIndex = -1;
+        flipCoinGameList = new ArrayList<>();
+        override_default_empty = false;
     }
 
     ///--------------------------Functions for instances-------------------------///
@@ -32,31 +35,88 @@ public class FlipCoinManager {
         return instance;
     }
 
-    ///--------------------------Functions for updating index-------------------------///
+    ///-------------------------Functions for managing player information--------=--------------///
 
-
-    //numChildren = current number of children saved in the app
-    public int getCurrentIndex(int numChildren) {
-        if (currentIndex == -1 || currentIndex >= numChildren) {
-            currentIndex = -1;
-            updateIndex(numChildren);
-        }
-        return currentIndex;
+    public void setPlayerList(ArrayList<Child> childrenList){
+        this.childrenList = childrenList;
     }
 
-    public int updateIndex(int numChildren){
-        if (currentIndex == -1) {
-            Random rand = new Random();
-            currentIndex = rand.nextInt(numChildren);
-        }
-        else {
-            currentIndex = (currentIndex + 1) % numChildren;
-        }
-        return currentIndex;
+    public ArrayList<Child> getPlayerList(){
+        return childrenList;
     }
 
-    public void resetIndex(){
-        currentIndex = -1;
+    public int getNumPlayer(){
+        return childrenList.size();
+    }
+
+    public boolean isEmpty(){
+        return childrenList.size() == 0;
+    }
+
+    public Child getCurrentPlayer() {
+        if(childrenList == null || override_default_empty){
+            return null;
+        }
+        return childrenList.get(0);
+    }
+
+    ///--------------------------Functions for updating Queue-------------------------///
+
+    public void updateQueue(){
+        if (childrenList != null && childrenList.size() > 0) {
+            if (override_default_empty){
+                override_default_empty = false;
+                return;
+            }
+            Child child = childrenList.get(0);
+            childrenList.remove(0);
+            childrenList.add(child);
+        }
+    }
+
+    public void overrideDefault(int index){
+
+        if(childrenList == null || index < 0 || index >= childrenList.size()){
+            throw new IndexOutOfBoundsException();
+        }
+
+        Child child = childrenList.get(index);
+        childrenList.remove(index);
+        childrenList.add(0, child);
+    }
+
+    public void overrideDefault(Child child){
+        if (!childrenList.contains(child)){
+            throw new IllegalArgumentException("Child does not exist!");
+        }
+        childrenList.remove(child);
+        childrenList.add(0, child);
+    }
+
+    public void shufflePlayer(){
+        if (childrenList != null){
+            Collections.shuffle(childrenList);
+        }
+    }
+
+    public void setDefaultEmpty(boolean flag){
+        override_default_empty = flag;
+    }
+
+    public boolean isOverrideDefaultEmpty(){
+        return override_default_empty;
+    }
+
+    public void resetEpoch(){
+        epoch = true;
+    }
+
+    public void updateEpoch(){
+        epoch = false;
+    }
+
+    public boolean isNewEpoch(){
+        return epoch;
     }
 
     ///--------------------------Functions to update Game-------------------------///

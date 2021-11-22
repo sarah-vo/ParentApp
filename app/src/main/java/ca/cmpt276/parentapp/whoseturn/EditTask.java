@@ -72,7 +72,9 @@ public class EditTask extends AppCompatActivity {
             task.passTurnToNextChild();
             finish();
         });
-        btnCancel.setOnClickListener(View -> finish());
+        btnCancel.setOnClickListener(View -> {
+            finish();
+        });
     }
 
 }

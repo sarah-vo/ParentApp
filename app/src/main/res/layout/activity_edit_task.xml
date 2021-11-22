@@ -7,7 +7,7 @@
     tools:context=".whoseturn.EditTask">
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/button_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="56dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etTaskName" />
 
     <Button
-        android:id="@+id/btnComplete"
+        android:id="@+id/buttotn_complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="184dp"

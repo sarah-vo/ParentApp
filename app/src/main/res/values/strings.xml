@@ -66,6 +66,11 @@
     <string name="task_name">Task Name</string>
     <string name="done_button_text">Done</string>
     <string name="tasks_button">Tasks</string>
+    <string name="confirm_add_task">Are you sure you want to add \"%1$s\" to the list?</string>
+    <string name="yes_add_task">Yes</string>
+    <string name="no_add_task">No</string>
+    <string name="empty_value_task">Name field can not be empty</string>
+    <string name="no_new_task_exit">Do you want to exit without adding any new task</string>
     <string name="cancel">Cancel</string>
     <string name="task_complete">Task Complete</string>
 </resources>

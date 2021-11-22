@@ -2,6 +2,7 @@ package ca.cmpt276.parentapp.whoseturn;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Task;
@@ -30,6 +32,10 @@ public class EditTask extends AppCompatActivity {
 
         setupText();
         setupButton();
+
+        ActionBar actionBar = getActionBar();
+
+
     }
 
     private void setupText() {
@@ -66,9 +72,7 @@ public class EditTask extends AppCompatActivity {
             task.passTurnToNextChild();
             finish();
         });
-        btnCancel.setOnClickListener(View -> {
-            finish();
-        });
+        btnCancel.setOnClickListener(View -> finish());
     }
 
 }

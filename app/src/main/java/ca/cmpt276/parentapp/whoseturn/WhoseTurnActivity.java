@@ -27,6 +27,7 @@ import ca.cmpt276.parentapp.model.TaskManager;
 public class WhoseTurnActivity extends AppCompatActivity {
     TaskManager taskManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +67,10 @@ public class WhoseTurnActivity extends AppCompatActivity {
 
     private void registerClickCallback() {
         ListView list = (ListView) findViewById(R.id.listViewTask);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(WhoseTurnActivity.this, EditTask.class);
-                intent.putExtra("task index", i);
-                startActivity(intent);
-            }
+        list.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(WhoseTurnActivity.this, EditTask.class);
+            intent.putExtra("task index", i);
+            startActivity(intent);
         });
     }
 

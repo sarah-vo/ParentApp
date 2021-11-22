@@ -24,7 +24,8 @@ public class MessageFragment extends AppCompatDialogFragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 switch(i) {
                     case DialogInterface.BUTTON_POSITIVE:
-                        // TODO:move the turn to next child
+                        
+                        getActivity().finish();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -34,7 +35,7 @@ public class MessageFragment extends AppCompatDialogFragment {
         };
 
         return new AlertDialog.Builder(getActivity())
-                .setTitle("Task name")
+
                 .setView(view)
                 .setPositiveButton(android.R.string.ok, listener)
                 .setNegativeButton(android.R.string.cancel, listener)

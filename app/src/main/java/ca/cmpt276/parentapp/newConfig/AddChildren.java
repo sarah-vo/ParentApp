@@ -125,11 +125,20 @@ public class AddChildren extends AppCompatActivity{
             Log.d("path", file.toString());
             FileOutputStream fos;
             try {
-                fos = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-                fos.close();
-                Log.d("Photo saved", "Photo saved");
+                if(isDefaultPicture){
+                    fos = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    fos.flush();
+                    fos.close();
+                    Log.d("Photo saved FOR DEFAULT", "Photo saved");
+                }
+                else {
+                    fos = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.flush();
+                    fos.close();
+                    Log.d("Photo saved", "Photo saved");
+                }
             } catch (java.io.IOException e) {
                 e.printStackTrace();
             }
@@ -146,6 +155,7 @@ public class AddChildren extends AppCompatActivity{
             return manager.getChildPosition()+1;
         }
     }
+
     String time() {
         Date date = new Date();
         return String.valueOf(date.getTime());
@@ -192,8 +202,8 @@ public class AddChildren extends AppCompatActivity{
     private void injectDefaultPortrait() {
         if(photoPath == null) {
             Bitmap defaultPortrait = BitmapFactory.decodeResource(getResources(),R.drawable.default_portrait);
-            photoPath = saveAndReturnPhotoDir(defaultPortrait, 0);
             isDefaultPicture = true;
+            photoPath = saveAndReturnPhotoDir(defaultPortrait, 0);
         }
     }
 

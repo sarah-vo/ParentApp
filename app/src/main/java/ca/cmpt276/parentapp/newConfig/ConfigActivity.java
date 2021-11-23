@@ -62,7 +62,7 @@ public class ConfigActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.childListView);
         list.setAdapter(adapter);
         list.setOnItemClickListener((parent, viewClicked, position, id) -> {
-            Intent intent = new Intent(this, ModifyDeleteChildren.class);
+            Intent intent = new Intent(this, EditChildren.class);
             intent.putExtra("Child Position",position);
             startActivity(intent);
             saveData();

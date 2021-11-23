@@ -66,7 +66,7 @@ public class EditTask extends AppCompatActivity {
         });
 
         Child child = task.getCurrentTurnChild();
-        TextView tvChildName = findViewById(R.id.tv_child_name);
+        TextView tvChildName = findViewById(R.id.tvChildName);
         ImageView childPhoto = findViewById(R.id.ivPhoto);
         if (child != null) {
             tvChildName.setText(child.getChildName());
@@ -76,7 +76,7 @@ public class EditTask extends AppCompatActivity {
     }
 
     private void setupButton() {
-        Button btnComplete = findViewById(R.id.button_complete);
+        Button btnComplete = findViewById(R.id.buttotn_complete);
         Button btnCancel = findViewById(R.id.button_cancel);
 
         btnComplete.setOnClickListener(View -> {

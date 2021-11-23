@@ -4,11 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -70,7 +67,7 @@ public class EditTask extends AppCompatActivity {
         });
 
         Child child = task.getCurrentTurnChild();
-        TextView tvChildName = findViewById(R.id.tvChildName);
+        TextView tvChildName = findViewById(R.id.tv_child_name);
         ImageView childPhoto = findViewById(R.id.ivPhoto);
         if (child != null) {
             tvChildName.setText(child.getChildName());
@@ -80,7 +77,7 @@ public class EditTask extends AppCompatActivity {
     }
 
     private void setupButton() {
-        Button btnComplete = findViewById(R.id.buttotn_complete);
+        Button btnComplete = findViewById(R.id.button_complete);
         Button btnCancel = findViewById(R.id.button_cancel);
 
         btnComplete.setOnClickListener(View -> {

@@ -4,20 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import ca.cmpt276.parentapp.R;
-import ca.cmpt276.parentapp.FlipCoin_Queue_Adapter;
+import ca.cmpt276.parentapp.FlipCoinQueueAdapter;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 public class FlipCoinQueue extends AppCompatActivity {
-    FlipCoin_Queue_Adapter flipCoinQueueAdapter;
+    FlipCoinQueueAdapter flipCoinQueueAdapter;
     FlipCoinManager coinManager;
 
     //Create an intent for this activity
@@ -56,7 +55,7 @@ public class FlipCoinQueue extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        flipCoinQueueAdapter = new FlipCoin_Queue_Adapter(FlipCoinQueue.this,
+        flipCoinQueueAdapter = new FlipCoinQueueAdapter(FlipCoinQueue.this,
                                                             coinManager.getPlayerList());
         ListView gameList = findViewById(R.id.flipCoinQueue);
         gameList.setAdapter(flipCoinQueueAdapter);

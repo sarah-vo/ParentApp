@@ -90,4 +90,7 @@
     <string name="format_name">Name: %1$s</string>
     <string name="format_picker">Picker: %1$s</string>
     <string name="format_result">Result: %1$s</string>
+    <string name="edit_task_toolbar_title">Edit Task</string>
+    <string name="edit_task_name">Task Name</string>
+    <string name="edit_text_child_name">Child Name</string>
 </resources>

@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -50,7 +48,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
 
         ArrayAdapter<Task> adapter = new ArrayAdapter<>(
                 this,
-                R.layout.task_list,
+                R.layout.task_list_item,
                 tasks);
 
         ListView list = (ListView) findViewById(R.id.listViewTask);
@@ -75,7 +73,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
 
         ArrayAdapter<Task> adapter = new ArrayAdapter<>(
                 this,
-                R.layout.task_list,
+                R.layout.task_list_item,
                 tasks);
 
         ListView list = (ListView) findViewById(R.id.listViewTask);

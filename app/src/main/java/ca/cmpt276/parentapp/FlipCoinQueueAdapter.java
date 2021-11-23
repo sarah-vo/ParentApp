@@ -18,8 +18,8 @@ import ca.cmpt276.parentapp.model.Child;
 /**
 *Queue Adapter to show the list of queue in the current flipCoinGame
  * */
-public class FlipCoin_Queue_Adapter extends ArrayAdapter<Child> {
-    public FlipCoin_Queue_Adapter(Context context, ArrayList<Child> childList){
+public class FlipCoinQueueAdapter extends ArrayAdapter<Child> {
+    public FlipCoinQueueAdapter(Context context, ArrayList<Child> childList){
         super(context, R.layout.activity_flip_coin_queue, childList);
     }
 

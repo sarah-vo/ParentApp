@@ -23,6 +23,9 @@ import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
 
+/**
+ * Screen to let user change task name, delete the task, and confirm the child has complete task.
+ */
 public class EditTask extends AppCompatActivity {
     TaskManager taskManager = TaskManager.getInstance();
     Task task;

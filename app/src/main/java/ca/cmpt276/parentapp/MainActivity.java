@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         switchActivityTimeoutTimer();
         switchActivitySettings();
         switchActivityWhoseTurn();
+        switchActivityHelpScreen();
     }
 
     private void getChildrenListFromSharedPreferences() {
@@ -74,6 +75,14 @@ public class MainActivity extends AppCompatActivity {
         Button whoseTurnButton = findViewById(R.id.taskButton);
         whoseTurnButton.setOnClickListener(View -> {
             Intent intent = new Intent(this, WhoseTurnActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void switchActivityHelpScreen() {
+        Button helpScreenButton = findViewById(R.id.btnHelpScreen);
+        helpScreenButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, HelpScreenActivity.class);
             startActivity(intent);
         });
     }

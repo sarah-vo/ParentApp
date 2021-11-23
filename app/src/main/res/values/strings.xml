@@ -89,4 +89,14 @@
     <string name="format_name">Name: %1$s</string>
     <string name="format_picker">Picker: %1$s</string>
     <string name="format_result">Result: %1$s</string>
+    <string name="timer_background"><a href="https://www.pinterest.ca/pin/560698222327909591/?d=t&amp;mt=login"> Timer Background</a></string>
+    <string name="delete_icon"><a href="https://www.flaticon.com/premium-icon/trash_3102186?term=trash&amp;page=1&amp;position=20&amp;page=1&amp;position=20&amp;related_id=3102186&amp;origin=search">Delete icon</a></string>
+    <string name="main_menu_background"><a href="https://stock.adobe.com/225471530?as_campaign=TinEye&amp;as_content=tineye_match&amp;epi1=225471530&amp;tduid=0bd245f8741b1b982ad71a5670df635e&amp;as_channel=affiliate&amp;as_campclass=redirect&amp;as_source=arvato">Main Menu Image</a></string>
+    <string name="alarm_sound_link"><a href="https://mixkit.co/free-sound-effects/alarm/"> Alarm sound</a></string>
+    <string name="tick_icon_link"><a href="https://www.clipartmax.com/middle/m2i8m2Z5G6i8H7b1_check-mark-computer-icons-clip-art-green-checkmark-icon-png/"> Tick icon</a></string>
+    <string name="x_icon_link"><a href="https://www.clipartmax.com/middle/m2H7H7A0m2Z5N4H7_x-mark-cross-computer-icons-clip-art-red-cross-icon/"> X icon</a></string>
+    <string name="flipcoin_background_link"><a href="https://wallpaperaccess.com/amazing-wood#google_vignette"> Flip Coin Background</a></string>
+    <string name="save_icon_link"><a href="https://flyclipart.com/download-png#disk-diskette-floppy-floppy-disk-guardar-preserve-save-icon-769235.png"> Save icon</a></string>
+    <string name="image_picker_link"><a href="https://github.com/Dhaval2404/ImagePicker"> Image Picker API</a></string>
+    <string name="default_avatar_link"><a href="https://www.seekpng.com/idown/u2q8r5t4i1y3w7e6_existing-user-default-avatar/">Default Avatar</a></string>
 </resources>

@@ -41,6 +41,19 @@
             android:label="Configure children"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".whoseturn.AddTaskActivity"
+            android:parentActivityName=".whoseturn.WhoseTurnActivity"
+            android:exported="true" />
+        <activity
+            android:name=".whoseturn.EditTask"
+            android:parentActivityName=".whoseturn.WhoseTurnActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="true" />
+        <activity
+            android:name=".whoseturn.WhoseTurnActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".flipcoin.FlipCoinHistory"
             android:exported="false"
             android:parentActivityName=".flipcoin.FlipCoinActivity" />
@@ -66,9 +79,7 @@
             </intent-filter>
         </activity>
 
-
         <service android:name=".timer.TimerService" />
-
 
         <receiver android:name=".timer.NotificationReceiver" />
 

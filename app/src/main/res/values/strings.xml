@@ -61,6 +61,20 @@
     <string name="min">min</string>
     <string name="sec">sec</string>
     <string name="add_child">Add Child</string>
+
+    <string name="title_activity_whose_turn">Whose Turn</string>
+    <string name="create_new_task">Create new Task</string>
+    <string name="task_name">Task Name</string>
+    <string name="done_button_text">Done</string>
+    <string name="tasks_button">Tasks</string>
+    <string name="confirm_add_task">Are you sure you want to add \"%1$s\" to the list?</string>
+    <string name="yes_add_task">Yes</string>
+    <string name="no_add_task">No</string>
+    <string name="back_without_done">Your task has not saved! Do you want to exit without adding any new task?</string>
+    <string name="back_without_value">Do you want to exit with out adding any new task?</string>
+    <string name="no_new_task_exit">Name field can not be empty! Do you want to exit without adding any new task?</string>
+    <string name="cancel">Cancel</string>
+    <string name="task_complete">Task Complete</string>
     <string name="title_activity_config">configActivity</string>
     <string name="save">save</string>
     <string name="save_button">Save button</string>

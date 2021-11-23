@@ -48,6 +48,9 @@ public class CoinListAdapter extends ArrayAdapter<FlipCoin> {
             if(currentGame.getPicker().getPortrait() != null){
                 playerProfile.setImageBitmap(currentGame.getPicker().getPortrait());
             }
+            else{
+                playerProfile.setImageResource(R.drawable.default_portrait);
+            }
 
             // P1 info
             ImageView coinDetails =  itemView.findViewById(R.id.coinDetails);

@@ -89,6 +89,9 @@ public class FlipCoinActivity extends AppCompatActivity {
             if(flipCoinGame.getPicker().getPortrait() != null){
                 playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
             }
+            else{
+                playerProfile.setImageResource(R.drawable.default_portrait);
+            }
 
             String message = getString(R.string.player_turn,flipCoinManager.getCurrentPlayer().getChildName());
             showPicker.setText(message);
@@ -183,6 +186,9 @@ public class FlipCoinActivity extends AppCompatActivity {
             if(flipCoinGame.getPicker().getPortrait() != null){
                 playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
             }
+            else{
+                playerProfile.setImageResource(R.drawable.default_portrait);
+            }
 
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getChildName());
             showPicker.setText(message);
@@ -274,6 +280,9 @@ public class FlipCoinActivity extends AppCompatActivity {
 
                         if(flipCoinGame.getPicker().getPortrait() != null){
                             playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+                        }
+                        else{
+                            playerProfile.setImageResource(R.drawable.default_portrait);
                         }
 
                         String message = getString(R.string.player_turn,

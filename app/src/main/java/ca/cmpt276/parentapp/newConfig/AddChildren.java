@@ -39,6 +39,7 @@ public class AddChildren extends AppCompatActivity{
     final ChildManager manager = ChildManager.getInstance();
     ImageView imageView = null;
     String photoPath = null;
+    boolean isDefaultPicture;
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
     private static final int EMPTY_CHILD_LIST = -999;
@@ -94,7 +95,9 @@ public class AddChildren extends AppCompatActivity{
                     photoPath = saveAndReturnPhotoDir(
                             MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
                             getNewChildPosition());
+                    isDefaultPicture = false;
                 }
+
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -122,10 +125,20 @@ public class AddChildren extends AppCompatActivity{
             Log.d("path", file.toString());
             FileOutputStream fos;
             try {
-                fos = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                fos.flush();
-                fos.close();
+                if(isDefaultPicture){
+                    fos = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    fos.flush();
+                    fos.close();
+                    Log.d("Photo saved FOR DEFAULT", "Photo saved");
+                }
+                else {
+                    fos = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.flush();
+                    fos.close();
+                    Log.d("Photo saved", "Photo saved");
+                }
             } catch (java.io.IOException e) {
                 e.printStackTrace();
             }
@@ -142,6 +155,7 @@ public class AddChildren extends AppCompatActivity{
             return manager.getChildPosition()+1;
         }
     }
+
     String time() {
         Date date = new Date();
         return String.valueOf(date.getTime());
@@ -163,8 +177,8 @@ public class AddChildren extends AppCompatActivity{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
-
-                            manager.addChildren(newName,photoPath);
+                            injectDefaultPortrait();
+                            manager.addChildren(newName,photoPath, isDefaultPicture);
                             saveData();
                             finish();
 
@@ -184,6 +198,15 @@ public class AddChildren extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void injectDefaultPortrait() {
+        if(photoPath == null) {
+            Bitmap defaultPortrait = BitmapFactory.decodeResource(getResources(),R.drawable.default_portrait);
+            isDefaultPicture = true;
+            photoPath = saveAndReturnPhotoDir(defaultPortrait, 0);
+        }
+    }
+
 
     void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);

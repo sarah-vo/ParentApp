@@ -29,10 +29,10 @@
         android:id="@+id/result_img"
         android:layout_width="67dp"
         android:layout_height="59dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:contentDescription="@string/result_flipCoin"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
-        app:layout_constraintStart_toEndOf="@+id/flipcoin_history_result"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/tick_icon" />
 
     <TextView

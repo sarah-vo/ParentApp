@@ -4,6 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.517555266579974" />
+        <entry key="..\:/SFU/12. Fall 2021/CMPT 276/Project/ParentApp/app/src/main/res/layout/activity_edit_task.xml" value="0.25" />
+        <entry key="..\:/SFU/12. Fall 2021/CMPT 276/Project/ParentApp/app/src/main/res/layout/activity_flip_coin_history.xml" value="0.15625" />
+        <entry key="..\:/SFU/12. Fall 2021/CMPT 276/Project/ParentApp/app/src/main/res/layout/history_textview.xml" value="0.4" />
         <entry key="..\:/Users/georg/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/custom_button.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/georg/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/default_buttom_img.xml" value="0.15625" />
         <entry key="..\:/Users/georg/AndroidStudioProjects/ParentApp/app/src/main/res/drawable/default_button_2.xml" value="0.15625" />
@@ -16,7 +19,6 @@
         <entry key="app/src/main/res/drawable/default_button_2.xml" value="0.39794871794871794" />
         <entry key="app/src/main/res/drawable/default_button_img.xml" value="0.39794871794871794" />
         <entry key="app/src/main/res/drawable/ic_add_24dp.xml" value="0.39794871794871794" />
-        <entry key="app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.39794871794871794" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.4041666666666667" />
         <entry key="app/src/main/res/drawable/main_menu_button.xml" value="0.39794871794871794" />
         <entry key="app/src/main/res/drawable/timer.xml" value="0.39794871794871794" />
@@ -27,8 +29,6 @@
         <entry key="app/src/main/res/layout/activity_edit_task.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_flip_coin.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_flip_coin_history.xml" value="0.3880208333333333" />
-        <entry key="app/src/main/res/layout/activity_flip_coin_queue.xml" value="0.3880208333333333" />
-        <entry key="app/src/main/res/layout/activity_help_screen.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/activity_main2.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_modify_delete_children.xml" value="0.3880208333333333" />
@@ -41,7 +41,6 @@
         <entry key="app/src/main/res/layout/flip_coin_empty_history.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/history_textview.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/layout/task_list.xml" value="0.3880208333333333" />
-        <entry key="app/src/main/res/layout/task_list_item.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/layout/task_message_layout.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/menu/add_toolbar_icons.xml" value="0.3880208333333333" />
         <entry key="app/src/main/res/menu/flip_coin_menu.xml" value="0.3880208333333333" />

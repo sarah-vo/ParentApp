@@ -1,7 +1,6 @@
 package ca.cmpt276.parentapp.whoseturn;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -76,16 +75,14 @@ public class EditTask extends AppCompatActivity {
     }
 
     private void setupButton() {
-        Button btnComplete = findViewById(R.id.buttotn_complete);
+        Button btnComplete = findViewById(R.id.button_complete);
         Button btnCancel = findViewById(R.id.button_cancel);
 
         btnComplete.setOnClickListener(View -> {
             task.passTurnToNextChild();
             finish();
         });
-        btnCancel.setOnClickListener(View -> {
-            finish();
-        });
+        btnCancel.setOnClickListener(View -> finish());
     }
 
     @Override

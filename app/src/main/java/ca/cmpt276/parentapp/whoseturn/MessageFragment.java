@@ -19,18 +19,15 @@ public class MessageFragment extends AppCompatDialogFragment {
         View view = LayoutInflater.from(getActivity())
                     .inflate(R.layout.task_message_layout, null);
 
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch(i) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        
-                        getActivity().finish();
-                        break;
+        DialogInterface.OnClickListener listener = (dialogInterface, i) -> {
+            switch(i) {
+                case DialogInterface.BUTTON_POSITIVE:
 
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
-                }
+                    getActivity().finish();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
             }
         };
 

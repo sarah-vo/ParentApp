@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -42,12 +41,8 @@ public class AddTaskActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(mTaskNameEntry.getText().toString())) {
                 builder
                         .setMessage(R.string.no_new_task_exit)
-                        .setPositiveButton(R.string.yes_add_task, (dialog, which) -> {
-                            finish();
-                        })
-                        .setNegativeButton(R.string.no_add_task, (dialog, which) -> {
-                            onClickDone();
-                        });
+                        .setPositiveButton(R.string.yes_add_task, (dialog, which) -> finish())
+                        .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
 
                 AlertDialog alert = builder.create();
                 alert.show();
@@ -60,9 +55,7 @@ public class AddTaskActivity extends AppCompatActivity {
                             taskManager.addTask(newTask);
                             finish();
                         })
-                        .setNegativeButton(R.string.no_add_task, (dialog, which) -> {
-                            onClickDone();
-                        });
+                        .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
                 AlertDialog alert = builder.create();
                 alert.show();
             }
@@ -76,40 +69,17 @@ public class AddTaskActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (TextUtils.isEmpty(mTaskNameEntry.getText().toString())) {
             builder.setMessage(R.string.back_without_value)
-                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> {
-                        super.onBackPressed();
-                    })
-                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> {
-                        onClickDone();
-                    });
+                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> super.onBackPressed())
+                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
             AlertDialog alert = builder.create();
             alert.show();
         } else {
             builder.setMessage(R.string.back_without_done)
-                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> {
-                        super.onBackPressed();
-                    })
-                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> {
-                        onClickDone();
-                    });
+                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> super.onBackPressed())
+                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
             AlertDialog alert = builder.create();
             alert.show();
         }
 
     }
 }
-/*            else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder
-                        .setMessage(getString(R.string.confirm_add_task, taskName))
-                        .setPositiveButton(R.string.yes_add_task, (dialog, which) -> {
-                            newTask.setTaskName(taskName);
-                            taskManager.addTask(newTask);
-                            finish();
-                        })
-                        .setNegativeButton(R.string.no_add_task, (dialog, which) -> {
-                            AddTaskName();
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }*/

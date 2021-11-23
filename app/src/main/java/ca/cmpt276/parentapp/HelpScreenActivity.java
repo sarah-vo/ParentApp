@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+/**
+ * State the name of the team and developers which created the app. Show links to material used in the app
+ */
 public class HelpScreenActivity extends AppCompatActivity {
 
     @Override

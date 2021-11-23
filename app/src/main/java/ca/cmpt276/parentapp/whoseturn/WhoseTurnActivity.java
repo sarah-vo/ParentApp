@@ -51,12 +51,12 @@ public class WhoseTurnActivity extends AppCompatActivity {
                 R.layout.task_list_item,
                 tasks);
 
-        ListView list = (ListView) findViewById(R.id.listViewTask);
+        ListView list = findViewById(R.id.listViewTask);
         list.setAdapter(adapter);
     }
 
     private void registerClickCallback() {
-        ListView list = (ListView) findViewById(R.id.listViewTask);
+        ListView list = findViewById(R.id.listViewTask);
         list.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = new Intent(WhoseTurnActivity.this, EditTask.class);
             intent.putExtra("task index", i);
@@ -76,7 +76,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
                 R.layout.task_list_item,
                 tasks);
 
-        ListView list = (ListView) findViewById(R.id.listViewTask);
+        ListView list = findViewById(R.id.listViewTask);
         list.setAdapter(adapter);
     }
 
@@ -102,7 +102,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = sharedPreferences.getString("Task List",null);
         taskManager = gson.fromJson(json, TaskManager.class);
-        taskManager.setInstance(taskManager);
+        TaskManager.setInstance(taskManager);
 
         if(taskManager == null){
             taskManager = TaskManager.getInstance();

@@ -1,4 +1,4 @@
-Scrum Master: Trung Vo
-Product Owner: Surat Perkash
-Repo Manager: Heyuan Wang
-Team Member: George Andreas
+Scrum Master: Heyuan Wang
+Product Owner: George Andreas
+Repo Manager: Surat Perkash
+Team Member:Trung Vo

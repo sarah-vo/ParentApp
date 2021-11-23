@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         ChildManager childrenManager = gson.fromJson(json, ChildManager.class);
         ChildManager.setInstance(childrenManager);
-
-        if(childrenManager == null){
-            childrenManager = ChildManager.getInstance();
-        }
     }
 
 

@@ -2,17 +2,12 @@ package ca.cmpt276.parentapp.child_config;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -25,11 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Date;
-
 import ca.cmpt276.parentapp.R;
+import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 
 
@@ -37,14 +29,11 @@ import ca.cmpt276.parentapp.model.ChildManager;
 public class AddChildren extends AppCompatActivity{
     final ChildManager manager = ChildManager.getInstance();
     ImageView imageView = null;
-    String photoPath = null;
-    boolean IS_DEFAULT_PORTRAIT = true;
+
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
-    private static final int EMPTY_CHILD_LIST = -999;
-    final String DEFAULT_PORTRAIT = "defaultPortrait";
 
-
+    Child child;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +41,8 @@ public class AddChildren extends AppCompatActivity{
 
         //setting up toolbar
         setContentView(R.layout.activity_add_children);
-//        Toolbar myToolbar = findViewById(R.id.addToolbar);
-//        setSupportActionBar(myToolbar);
+        child = new Child();
+
         addImage();
     }
 
@@ -62,9 +51,7 @@ public class AddChildren extends AppCompatActivity{
         //confirm if user wanted to exit
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.backPressedWarning).setPositiveButton
-                (R.string.yes_edit_child, (dialog, which) -> {
-                    super.onBackPressed();
-                }).setNegativeButton
+                (R.string.yes_edit_child, (dialog, which) -> super.onBackPressed()).setNegativeButton
                     (R.string.no_edit_child, (dialog, which) -> {
                     /*do nothing*/
                 });
@@ -92,18 +79,14 @@ public class AddChildren extends AppCompatActivity{
             Uri fileUri = data.getData();
             try {
                 if(fileUri !=null){
-                    photoPath = saveAndReturnPhotoDir(
-                            MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
-                            getNewChildPosition(), !IS_DEFAULT_PORTRAIT);
+                    child.saveBitmapString(MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri));
+                    imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri));
                 }
 
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
-
-            //setting bitmap to imageview and child's portrait variable
-            imageView.setImageBitmap(BitmapFactory.decodeFile(photoPath));
 
             //error handling
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
@@ -115,46 +98,6 @@ public class AddChildren extends AppCompatActivity{
 
     }
 
-    String saveAndReturnPhotoDir(Bitmap bitmap,int position, boolean isDefaultPortrait) {
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        String fileName = null;
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        if(isDefaultPortrait){
-            fileName = DEFAULT_PORTRAIT;
-        }
-        else{
-            fileName = "portraitChild"+position+time();
-        }
-        File file = new File(directory, fileName + ".jpg");
-        if (!file.exists()) {
-            Log.d("path", file.toString());
-            FileOutputStream fos;
-            try {
-                    fos = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                    fos.flush();
-                    fos.close();
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return file.getPath();
-    }
-
-    /**ONLY FOR saveAndReturnPhotoDir. NOT TO BE USED USED FOR ANYTHING ELSE**/
-    int getNewChildPosition() {
-        if(manager.getLatestChildPosition() == EMPTY_CHILD_LIST){
-            return 0;
-        }
-        else {
-            return manager.getLatestChildPosition()+1;
-        }
-    }
-
-    String time() {
-        Date date = new Date();
-        return String.valueOf(date.getTime());
-    }
 
     //configure save button
     @Override
@@ -172,8 +115,8 @@ public class AddChildren extends AppCompatActivity{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
-                            injectDefaultPortrait();
-                            manager.addChildren(newName,photoPath);
+                            child.setName(newName);
+                            manager.addChildren(child);
                             saveData();
                             finish();
 
@@ -193,14 +136,6 @@ public class AddChildren extends AppCompatActivity{
         }
         return super.onOptionsItemSelected(item);
     }
-
-    private void injectDefaultPortrait() {
-        if(photoPath == null) {
-            Bitmap defaultPortrait = BitmapFactory.decodeResource(getResources(),R.drawable.default_portrait);
-            photoPath = saveAndReturnPhotoDir(defaultPortrait, 0, IS_DEFAULT_PORTRAIT);
-        }
-    }
-
 
     void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);

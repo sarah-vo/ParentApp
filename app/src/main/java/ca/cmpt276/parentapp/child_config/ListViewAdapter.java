@@ -33,8 +33,9 @@ public class ListViewAdapter extends ArrayAdapter<Child> {
         if (child != null){
             //image
             ImageView imageView = itemView.findViewById(R.id.portrait);
+            if(child.getPortrait() != null){
                 imageView.setImageBitmap(child.getPortrait());
-
+            }
 
             //name
             TextView name = itemView.findViewById(R.id.name);

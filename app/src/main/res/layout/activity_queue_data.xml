@@ -25,5 +25,5 @@
         app:layout_constraintEnd_toStartOf="@+id/child_name_data"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/default_profile" />
+        app:srcCompat="@drawable/default_portrait" />
 </androidx.constraintlayout.widget.ConstraintLayout>

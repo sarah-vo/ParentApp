@@ -37,7 +37,10 @@ public class FlipCoinQueueAdapter extends ArrayAdapter<Child> {
         name_text.setText(getContext().getString(R.string.format_name, child.getChildName()));
 
         ImageView player_profile = convertView.findViewById(R.id.flipCoin_queue_profile);
-        player_profile.setImageBitmap(child.getPortrait());
+
+        if(child.getPortrait() != null){
+            player_profile.setImageBitmap(child.getPortrait());
+        }
 
         return convertView;
     }

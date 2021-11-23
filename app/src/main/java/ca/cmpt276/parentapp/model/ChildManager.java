@@ -30,9 +30,8 @@ public  class ChildManager {
         return childrenList;
     }
 
-
-    public void addChildren(String name, String newPhotoPath) {
-        childrenList.add(new Child(name, newPhotoPath));
+    public void addChildren(Child child) {
+        childrenList.add(child);
     }
 
     public void removeChildren(int index){
@@ -44,8 +43,8 @@ public  class ChildManager {
         childrenList.get(index).childName(name);
     }
 
-    public void editChildrenPortraitPath(String newPath, int position) {
-        childrenList.get(position).setPortrait(newPath);
+    public void editChildrenByteString(String byteString, int position){
+        childrenList.get(position).saveBitmapString(byteString);
     }
 
     public Child getChild(int pos) {

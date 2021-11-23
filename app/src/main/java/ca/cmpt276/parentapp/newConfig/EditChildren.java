@@ -149,7 +149,7 @@ public class EditChildren extends AppCompatActivity {
             FileOutputStream fos;
             try {
                 fos = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 fos.flush();
                 fos.close();
             } catch (java.io.IOException e) {

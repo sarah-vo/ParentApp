@@ -212,7 +212,7 @@ public class EditChildren extends AppCompatActivity {
 
     private void deleteChildInfo() {
         manager.removeChildren(position);
-        deletePhoto();
+        //deletePhoto();
         saveData();
         finish();
     }
@@ -224,18 +224,18 @@ public class EditChildren extends AppCompatActivity {
         finish();
     }
 
-    private void deletePhoto() {
-        if(child.getPortraitPath() != null) {
-            File fdelete = new File(child.getPortraitPath());
-            if (fdelete.exists()) {
-                if (fdelete.delete()) {
-                    System.out.println("file Deleted :" + photoPath);
-                } else {
-                    System.out.println("file not Deleted :" + photoPath);
-                }
-            }
-        }
-    }
+//    private void deletePhoto() {
+//        if(child.getPortraitPath() != null) {
+//            File fdelete = new File(child.getPortraitPath());
+//            if (fdelete.exists()) {
+//                if (fdelete.delete()) {
+//                    System.out.println("file Deleted :" + photoPath);
+//                } else {
+//                    System.out.println("file not Deleted :" + photoPath);
+//                }
+//            }
+//        }
+//    }
 
     void saveData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);

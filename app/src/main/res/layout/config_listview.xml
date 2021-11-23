@@ -14,7 +14,7 @@
         android:contentDescription="@string/portrait_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/default_portrait" />
 
     <TextView
         android:id="@+id/name"

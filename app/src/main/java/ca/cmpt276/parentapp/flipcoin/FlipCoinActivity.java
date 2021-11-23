@@ -83,11 +83,12 @@ public class FlipCoinActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
         if (childrenList.size() > 0 && flipCoinManager.getCurrentPlayer() != null) {
             flipCoinGame = new FlipCoin();
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-            playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+            if(flipCoinGame.getPicker().getPortrait() != null){
+                playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+            }
 
             String message = getString(R.string.player_turn,flipCoinManager.getCurrentPlayer().getChildName());
             showPicker.setText(message);
@@ -178,7 +179,10 @@ public class FlipCoinActivity extends AppCompatActivity {
             flipCoinGame = new FlipCoin();
 
             flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-            playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+
+            if(flipCoinGame.getPicker().getPortrait() != null){
+                playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+            }
 
             String message = getString(R.string.player_turn,flipCoinGame.getPicker().getChildName());
             showPicker.setText(message);
@@ -267,7 +271,10 @@ public class FlipCoinActivity extends AppCompatActivity {
                         newGame = new FlipCoin();
                         flipCoinGame = newGame;
                         flipCoinGame.setPicker(flipCoinManager.getCurrentPlayer());
-                        playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+
+                        if(flipCoinGame.getPicker().getPortrait() != null){
+                            playerProfile.setImageBitmap(flipCoinGame.getPicker().getPortrait());
+                        }
 
                         String message = getString(R.string.player_turn,
                                 flipCoinGame.getPicker().getChildName());

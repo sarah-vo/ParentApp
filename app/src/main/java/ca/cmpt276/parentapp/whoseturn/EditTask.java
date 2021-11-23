@@ -69,7 +69,9 @@ public class EditTask extends AppCompatActivity {
         ImageView childPhoto = findViewById(R.id.ivPhoto);
         if (child != null) {
             tvChildName.setText(child.getChildName());
-            childPhoto.setImageBitmap(child.getPortrait());
+            if(child.getPortrait() != null) {
+                childPhoto.setImageBitmap(child.getPortrait());
+            }
         }
 
     }

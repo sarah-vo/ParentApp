@@ -2,16 +2,14 @@ package ca.cmpt276.parentapp.child_config;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,9 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Date;
+import java.io.ByteArrayOutputStream;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
@@ -39,14 +35,16 @@ public class EditChildren extends AppCompatActivity {
     Child child;
     int position;
     ImageView portraitImageView;
-    String photoPath;
     EditText nameEditText;
+
+    String byteArray;
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //setting up toolbar
         setContentView(R.layout.activity_modify_delete_children);
         fillPositionAndChild();
@@ -80,7 +78,10 @@ public class EditChildren extends AppCompatActivity {
 
     private void fillPortraitAndNameField() {
         portraitImageView = findViewById(R.id.modifyPortrait);
-        portraitImageView.setImageBitmap(child.getPortrait());
+        if(child.getPortrait() != null){
+            portraitImageView.setImageBitmap(child.getPortrait());
+        }
+
         nameEditText = findViewById(R.id.modifyChildName);
         nameEditText.setText(child.getChildName());
     }
@@ -109,58 +110,26 @@ public class EditChildren extends AppCompatActivity {
             Uri fileUri = data.getData();
             try {
                 if(  fileUri !=null   ){
-                    photoPath = saveAndReturnPhotoDir(
-                            MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
-                            manager.getLatestChildPosition());
+                    byteArray = convertBitmapString(MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri));
+                    portraitImageView.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri));
                 }
             }
             catch (Exception e) {
                 e.printStackTrace();
             }
-
-            //setting bitmap to imageview and child's portrait variable
-            portraitImageView.setImageBitmap(BitmapFactory.decodeFile(photoPath));
-            //error handling
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Task Cancelled", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
-    String saveAndReturnPhotoDir(Bitmap bitmap, int position){
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        String fileName = "portraitChild"+position+time();
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        File file = new File(directory, fileName + ".jpg");
-        if (!file.exists()) {
-            Log.d("path", file.toString());
-            FileOutputStream fos;
-            try {
-                fos = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                fos.flush();
-                fos.close();
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return file.getPath();
-    }
-
-    String time(){
-        Date date = new Date();
-        return String.valueOf(date.getTime());
-    }
-
-    //configure save/delete button
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.modify_toolbar_icons,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //SAVE BUTTON CONFIG
@@ -212,30 +181,27 @@ public class EditChildren extends AppCompatActivity {
 
     private void deleteChildInfo() {
         manager.removeChildren(position);
-        //deletePhoto();
         saveData();
         finish();
     }
 
     private void editChildInfo(String newName) {
         manager.editChildrenName(newName, position);
-        manager.editChildrenPortraitPath(photoPath,position);
+        manager.editChildrenByteString(byteArray, position);
         saveData();
         finish();
     }
 
-//    private void deletePhoto() {
-//        if(child.getPortraitPath() != null) {
-//            File fdelete = new File(child.getPortraitPath());
-//            if (fdelete.exists()) {
-//                if (fdelete.delete()) {
-//                    System.out.println("file Deleted :" + photoPath);
-//                } else {
-//                    System.out.println("file not Deleted :" + photoPath);
-//                }
-//            }
-//        }
-//    }
+    public String convertBitmapString(Bitmap bitmap){
+        String bytePhoto;
+
+        ByteArrayOutputStream baos = new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        bytePhoto =  Base64.encodeToString(b, Base64.DEFAULT);
+        return bytePhoto;
+    }
+
 
     void saveData(){
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE, MODE_PRIVATE);

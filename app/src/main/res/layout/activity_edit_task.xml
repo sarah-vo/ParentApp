@@ -60,6 +60,6 @@
         android:layout_marginTop="68dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTaskName"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/default_portrait"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -47,7 +47,6 @@
         <activity
             android:name=".whoseturn.EditTask"
             android:parentActivityName=".whoseturn.WhoseTurnActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true" />
         <activity
             android:name=".whoseturn.WhoseTurnActivity"
@@ -68,6 +67,9 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".HelpScreenActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

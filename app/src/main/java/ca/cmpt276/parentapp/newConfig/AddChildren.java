@@ -39,10 +39,11 @@ public class AddChildren extends AppCompatActivity{
     final ChildManager manager = ChildManager.getInstance();
     ImageView imageView = null;
     String photoPath = null;
-    boolean isDefaultPicture;
+    boolean IS_DEFAULT_PORTRAIT = true;
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
     private static final int EMPTY_CHILD_LIST = -999;
+    final String DEFAULT_PORTRAIT = "defaultPortrait";
 
 
 
@@ -94,8 +95,7 @@ public class AddChildren extends AppCompatActivity{
                 if(fileUri !=null){
                     photoPath = saveAndReturnPhotoDir(
                             MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
-                            getNewChildPosition());
-                    isDefaultPicture = false;
+                            getNewChildPosition(), !IS_DEFAULT_PORTRAIT);
                 }
 
             }
@@ -116,29 +116,25 @@ public class AddChildren extends AppCompatActivity{
 
     }
 
-    String saveAndReturnPhotoDir(Bitmap bitmap,int position) {
+    String saveAndReturnPhotoDir(Bitmap bitmap,int position, boolean isDefaultPortrait) {
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        String fileName = "portraitChild"+position+time();
+        String fileName = null;
         File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        if(isDefaultPortrait){
+            fileName = DEFAULT_PORTRAIT;
+        }
+        else{
+            fileName = "portraitChild"+position+time();
+        }
         File file = new File(directory, fileName + ".jpg");
         if (!file.exists()) {
             Log.d("path", file.toString());
             FileOutputStream fos;
             try {
-                if(isDefaultPicture){
                     fos = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     fos.flush();
                     fos.close();
-                    Log.d("Photo saved FOR DEFAULT", "Photo saved");
-                }
-                else {
-                    fos = new FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                    fos.flush();
-                    fos.close();
-                    Log.d("Photo saved", "Photo saved");
-                }
             } catch (java.io.IOException e) {
                 e.printStackTrace();
             }
@@ -178,7 +174,7 @@ public class AddChildren extends AppCompatActivity{
                 builder.setMessage(getString(R.string.confirm_add_child, newName))
                         .setPositiveButton(R.string.yes_add_child, (dialog, which) -> {
                             injectDefaultPortrait();
-                            manager.addChildren(newName,photoPath, isDefaultPicture);
+                            manager.addChildren(newName,photoPath);
                             saveData();
                             finish();
 
@@ -202,8 +198,7 @@ public class AddChildren extends AppCompatActivity{
     private void injectDefaultPortrait() {
         if(photoPath == null) {
             Bitmap defaultPortrait = BitmapFactory.decodeResource(getResources(),R.drawable.default_portrait);
-            isDefaultPicture = true;
-            photoPath = saveAndReturnPhotoDir(defaultPortrait, 0);
+            photoPath = saveAndReturnPhotoDir(defaultPortrait, 0, IS_DEFAULT_PORTRAIT);
         }
     }
 

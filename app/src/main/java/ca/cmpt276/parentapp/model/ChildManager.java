@@ -31,8 +31,8 @@ public  class ChildManager {
     }
 
 
-    public void addChildren(String name, String newPhotoPath, boolean isDefaultPicture) {
-        childrenList.add(new Child(name, newPhotoPath, isDefaultPicture));
+    public void addChildren(String name, String newPhotoPath) {
+        childrenList.add(new Child(name, newPhotoPath));
     }
 
     public void removeChildren(int index){

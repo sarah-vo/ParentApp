@@ -10,16 +10,14 @@ import android.graphics.BitmapFactory;
 public class Child {
     String childName;
     String portraitPath;
-    boolean isDefaultPicture;
 
     public Child(String childName) {
         this.childName = childName;
     }
 
-    public Child(String childName, String newPortraitPath, boolean isDefaultPicture) {
+    public Child(String childName, String newPortraitPath) {
         this.childName = childName;
         portraitPath = newPortraitPath;
-        this.isDefaultPicture = isDefaultPicture;
     }
 
     public Bitmap getPortrait() {
@@ -41,11 +39,5 @@ public class Child {
     public void childName(String newName) {
         childName = newName;
     }
-    public boolean isDefaultPicture() {
-        return isDefaultPicture;
-    }
 
-    public void setDefaultPicture(boolean defaultPicture) {
-        isDefaultPicture = defaultPicture;
-    }
 }

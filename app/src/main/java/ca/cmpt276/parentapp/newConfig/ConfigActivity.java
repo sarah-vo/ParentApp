@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,8 +32,6 @@ public class ConfigActivity extends AppCompatActivity {
         setContentView(R.layout.activity_config);
         buildChildList();
         buildFloatingButton();
-        deleteAllDEBUGButton();
-        addChildrenDEBUGButton();
     }
 
     @Override
@@ -113,26 +110,6 @@ public class ConfigActivity extends AppCompatActivity {
         }
     }
 
-    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
-    private void deleteAllDEBUGButton() {
-        Button button = findViewById(R.id.deleteAllChildButton);
-        button.setOnClickListener(View ->{
-            manager.getChildList().clear();
-            adapter.notifyDataSetChanged();
-            saveData();
-        });
-    }
-    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
-    private void addChildrenDEBUGButton(){
-        Button button = findViewById(R.id.createChildren);
-        button.setOnClickListener(View ->{
-            int i = (manager.getChildList().isEmpty())?(0):(manager.getChildList().size());
-            manager.addChildren(Integer.toString(i), null, true);
-            adapter.notifyDataSetChanged();
-        });
-
-
-    }
 
 
 }

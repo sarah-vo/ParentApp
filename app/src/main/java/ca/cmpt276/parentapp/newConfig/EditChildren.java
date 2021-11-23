@@ -83,12 +83,7 @@ public class EditChildren extends AppCompatActivity {
 
     private void fillPortraitAndNameField() {
         portraitImageView = findViewById(R.id.modifyPortrait);
-        if(!child.isDefaultPicture()){
-            portraitImageView.setImageBitmap(child.getPortrait());
-        }
-        else{
-            portraitImageView.setImageResource(R.drawable.add_icon);
-        }
+        portraitImageView.setImageBitmap(child.getPortrait());
         nameEditText = findViewById(R.id.modifyChildName);
         nameEditText.setText(child.getChildName());
     }
@@ -120,7 +115,6 @@ public class EditChildren extends AppCompatActivity {
                     photoPath = saveAndReturnPhotoDir(
                             MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
                             manager.getChildPosition());
-                    child.setDefaultPicture(true);
                 }
             }
             catch (Exception e) {

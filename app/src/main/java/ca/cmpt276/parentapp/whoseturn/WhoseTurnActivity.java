@@ -19,6 +19,11 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
 
+/**
+ * Display the list of tasks onto the screen along with next turn's child name. The user can add
+ * tasks from the floating action button and edit tasks by clicking on them (this include conforming
+ * the child has complete the task).
+ */
 public class WhoseTurnActivity extends AppCompatActivity {
     TaskManager taskManager;
 
@@ -41,14 +46,6 @@ public class WhoseTurnActivity extends AppCompatActivity {
     }
 
     private void displayTask() {
-
-        // For testing
-        Task t1 = new Task("Pick a tv channel to watch");
-        Task t2 = new Task("Wash the dished");
-        taskManager.addTask(t1);
-        taskManager.addTask(t2);
-        // For testing end
-
         ArrayList<Task> tasks = taskManager.getTaskList();
 
         ArrayAdapter<Task> adapter = new ArrayAdapter<>(

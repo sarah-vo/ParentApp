@@ -1,7 +1,5 @@
 package ca.cmpt276.parentapp;
 
-import static ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity.CHILD_LIST;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +8,6 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.google.gson.Gson;
-
-import ca.cmpt276.parentapp.configurechildren.ChildConfigurationActivity;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.newConfig.ConfigActivity;

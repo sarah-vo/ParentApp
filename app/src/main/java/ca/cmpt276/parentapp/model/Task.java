@@ -36,23 +36,30 @@ public class Task {
         whoseTurnIndex++;
     }
 
-    public String getCurrentTurnChild() {
+    public Child getCurrentTurnChild() {
         ChildManager childrenManager = ChildManager.getInstance();
-        int numChildren = childrenManager.numberOfChildren();
-        String name;
+        int numChildren = childrenManager.getNumberOfChildren();
+        Child child;
         if (numChildren == 0) {
-            name = "No child yet";
+             return null;
         }
         else {
-            name = childrenManager.getName(getWhoseTurn(numChildren));
+            child = childrenManager.getChild(getWhoseTurn(numChildren));
         }
 
-        return name;
+        return child;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return taskName + "\nNext turn: " + getCurrentTurnChild();
+        String childName;
+        if (getCurrentTurnChild() == null) {
+            childName = "No child yet";
+        }
+        else {
+            childName = getCurrentTurnChild().getChildName();
+        }
+        return taskName + "\nNext turn: " + childName;
     }
 }

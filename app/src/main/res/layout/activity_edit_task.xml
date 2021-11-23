@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etTaskName" />
 
     <Button
-        android:id="@+id/button_cancel"
+        android:id="@+id/button_edit_task_done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"

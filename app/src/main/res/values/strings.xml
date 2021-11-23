@@ -67,12 +67,16 @@
     <string name="done_button_text">Done</string>
     <string name="tasks_button">Tasks</string>
     <string name="confirm_add_task">Are you sure you want to add \"%1$s\" to the list?</string>
+    <string name="confirm_edit_task">Are you sure you want to change the task name to \"%1$s\"?</string>
     <string name="yes_add_task">Yes</string>
     <string name="no_add_task">No</string>
     <string name="back_without_done">Your task has not saved! Do you want to exit without adding any new task?</string>
+    <string name="back_edit_task_without_done">Are you sure you want to exit? All your unsaved changes will be discarded!</string>
     <string name="back_without_value">Do you want to exit with out adding any new task?</string>
+    <string name="no_edit_task_exit">Name field cannot be empty</string>
     <string name="no_new_task_exit">Name field can not be empty! Do you want to exit without adding any new task?</string>
-    <string name="cancel">Cancel</string>
+    <string name="back_edit_task_without_value">Name field can not be empty! Do you want to exit without editing the task name?</string>
+    <string name="cancel">Done</string>
     <string name="task_complete">Task Complete</string>
     <string name="title_activity_config">configActivity</string>
     <string name="save">save</string>

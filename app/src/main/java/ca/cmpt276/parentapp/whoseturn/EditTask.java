@@ -3,9 +3,11 @@ package ca.cmpt276.parentapp.whoseturn;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,32 +39,70 @@ public class EditTask extends AppCompatActivity {
         taskIndex = intent.getIntExtra("task index", -1);
         task = taskManager.getTask(taskIndex);
 
-
         setupText();
         setupButton();
+        onClickDone();
+    }
+
+    public void onClickDone() {
+
+        Button mEditTaskButton = findViewById(R.id.button_edit_task_done);
+        EditText mEditTaskName = findViewById(R.id.etTaskName);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String oldTaskName = mEditTaskName.getText().toString();
+
+        mEditTaskButton.setOnClickListener((view) -> {
+            if (TextUtils.isEmpty(mEditTaskName.getText().toString())) {
+                builder
+                        .setMessage(R.string.no_edit_task_exit)
+                        .setNeutralButton(R.string.OK, (dialog, which) -> onClickDone());
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else {
+                String newTaskName;
+                newTaskName = mEditTaskName.getText().toString();
+                builder
+                        .setMessage(getString(R.string.confirm_edit_task, newTaskName))
+                        .setPositiveButton(R.string.yes_add_task, (dialog, which) -> {
+                            task.setTaskName(newTaskName);
+                            finish();
+                        })
+                        .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        //confirm if user wanted to exit
+        EditText mEditTaskName = findViewById(R.id.etTaskName);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (TextUtils.isEmpty(mEditTaskName.getText().toString())) {
+            builder.setMessage(R.string.back_edit_task_without_value)
+                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> {
+                        finish();
+                    })
+                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> {
+                        onClickDone();
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            builder.setMessage(R.string.back_edit_task_without_done)
+                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> super.onBackPressed())
+                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
     }
 
     private void setupText() {
         EditText etTaskName = findViewById(R.id.etTaskName);
         etTaskName.setText(task.getTaskName());
-
-        etTaskName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String newTask = etTaskName.getText().toString();
-                task.setTaskName(newTask);
-            }
-        });
 
         Child child = task.getCurrentTurnChild();
         TextView tvChildName = findViewById(R.id.tvChildName);
@@ -78,7 +118,7 @@ public class EditTask extends AppCompatActivity {
 
     private void setupButton() {
         Button btnComplete = findViewById(R.id.button_complete);
-        Button btnCancel = findViewById(R.id.button_cancel);
+        Button btnCancel = findViewById(R.id.button_edit_task_done);
 
         btnComplete.setOnClickListener(View -> {
             task.passTurnToNextChild();

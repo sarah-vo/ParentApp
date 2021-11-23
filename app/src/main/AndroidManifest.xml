@@ -19,7 +19,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
@@ -28,15 +28,15 @@
             android:exported="true"
             android:parentActivityName=".flipcoin.FlipCoinActivity"/>
         <activity
-            android:name=".newConfig.EditChildren"
+            android:name=".child_config.EditChildren"
             android:exported="false"
-            android:parentActivityName=".newConfig.ConfigActivity"/>
+            android:parentActivityName=".child_config.ConfigActivity"/>
         <activity
-            android:name=".newConfig.AddChildren"
+            android:name=".child_config.AddChildren"
             android:exported="false"
-            android:parentActivityName=".newConfig.ConfigActivity"/>
+            android:parentActivityName=".child_config.ConfigActivity"/>
         <activity
-            android:name=".newConfig.ConfigActivity"
+            android:name=".child_config.ConfigActivity"
             android:exported="false"
             android:label="Configure children"
             android:parentActivityName=".MainActivity"/>

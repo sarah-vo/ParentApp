@@ -27,7 +27,7 @@ import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.FlipCoin;
 import ca.cmpt276.parentapp.model.FlipCoinManager;
 import ca.cmpt276.parentapp.model.ChildManager;
-import ca.cmpt276.parentapp.newConfig.ConfigActivity;
+import ca.cmpt276.parentapp.child_config.ConfigActivity;
 
 /**
  * Generate flip coin activity screen. Displays which child's turn to pick, allows user to

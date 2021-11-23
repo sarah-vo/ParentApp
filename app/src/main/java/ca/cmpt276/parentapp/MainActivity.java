@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.google.gson.Gson;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
-import ca.cmpt276.parentapp.newConfig.ConfigActivity;
+import ca.cmpt276.parentapp.child_config.ConfigActivity;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.whoseturn.WhoseTurnActivity;
 

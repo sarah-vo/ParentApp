@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp.newConfig;
+package ca.cmpt276.parentapp.child_config;
 
 import android.app.Activity;
 import android.app.AlertDialog;

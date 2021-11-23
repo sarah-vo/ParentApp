@@ -43,6 +43,7 @@
         android:text="Picker"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/flipcoin_history_result"
+        app:layout_constraintEnd_toStartOf="@+id/result_img"
         app:layout_constraintStart_toEndOf="@+id/flipCoin_history_profile" />
 
     <TextView
@@ -53,6 +54,7 @@
         android:text="Result"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/result_img"
         app:layout_constraintStart_toEndOf="@+id/flipCoin_history_profile" />
 
     <ImageView

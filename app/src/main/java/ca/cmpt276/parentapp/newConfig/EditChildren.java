@@ -35,7 +35,7 @@ import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 
 /**Function that allows user to edit/delete child and their name/picture**/
-public class ModifyDeleteChildren extends AppCompatActivity {
+public class EditChildren extends AppCompatActivity {
     final ChildManager manager = ChildManager.getInstance();
     Child child;
     int position;
@@ -50,8 +50,6 @@ public class ModifyDeleteChildren extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setting up toolbar
         setContentView(R.layout.activity_modify_delete_children);
-        Toolbar myToolbar = findViewById(R.id.modifyToolBar);
-        setSupportActionBar(myToolbar);
         fillPositionAndChild();
         fillPortraitAndNameField();
         editImage();
@@ -83,12 +81,7 @@ public class ModifyDeleteChildren extends AppCompatActivity {
 
     private void fillPortraitAndNameField() {
         portraitImageView = findViewById(R.id.modifyPortrait);
-        if(child.getPortrait() != null){
-            portraitImageView.setImageBitmap(child.getPortrait());
-        }
-        else{
-            portraitImageView.setImageResource(R.drawable.add_icon);
-        }
+        portraitImageView.setImageBitmap(child.getPortrait());
         nameEditText = findViewById(R.id.modifyChildName);
         nameEditText.setText(child.getChildName());
     }
@@ -148,7 +141,7 @@ public class ModifyDeleteChildren extends AppCompatActivity {
             FileOutputStream fos;
             try {
                 fos = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 fos.flush();
                 fos.close();
             } catch (java.io.IOException e) {

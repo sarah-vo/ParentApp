@@ -52,7 +52,7 @@ public  class ChildManager {
         return childrenList.get(pos);
     }
 
-    public int getChildPosition() {
+    public int getLatestChildPosition() {
         if (!childrenList.isEmpty()) {
             return childrenList.size()-1;
         }
@@ -61,13 +61,9 @@ public  class ChildManager {
         }
     }
 
-//    public boolean isDefaultPicture(int pos){
-//        return childrenList.get(pos).isDefaultPicture()]
-//    }
-//
-//    public void setDefaultPicture(int pos, boolean newBoolean){
-//        childrenList.get(pos).setDefaultPicture(newBoolean);
-//    }
+    public int getNumberOfChildren(){
+        return childrenList.size();
+    }
 }
 
 

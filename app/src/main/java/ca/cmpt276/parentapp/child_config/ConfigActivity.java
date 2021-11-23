@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp.newConfig;
+package ca.cmpt276.parentapp.child_config;
 
 import android.content.Intent;
 import android.content.SharedPreferences;

@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp.newConfig;
+package ca.cmpt276.parentapp.child_config;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.gson.Gson;
@@ -112,7 +111,7 @@ public class EditChildren extends AppCompatActivity {
                 if(  fileUri !=null   ){
                     photoPath = saveAndReturnPhotoDir(
                             MediaStore.Images.Media.getBitmap(this.getContentResolver() , fileUri), /* obtain captured file**/
-                            manager.getChildPosition());
+                            manager.getLatestChildPosition());
                 }
             }
             catch (Exception e) {

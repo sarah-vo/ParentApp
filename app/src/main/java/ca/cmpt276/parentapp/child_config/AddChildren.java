@@ -1,4 +1,4 @@
-package ca.cmpt276.parentapp.newConfig;
+package ca.cmpt276.parentapp.child_config;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.gson.Gson;
@@ -144,11 +143,11 @@ public class AddChildren extends AppCompatActivity{
 
     /**ONLY FOR saveAndReturnPhotoDir. NOT TO BE USED USED FOR ANYTHING ELSE**/
     int getNewChildPosition() {
-        if(manager.getChildPosition() == EMPTY_CHILD_LIST){
+        if(manager.getLatestChildPosition() == EMPTY_CHILD_LIST){
             return 0;
         }
         else {
-            return manager.getChildPosition()+1;
+            return manager.getLatestChildPosition()+1;
         }
     }
 

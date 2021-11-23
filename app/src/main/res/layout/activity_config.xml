@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".newConfig.ConfigActivity">
+    tools:context=".child_config.ConfigActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/configFloatingButton"
@@ -17,26 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add"
         android:contentDescription="@string/add_more_child" />
-
-    <Button
-        android:id="@+id/deleteAllChildButton"
-        android:layout_width="183dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginBottom="33dp"
-        android:text="Delete all child"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/createChildren"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginBottom="100dp"
-        android:text="Create 1 child"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
         android:id="@+id/childListView"

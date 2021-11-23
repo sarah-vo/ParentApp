@@ -64,7 +64,6 @@
 
     <string name="title_activity_whose_turn">Whose Turn</string>
     <string name="create_new_task">Create new Task</string>
-    <string name="task_name">Task Name</string>
     <string name="done_button_text">Done</string>
     <string name="tasks_button">Tasks</string>
     <string name="confirm_add_task">Are you sure you want to add \"%1$s\" to the list?</string>
@@ -105,4 +104,5 @@
     <string name="edit_text_child_name">Child Name</string>
     <string name="child_name">Child Name</string>
     <string name="help_screen">Help Screen</string>
+    <string name="task_name">Task Name</string>
 </resources>

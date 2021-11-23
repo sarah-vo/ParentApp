@@ -100,4 +100,7 @@
     <string name="save_icon_link"><a href="https://flyclipart.com/download-png#disk-diskette-floppy-floppy-disk-guardar-preserve-save-icon-769235.png"> Save icon</a></string>
     <string name="image_picker_link"><a href="https://github.com/Dhaval2404/ImagePicker"> Image Picker API</a></string>
     <string name="default_avatar_link"><a href="https://www.seekpng.com/idown/u2q8r5t4i1y3w7e6_existing-user-default-avatar/">Default Avatar</a></string>
+    <string name="edit_task_toolbar_title">Edit Task</string>
+    <string name="edit_task_name">Task Name</string>
+    <string name="edit_text_child_name">Child Name</string>
 </resources>

@@ -19,23 +19,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="220dp"
-        android:text="@string/cancel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etTaskName" />
-
-    <Button
         android:id="@+id/buttotn_complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginTop="328dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/task_complete"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etTaskName" />
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="328dp"
+        android:text="@string/cancel"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTaskName" />
 
     <EditText
@@ -55,8 +55,8 @@
         android:id="@+id/tvChildName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="88dp"
+        android:layout_marginTop="216dp"
+        android:layout_marginEnd="148dp"
         android:text="Child Name"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -67,8 +67,8 @@
         android:id="@+id/ivPhoto"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="68dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTaskName"
         tools:srcCompat="@tools:sample/avatars" />

@@ -7,7 +7,7 @@
     tools:context=".whoseturn.EditTask">
 
     <Button
-        android:id="@+id/buttotn_complete"
+        android:id="@+id/button_complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="328dp"
@@ -33,7 +33,7 @@
         android:layout_marginTop="56dp"
         android:ems="12"
         android:inputType="textMultiLine"
-        android:text="Task Name"
+        android:text="@string/task_name"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +43,10 @@
         android:id="@+id/tvChildName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Child Name"
+        android:text="@string/child_name"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttotn_complete"
+        app:layout_constraintBottom_toTopOf="@+id/button_complete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

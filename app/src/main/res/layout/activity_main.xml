@@ -95,7 +95,7 @@
         android:layout_width="206dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_menu_button"
-        android:text="Help Screen"
+        android:text="@string/help_screen"
         android:textSize="16sp"
         app:icon="@drawable/ic_baseline_help_24"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"

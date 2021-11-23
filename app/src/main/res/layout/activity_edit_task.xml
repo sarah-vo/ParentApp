@@ -6,18 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".whoseturn.EditTask">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:minHeight="?attr/actionBarSize"
-        android:title="Edit Task"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/buttotn_complete"
         android:layout_width="wrap_content"

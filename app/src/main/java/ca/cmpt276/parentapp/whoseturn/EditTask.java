@@ -41,10 +41,6 @@ public class EditTask extends AppCompatActivity {
         taskIndex = intent.getIntExtra("task index", -1);
         task = taskManager.getTask(taskIndex);
 
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
 
         setupText();
         setupButton();

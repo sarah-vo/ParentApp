@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,14 +24,14 @@ public class ConfigActivity extends AppCompatActivity {
     public static final String CHILD_LIST = "Child List";
     ArrayAdapter<Child> adapter;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
         buildChildList();
         buildFloatingButton();
-        deleteAllDEBUGButton();
-        addChildrenDEBUGButton();
     }
 
     @Override
@@ -60,7 +59,7 @@ public class ConfigActivity extends AppCompatActivity {
         ListView list = findViewById(R.id.childListView);
         list.setAdapter(adapter);
         list.setOnItemClickListener((parent, viewClicked, position, id) -> {
-            Intent intent = new Intent(this, ModifyDeleteChildren.class);
+            Intent intent = new Intent(this, EditChildren.class);
             intent.putExtra("Child Position",position);
             startActivity(intent);
             saveData();
@@ -111,25 +110,6 @@ public class ConfigActivity extends AppCompatActivity {
         }
     }
 
-    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
-    private void deleteAllDEBUGButton() {
-        Button button = findViewById(R.id.deleteAllChildButton);
-        button.setOnClickListener(View ->{
-            manager.getChildList().clear();
-            adapter.notifyDataSetChanged();
-            saveData();
-        });
-    }
-    /** FOR DEBUG PURPOSES **/ //TODO: REMOVE THIS BEFORE SUBMISSION
-    private void addChildrenDEBUGButton(){
-        Button button = findViewById(R.id.createChildren);
-        button.setOnClickListener(View ->{
-            int i = (manager.getChildList().isEmpty())?(0):(manager.getChildList().size());
-            manager.addChildren(Integer.toString(i), null);
-            adapter.notifyDataSetChanged();
-        });
 
-
-    }
 
 }

@@ -11,39 +11,31 @@
         android:id="@+id/addPortrait"
         android:layout_width="131dp"
         android:layout_height="136dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="65dp"
+        android:contentDescription="@string/portrait_description"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addToolbar"
-        tools:srcCompat="@drawable/add_icon"
-        android:contentDescription="@string/portrait_description" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/add_icon" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="259dp"
         android:layout_height="49dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/addPortrait"
-        app:layout_constraintTop_toBottomOf="@+id/addToolbar">
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addPortrait">
 
         <EditText
             android:id="@+id/childNameAdd"
-            android:layout_width="246dp"
-            android:layout_height="38dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:autofillHints="hello"
             android:hint="@string/add_your_child_name_here"
             android:inputType="textPersonName" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/addToolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/purple_500"
-        android:minHeight="?attr/actionBarSize"
-        android:title="@string/add_a_child"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 
 

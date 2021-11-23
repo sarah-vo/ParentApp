@@ -10,7 +10,6 @@ public  class ChildManager {
     private static final int EMPTY_CHILD_LIST = -999;
     private static ChildManager instance;
     private final ArrayList<Child> childrenList;
-    //public ArrayList<String> childrenName = new ArrayList<>();
 
     public static ChildManager getInstance() {
         if(instance == null){
@@ -31,9 +30,6 @@ public  class ChildManager {
         return childrenList;
     }
 
-    public void addChildren(String name) {
-        childrenList.add(new Child(name));
-    }
 
     public void addChildren(String name, String newPhotoPath) {
         childrenList.add(new Child(name, newPhotoPath));
@@ -64,6 +60,15 @@ public  class ChildManager {
             return EMPTY_CHILD_LIST;
         }
     }
+
+//    public boolean isDefaultPicture(int pos){
+//        return childrenList.get(pos).isDefaultPicture()]
+//    }
+//
+//    public void setDefaultPicture(int pos, boolean newBoolean){
+//        childrenList.get(pos).setDefaultPicture(newBoolean);
+//    }
+}
 
     public int getNumberOfChildren() {
         return childrenList.size();

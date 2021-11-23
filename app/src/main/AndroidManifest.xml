@@ -29,12 +29,10 @@
             android:parentActivityName=".flipcoin.FlipCoinActivity"/>
         <activity
             android:name=".newConfig.EditChildren"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false"
             android:parentActivityName=".newConfig.ConfigActivity"/>
         <activity
             android:name=".newConfig.AddChildren"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false"
             android:parentActivityName=".newConfig.ConfigActivity"/>
         <activity

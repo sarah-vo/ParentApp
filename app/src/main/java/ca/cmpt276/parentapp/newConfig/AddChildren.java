@@ -53,8 +53,8 @@ public class AddChildren extends AppCompatActivity{
 
         //setting up toolbar
         setContentView(R.layout.activity_add_children);
-        Toolbar myToolbar = findViewById(R.id.addToolbar);
-        setSupportActionBar(myToolbar);
+//        Toolbar myToolbar = findViewById(R.id.addToolbar);
+//        setSupportActionBar(myToolbar);
         addImage();
     }
 

@@ -50,8 +50,6 @@ public class EditChildren extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setting up toolbar
         setContentView(R.layout.activity_modify_delete_children);
-        Toolbar myToolbar = findViewById(R.id.modifyToolBar);
-        setSupportActionBar(myToolbar);
         fillPositionAndChild();
         fillPortraitAndNameField();
         editImage();

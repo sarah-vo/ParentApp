@@ -108,6 +108,14 @@ public class TimerActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             updateGUI(intent);
             isTimerRunning = true;
+
+            if(!isTimerServiceRunning() || TimerService.willServiceDestroy){
+                isTimerRunning = false;
+                pause_resume_button.setText(getString(R.string.resume));
+                time_left = initial_time;
+                timer_bar.setProgress(0);
+                updateProgressText();
+            }
         }
     };
 
@@ -201,10 +209,6 @@ public class TimerActivity extends AppCompatActivity {
         reset_button = findViewById(R.id.timer_reset);
 
         start_button.setOnClickListener(view ->{
-            Log.i(" startButton:", "------------------------------------");
-            Log.i("startButton_initial_time", initial_time + "");
-            Log.i("startButton_time_Left", time_left + "");
-
             setTime(getValueFromPicker());
             startTimer();
             pause_resume_button.setText(R.string.pause);
@@ -213,8 +217,6 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         pause_resume_button.setOnClickListener(view -> {
-            Log.i("isTimerServiceRunning_pause_resume", isTimerServiceRunning() + "");
-            Log.i("isTimerRunning_pause_resume", isTimerRunning + "");
             if (time_left != 0){
                 if(!isTimerRunning){
                     Log.i("do start", "ok");
@@ -225,7 +227,6 @@ public class TimerActivity extends AppCompatActivity {
                 else{
                     Log.i("do pause", "ok");
                     pauseTimer();
-                    Log.i("isTimerRunning_pause_resume_after_function", isTimerRunning + "");
                     pause_resume_button.setText(R.string.resume);
                 }
             }
@@ -400,9 +401,6 @@ public class TimerActivity extends AppCompatActivity {
     ///--------------------------Functions to update timers from Service-------------------------///
 
     private void startTimer(){
-        Log.i(" startTimer:", "------------------------------------");
-        Log.i("startTimer_initial time:", initial_time + "");
-        Log.i("startTimer_time left:", time_left + "");
         timer_bar.setMax(initial_time);
         timer_bar.setProgress(Math.abs(time_left - initial_time));
 
@@ -435,14 +433,11 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void resetTimer() {
-        Log.i("reset", "---------------------------------------");
         if (!isTimerServiceRunning()){
-            Log.i("isTimerServiceRunning", "inside");
             return;
         }
 
         else{
-            Log.i("insideResetElse", "inside");
             Intent intent = new Intent(this, TimerService.class);
             intent.putExtra(TimerService.SERVICE_DESTROY,true);
             startForegroundService(intent);
@@ -451,16 +446,8 @@ public class TimerActivity extends AppCompatActivity {
         time_left = initial_time;
         isTimerRunning = false;
 
-        Log.i("reset_initial_time", "" + initial_time);
-        Log.i("reset_time_left", "" + time_left);
-
-        Log.i("isTimerRunning_reset", isTimerRunning + "");
-
         pause_resume_button.setText(getString(R.string.resume));
-
         timer_bar.setProgress(0);
-
-        Log.i("reset_timer_bar", "" + timer_bar.getProgress());
 
         updateProgressText();
     }

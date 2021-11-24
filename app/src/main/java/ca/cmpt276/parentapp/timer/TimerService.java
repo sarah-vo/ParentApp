@@ -41,16 +41,16 @@ public class TimerService extends Service {
 
     public static boolean isServiceRunning = false;
     public static boolean isPaused = false;
+    public static boolean willServiceDestroy = false;
 
     int initial_time;
     int time_left;
     float timer_speed_float;
+    boolean isFirstTick;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i("Oncreate", "------------------------------------");
-        Log.i("OncreateService called", "------------------------------------");
         timer_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         isServiceRunning = true;
@@ -58,23 +58,28 @@ public class TimerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        willServiceDestroy = false;
 
         if (intent.getBooleanExtra(SERVICE_DESTROY,false)){
+            willServiceDestroy = true;
+            sendBroadcast(timer_intent);
 
-            Log.i("went to destroy service", "ok");
             stopForeground(true);
             stopSelf();
             return START_STICKY;
         }
 
         if (intent.getBooleanExtra(SERVICE_PAUSE,false)){
-            Log.i("went to pause service", "ok");
             timer.cancel();
             isPaused = true;
         }
 
         else if (intent.getBooleanExtra(TIMER_CHANGE_SPEED_SERVICE_TAG,false)){
             timer_speed_float = intent.getFloatExtra(TimerActivity.TIMER_SPEED_TAG,1);
+            if(timer != null){
+                timer.cancel();
+            }
+            startTimer();
         }
 
         else{
@@ -90,6 +95,7 @@ public class TimerService extends Service {
             Notification timer_running_notification = createTimerRunningNotification();
 
             startForeground(1,timer_running_notification);
+            //startTimer();
             startTimer();
         }
         return START_STICKY;
@@ -97,20 +103,13 @@ public class TimerService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.i("onDestroyMethod", "---------------------------------------");
-        Log.i("onDestroyMethod", "called");
         stopForeground(true);
         stopSelf();
 
-        Log.i("timer null", "before");
         if(timer != null){
-            Log.i("timer null", "inside");
             timer.cancel();
         }
-        Log.i("timer null", "after");
-
         isServiceRunning = false;
-        Log.i("OnDestroy Service Running", "after");
 
         super.onDestroy();
     }
@@ -126,16 +125,21 @@ public class TimerService extends Service {
         int countDownInterval = 100;
         Log.i("timer speed:", timer_speed_float + "");
 
-        timer = new CountDownTimer(time_left,(long)
-                (countDownInterval)){
+        isFirstTick = true;
+
+        timer = new CountDownTimer((long) (time_left/timer_speed_float),
+                (long) (countDownInterval/timer_speed_float)){
             @Override
             public void onTick(long time_until_finish) {
                 if (time_left <= 0){
                     onFinish();
                 }
                 else{
-                    if (! (time_until_finish + (countDownInterval - 1) > initial_time)){
-                        time_left -= countDownInterval * timer_speed_float;
+                    if (!isFirstTick){
+                        time_left -= countDownInterval;
+                    }
+                    else{
+                        isFirstTick = false;
                     }
 
                     timer_intent.putExtra(TIME_LEFT_SERVICE_TAG,time_left);

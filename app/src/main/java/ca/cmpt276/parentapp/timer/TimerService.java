@@ -95,7 +95,6 @@ public class TimerService extends Service {
             Notification timer_running_notification = createTimerRunningNotification();
 
             startForeground(1,timer_running_notification);
-            //startTimer();
             startTimer();
         }
         return START_STICKY;
@@ -128,7 +127,7 @@ public class TimerService extends Service {
         isFirstTick = true;
 
         timer = new CountDownTimer((long) (time_left/timer_speed_float),
-                (long) (countDownInterval/timer_speed_float)){
+                (long) (countDownInterval)){
             @Override
             public void onTick(long time_until_finish) {
                 if (time_left <= 0){
@@ -136,7 +135,7 @@ public class TimerService extends Service {
                 }
                 else{
                     if (!isFirstTick){
-                        time_left -= countDownInterval;
+                        time_left -= countDownInterval * timer_speed_float;
                     }
                     else{
                         isFirstTick = false;

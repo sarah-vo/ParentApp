@@ -109,4 +109,5 @@
     <string name="child_name">Child Name</string>
     <string name="help_screen">Help Screen</string>
     <string name="task_name">Task Name</string>
+    <string name="timer_speed">Timer speed: %1$.2fx</string>
 </resources>

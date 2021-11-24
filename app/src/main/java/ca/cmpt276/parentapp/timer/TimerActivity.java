@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
@@ -45,7 +46,7 @@ public class TimerActivity extends AppCompatActivity {
     private NumberPicker timer_hour, timer_minute, timer_second;
     private TextView hour_text, minute_text, second_text;
 
-    private TextView progress_text;
+    private TextView progress_text, timer_speed_text;
     private ProgressBar timer_bar;
     private Button pause_resume_button, reset_button, start_button;
 
@@ -59,8 +60,9 @@ public class TimerActivity extends AppCompatActivity {
     private int initial_time = 0;
     private int time_left = initial_time;
     private boolean isTimerRunning;
-
     private float timer_speed_float;
+
+    private boolean menuHidden;
 
     public static Intent makeIntent(Context context){
         return  new Intent(context, TimerActivity.class);
@@ -70,8 +72,14 @@ public class TimerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         timerLayout = findViewById(R.id.timerLayout);
+
+        timer_speed_float = 1;
+        timer_speed_text = findViewById(R.id.timer_speed_text);
+        timer_speed_text.setText(getString(R.string.timer_speed,timer_speed_float));
+
         initializeTimerScroll();
         initializeProgressView();
         setUpTimerButtons();
@@ -84,9 +92,10 @@ public class TimerActivity extends AppCompatActivity {
         for (Integer speed : getResources().getIntArray(R.array.timer_speed)){
             timer_speed_list.add(speed);
         }
-        timer_speed_float = 1;
 
-        //Check if there a timer service exist and on pause state
+        menuHidden = true;
+
+        //Check if a timer service exist and on pause state
         if(isTimerServiceRunning() && TimerService.isPaused){
             time_left = TimerService.timer_intent.getIntExtra(TimerService.TIME_LEFT_SERVICE_TAG,3000);
             initial_time = TimerService.timer_intent.getIntExtra(TimerService.TIME_INITIAL_SERVICE_TAG,9000);
@@ -106,9 +115,6 @@ public class TimerActivity extends AppCompatActivity {
     private final BroadcastReceiver b_receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateGUI(intent);
-            isTimerRunning = true;
-
             if(!isTimerServiceRunning() || TimerService.willServiceDestroy){
                 isTimerRunning = false;
                 pause_resume_button.setText(getString(R.string.resume));
@@ -116,15 +122,21 @@ public class TimerActivity extends AppCompatActivity {
                 timer_bar.setProgress(0);
                 updateProgressText();
             }
+            else{
+                updateGUI(intent);
+                isTimerRunning = true;
+            }
         }
     };
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        if (timer_speed_list != null){
-            for (int i = 0; i < timer_speed_list.size(); i++){
-                menu.add(0,i,Menu.NONE,timer_speed_list.get(i) + "%");
+        if(!menuHidden){
+            if (timer_speed_list != null){
+                for (int i = 0; i < timer_speed_list.size(); i++){
+                    menu.add(0,i,Menu.NONE,timer_speed_list.get(i) + "%");
+                }
             }
         }
         return super.onPrepareOptionsMenu(menu);
@@ -134,11 +146,8 @@ public class TimerActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         for (int i = 0; i < timer_speed_list.size(); i++){
             if (item.getItemId() == i){
-                timer_speed_float = (float )timer_speed_list.get(i)/100;
-                Toast.makeText(getApplicationContext(),
-                        "speed chosen: " + timer_speed_float + "x",
-                        Toast.LENGTH_SHORT
-                        ).show();
+                timer_speed_float = (float)timer_speed_list.get(i)/100;
+                timer_speed_text.setText(getString(R.string.timer_speed,timer_speed_float));
 
                 service_intent = new Intent(this, TimerService.class);
                 service_intent.putExtra(TimerService.TIMER_CHANGE_SPEED_SERVICE_TAG, true);
@@ -269,7 +278,6 @@ public class TimerActivity extends AppCompatActivity {
 
                 CustomButton button = new CustomButton(this);
 
-
                 if (size_left != 0){
                     time_value = convertToMilliSeconds(default_time_list.get(i));
                 }
@@ -350,6 +358,7 @@ public class TimerActivity extends AppCompatActivity {
 
         timer_bar.setVisibility(View.VISIBLE);
         progress_text.setVisibility(View.VISIBLE);
+        timer_speed_text.setVisibility(View.VISIBLE);
 
         pause_resume_button.setVisibility(View.VISIBLE);
         reset_button.setVisibility(View.VISIBLE);
@@ -363,6 +372,9 @@ public class TimerActivity extends AppCompatActivity {
         second_text.setVisibility(View.GONE);
 
         default_time_table.setVisibility(View.GONE);
+
+        menuHidden = false;
+        invalidateOptionsMenu();
     }
 
     private void setInterface_Choose(){
@@ -372,6 +384,7 @@ public class TimerActivity extends AppCompatActivity {
 
         timer_bar.setVisibility(View.GONE);
         progress_text.setVisibility(View.GONE);
+        timer_speed_text.setVisibility(View.GONE);
 
         pause_resume_button.setVisibility(View.GONE);
         reset_button.setVisibility(View.GONE);
@@ -385,6 +398,9 @@ public class TimerActivity extends AppCompatActivity {
         second_text.setVisibility(View.VISIBLE);
 
         default_time_table.setVisibility(View.VISIBLE);
+
+        menuHidden = true;
+        invalidateOptionsMenu();
     }
 
     private void updateGUI(Intent intent){
@@ -403,6 +419,9 @@ public class TimerActivity extends AppCompatActivity {
     private void startTimer(){
         timer_bar.setMax(initial_time);
         timer_bar.setProgress(Math.abs(time_left - initial_time));
+
+        timer_speed_float = 1;
+        timer_speed_text.setText(getString(R.string.timer_speed,timer_speed_float));
 
         service_intent = new Intent(this, TimerService.class);
         service_intent.putExtra(TIME_INITIAL_TAG,initial_time);

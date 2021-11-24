@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
@@ -14,8 +17,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ public class TimerActivity extends AppCompatActivity {
     public static final String NOTIFY_ID = "Notification Channel ID for Timer";
     public static final String TIME_INITIAL_TAG = "INITIAL TIME TAG";
     public static final String TIME_LEFT_TAG = "INITIAL LEFT TAG";
+    public static final String TIMER_SPEED_TAG = "TIMER SPEED TAG";
 
     ConstraintLayout timerLayout;
 
@@ -50,11 +54,13 @@ public class TimerActivity extends AppCompatActivity {
 
     Intent service_intent;
 
-    Toolbar toolbar;
+    ArrayList<Integer> timer_speed_list;
 
     private int initial_time = 0;
     private int time_left = initial_time;
     private boolean isTimerRunning;
+
+    private float timer_speed_float;
 
     public static Intent makeIntent(Context context){
         return  new Intent(context, TimerActivity.class);
@@ -73,6 +79,12 @@ public class TimerActivity extends AppCompatActivity {
         populateDefaultTimeButton();
         updateViewInterface();
         this.setTitle("Timeout Timer");
+
+        timer_speed_list = new ArrayList<>();
+        for (Integer speed : getResources().getIntArray(R.array.timer_speed)){
+            timer_speed_list.add(speed);
+        }
+        timer_speed_float = 1;
 
         //Check if there a timer service exist and on pause state
         if(isTimerServiceRunning() && TimerService.isPaused){
@@ -98,6 +110,37 @@ public class TimerActivity extends AppCompatActivity {
             isTimerRunning = true;
         }
     };
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        if (timer_speed_list != null){
+            for (int i = 0; i < timer_speed_list.size(); i++){
+                menu.add(0,i,Menu.NONE,timer_speed_list.get(i) + "%");
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        for (int i = 0; i < timer_speed_list.size(); i++){
+            if (item.getItemId() == i){
+                timer_speed_float = (float )timer_speed_list.get(i)/100;
+                Toast.makeText(getApplicationContext(),
+                        "speed chosen: " + timer_speed_float + "x",
+                        Toast.LENGTH_SHORT
+                        ).show();
+
+                service_intent = new Intent(this, TimerService.class);
+                service_intent.putExtra(TimerService.TIMER_CHANGE_SPEED_SERVICE_TAG, true);
+                service_intent.putExtra(TIMER_SPEED_TAG, timer_speed_float);
+                startForegroundService(service_intent);
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onPause() {
@@ -158,6 +201,9 @@ public class TimerActivity extends AppCompatActivity {
         reset_button = findViewById(R.id.timer_reset);
 
         start_button.setOnClickListener(view ->{
+            Log.i(" startButton:", "------------------------------------");
+            Log.i("startButton_initial_time", initial_time + "");
+            Log.i("startButton_time_Left", time_left + "");
 
             setTime(getValueFromPicker());
             startTimer();
@@ -167,14 +213,19 @@ public class TimerActivity extends AppCompatActivity {
         });
 
         pause_resume_button.setOnClickListener(view -> {
+            Log.i("isTimerServiceRunning_pause_resume", isTimerServiceRunning() + "");
+            Log.i("isTimerRunning_pause_resume", isTimerRunning + "");
             if (time_left != 0){
                 if(!isTimerRunning){
+                    Log.i("do start", "ok");
                     startTimer();
                     pause_resume_button.setText(R.string.pause);
                 }
 
                 else{
+                    Log.i("do pause", "ok");
                     pauseTimer();
+                    Log.i("isTimerRunning_pause_resume_after_function", isTimerRunning + "");
                     pause_resume_button.setText(R.string.resume);
                 }
             }
@@ -349,12 +400,16 @@ public class TimerActivity extends AppCompatActivity {
     ///--------------------------Functions to update timers from Service-------------------------///
 
     private void startTimer(){
+        Log.i(" startTimer:", "------------------------------------");
+        Log.i("startTimer_initial time:", initial_time + "");
+        Log.i("startTimer_time left:", time_left + "");
         timer_bar.setMax(initial_time);
         timer_bar.setProgress(Math.abs(time_left - initial_time));
 
         service_intent = new Intent(this, TimerService.class);
         service_intent.putExtra(TIME_INITIAL_TAG,initial_time);
         service_intent.putExtra(TIME_LEFT_TAG,time_left);
+        service_intent.putExtra(TIMER_SPEED_TAG, timer_speed_float);
 
         startForegroundService(service_intent);
 
@@ -380,11 +435,14 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void resetTimer() {
+        Log.i("reset", "---------------------------------------");
         if (!isTimerServiceRunning()){
+            Log.i("isTimerServiceRunning", "inside");
             return;
         }
 
         else{
+            Log.i("insideResetElse", "inside");
             Intent intent = new Intent(this, TimerService.class);
             intent.putExtra(TimerService.SERVICE_DESTROY,true);
             startForegroundService(intent);
@@ -393,11 +451,18 @@ public class TimerActivity extends AppCompatActivity {
         time_left = initial_time;
         isTimerRunning = false;
 
+        Log.i("reset_initial_time", "" + initial_time);
+        Log.i("reset_time_left", "" + time_left);
+
+        Log.i("isTimerRunning_reset", isTimerRunning + "");
+
         pause_resume_button.setText(getString(R.string.resume));
 
         timer_bar.setProgress(0);
-        updateProgressText();
 
+        Log.i("reset_timer_bar", "" + timer_bar.getProgress());
+
+        updateProgressText();
     }
 
     ///--------------------------Functions for formatting time -------------------------///
@@ -427,8 +492,6 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     ///--------------------------Functions regarding Service -------------------------///
-
-
 
     public boolean isTimerServiceRunning (){
         return TimerService.isServiceRunning;

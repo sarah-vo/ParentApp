@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -30,6 +31,7 @@ public class TimerService extends Service {
     public static final String TIME_LEFT_SERVICE_TAG = "TIME_LEFT_SERVICE_TAG =";
     public static final String TIME_INITIAL_SERVICE_TAG = "TIME_INITIAL_SERVICE_TAG";
     public static final String TIMER_PAUSE_SERVICE_TAG = "TIMER_PAUSE_SERVICE_TAG";
+    public static final String TIMER_CHANGE_SPEED_SERVICE_TAG = "TIMER_CHANGE_SERVICE_TAG";
 
     public static final String SERVICE_DESTROY = "DESTROY SERVICE TAG";
     public static final String SERVICE_PAUSE = "PAUSE SERVICE TAG";
@@ -42,10 +44,13 @@ public class TimerService extends Service {
 
     int initial_time;
     int time_left;
+    float timer_speed_float;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i("Oncreate", "------------------------------------");
+        Log.i("OncreateService called", "------------------------------------");
         timer_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         isServiceRunning = true;
@@ -55,14 +60,21 @@ public class TimerService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent.getBooleanExtra(SERVICE_DESTROY,false)){
+
+            Log.i("went to destroy service", "ok");
             stopForeground(true);
             stopSelf();
             return START_STICKY;
         }
 
         if (intent.getBooleanExtra(SERVICE_PAUSE,false)){
+            Log.i("went to pause service", "ok");
             timer.cancel();
             isPaused = true;
+        }
+
+        else if (intent.getBooleanExtra(TIMER_CHANGE_SPEED_SERVICE_TAG,false)){
+            timer_speed_float = intent.getFloatExtra(TimerActivity.TIMER_SPEED_TAG,1);
         }
 
         else{
@@ -72,6 +84,7 @@ public class TimerService extends Service {
 
             initial_time = intent.getIntExtra(TimerActivity.TIME_INITIAL_TAG,1000);
             time_left = intent.getIntExtra(TimerActivity.TIME_LEFT_TAG,1300);
+            timer_speed_float = intent.getFloatExtra(TimerActivity.TIMER_SPEED_TAG,1);
             timer_intent.putExtra(TIME_INITIAL_SERVICE_TAG, initial_time);
 
             Notification timer_running_notification = createTimerRunningNotification();
@@ -84,14 +97,20 @@ public class TimerService extends Service {
 
     @Override
     public void onDestroy() {
+        Log.i("onDestroyMethod", "---------------------------------------");
+        Log.i("onDestroyMethod", "called");
         stopForeground(true);
         stopSelf();
 
+        Log.i("timer null", "before");
         if(timer != null){
+            Log.i("timer null", "inside");
             timer.cancel();
         }
+        Log.i("timer null", "after");
 
         isServiceRunning = false;
+        Log.i("OnDestroy Service Running", "after");
 
         super.onDestroy();
     }
@@ -105,17 +124,24 @@ public class TimerService extends Service {
     private void startTimer(){
 
         int countDownInterval = 100;
+        Log.i("timer speed:", timer_speed_float + "");
 
-        timer = new CountDownTimer(time_left,countDownInterval) {
+        timer = new CountDownTimer(time_left,(long)
+                (countDownInterval)){
             @Override
             public void onTick(long time_until_finish) {
-                if (! (time_until_finish + (countDownInterval - 1) > initial_time)){
-                    time_left -= countDownInterval;
+                if (time_left <= 0){
+                    onFinish();
                 }
+                else{
+                    if (! (time_until_finish + (countDownInterval - 1) > initial_time)){
+                        time_left -= countDownInterval * timer_speed_float;
+                    }
 
-                timer_intent.putExtra(TIME_LEFT_SERVICE_TAG,time_left);
-                timer_intent.putExtra(TIME_INITIAL_SERVICE_TAG,initial_time);
-                sendBroadcast(timer_intent);
+                    timer_intent.putExtra(TIME_LEFT_SERVICE_TAG,time_left);
+                    timer_intent.putExtra(TIME_INITIAL_SERVICE_TAG,initial_time);
+                    sendBroadcast(timer_intent);
+                }
             }
 
             @Override

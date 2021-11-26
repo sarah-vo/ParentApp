@@ -19,8 +19,8 @@ import ca.cmpt276.parentapp.R;
 
 
 public class TimerService extends Service {
-    private NotificationManagerCompat notify_manager;
-    public static MediaPlayer alarm_sound;
+    private NotificationManagerCompat notifyManager;
+    public static MediaPlayer alarmSound;
 
     CountDownTimer timer;
 
@@ -37,21 +37,21 @@ public class TimerService extends Service {
     public static final String SERVICE_PAUSE = "PAUSE SERVICE TAG";
 
     public static final String COUNTDOWN_BR = "COUNTDOWN_BR";
-    public static Intent timer_intent = new Intent(COUNTDOWN_BR);
+    public static Intent timerIntent = new Intent(COUNTDOWN_BR);
 
     public static boolean isServiceRunning = false;
     public static boolean isPaused = false;
     public static boolean willServiceDestroy = false;
 
-    int initial_time;
-    int time_left;
-    float timer_speed_float;
+    int initialTime;
+    int timeLeft;
+    float timerSpeedFloat;
     boolean isFirstTick;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        timer_intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        timerIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         isServiceRunning = true;
     }
@@ -62,7 +62,7 @@ public class TimerService extends Service {
 
         if (intent.getBooleanExtra(SERVICE_DESTROY,false)){
             willServiceDestroy = true;
-            sendBroadcast(timer_intent);
+            sendBroadcast(timerIntent);
 
             stopForeground(true);
             stopSelf();
@@ -75,7 +75,7 @@ public class TimerService extends Service {
         }
 
         else if (intent.getBooleanExtra(TIMER_CHANGE_SPEED_SERVICE_TAG,false)){
-            timer_speed_float = intent.getFloatExtra(TimerActivity.TIMER_SPEED_TAG,1);
+            timerSpeedFloat = intent.getFloatExtra(TimerActivity.TIMER_SPEED_TAG,1);
             if(timer != null){
                 timer.cancel();
             }
@@ -84,13 +84,13 @@ public class TimerService extends Service {
 
         else{
             isPaused = false;
-            timer_intent.putExtra(TIMER_PAUSE_SERVICE_TAG, false);
+            timerIntent.putExtra(TIMER_PAUSE_SERVICE_TAG, false);
             initializeAlarmSound();
 
-            initial_time = intent.getIntExtra(TimerActivity.TIME_INITIAL_TAG,1000);
-            time_left = intent.getIntExtra(TimerActivity.TIME_LEFT_TAG,1300);
-            timer_speed_float = intent.getFloatExtra(TimerActivity.TIMER_SPEED_TAG,1);
-            timer_intent.putExtra(TIME_INITIAL_SERVICE_TAG, initial_time);
+            initialTime = intent.getIntExtra(TimerActivity.TIME_INITIAL_TAG,1000);
+            timeLeft = intent.getIntExtra(TimerActivity.TIME_LEFT_TAG,1300);
+            timerSpeedFloat = intent.getFloatExtra(TimerActivity.TIMER_SPEED_TAG,1);
+            timerIntent.putExtra(TIME_INITIAL_SERVICE_TAG, initialTime);
 
             Notification timer_running_notification = createTimerRunningNotification();
 
@@ -122,40 +122,40 @@ public class TimerService extends Service {
     private void startTimer(){
 
         int countDownInterval = 100;
-        Log.i("timer speed:", timer_speed_float + "");
+        Log.i("timer speed:", timerSpeedFloat + "");
 
         isFirstTick = true;
 
-        timer = new CountDownTimer((long) (time_left/timer_speed_float),
-                (long) (countDownInterval)){
+        timer = new CountDownTimer((long) (timeLeft / timerSpeedFloat),
+                countDownInterval){
             @Override
             public void onTick(long time_until_finish) {
-                if (time_left <= 0){
+                if (timeLeft <= 0){
                     onFinish();
                 }
                 else{
                     if (!isFirstTick){
-                        time_left -= countDownInterval * timer_speed_float;
+                        timeLeft -= countDownInterval * timerSpeedFloat;
                     }
                     else{
                         isFirstTick = false;
                     }
 
-                    timer_intent.putExtra(TIME_LEFT_SERVICE_TAG,time_left);
-                    timer_intent.putExtra(TIME_INITIAL_SERVICE_TAG,initial_time);
-                    sendBroadcast(timer_intent);
+                    timerIntent.putExtra(TIME_LEFT_SERVICE_TAG, timeLeft);
+                    timerIntent.putExtra(TIME_INITIAL_SERVICE_TAG, initialTime);
+                    sendBroadcast(timerIntent);
                 }
             }
 
             @Override
             public void onFinish() {
-                time_left = 0;
+                timeLeft = 0;
 
-                timer_intent.putExtra(TIME_LEFT_SERVICE_TAG,time_left);
-                timer_intent.putExtra(TIME_INITIAL_SERVICE_TAG,initial_time);
+                timerIntent.putExtra(TIME_LEFT_SERVICE_TAG, timeLeft);
+                timerIntent.putExtra(TIME_INITIAL_SERVICE_TAG, initialTime);
 
                 playAlarm();
-                sendBroadcast(timer_intent);
+                sendBroadcast(timerIntent);
 
                 vibrate(VIBRATION_TIME);
                 sendToTimerEndedNotificationChannel();
@@ -165,13 +165,13 @@ public class TimerService extends Service {
 
     ///--------------------------Functions for Playing Sounds-------------------------///
     private void initializeAlarmSound(){
-        alarm_sound = MediaPlayer.create(TimerService.this,R.raw.alarm_sound);
-        alarm_sound.setLooping(false);
+        alarmSound = MediaPlayer.create(TimerService.this,R.raw.alarm_sound);
+        alarmSound.setLooping(false);
     }
 
     private void playAlarm(){
-        if (alarm_sound != null){
-            alarm_sound.start();
+        if (alarmSound != null){
+            alarmSound.start();
         }
     }
 
@@ -203,7 +203,7 @@ public class TimerService extends Service {
     }
 
     private void sendToTimerEndedNotificationChannel(){
-        notify_manager = NotificationManagerCompat.from(this);
+        notifyManager = NotificationManagerCompat.from(this);
 
         int id = 1;
         Intent receive_intent = new Intent(this,NotificationReceiver.class);
@@ -224,6 +224,6 @@ public class TimerService extends Service {
 
         //end service that maintains foreground for timer
         stopService(new Intent(this, TimerService.class));
-        notify_manager.notify(id,notify);
+        notifyManager.notify(id,notify);
     }
 }

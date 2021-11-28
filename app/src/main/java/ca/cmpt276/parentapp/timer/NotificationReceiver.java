@@ -19,10 +19,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         int notification_id = intent.getIntExtra(TimerActivity.NOTIFY_ID,1);
 
-        if (TimerService.alarm_sound != null && TimerService.alarm_sound.isPlaying()){
+        if (TimerService.alarmSound != null && TimerService.alarmSound.isPlaying()){
             try {
-                TimerService.alarm_sound.stop();
-                TimerService.alarm_sound.prepare();
+                TimerService.alarmSound.stop();
+                TimerService.alarmSound.prepare();
             } catch (IOException e) {
                 Toast.makeText(context,"Error in playing alarm",Toast.LENGTH_SHORT).show();
             }

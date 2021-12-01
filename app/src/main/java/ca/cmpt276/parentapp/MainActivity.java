@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.child_config.ConfigActivity;
+import ca.cmpt276.parentapp.takebreath.TakeBreath;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.whoseturn.WhoseTurnActivity;
 
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         switchActivitySettings();
         switchActivityWhoseTurn();
         switchActivityHelpScreen();
+        switchActivityTakeBreath();
     }
 
     private void getChildrenListFromSharedPreferences() {
@@ -41,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         ChildManager childrenManager = gson.fromJson(json, ChildManager.class);
         ChildManager.setInstance(childrenManager);
     }
-
 
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);
@@ -79,6 +80,14 @@ public class MainActivity extends AppCompatActivity {
         Button helpScreenButton = findViewById(R.id.btnHelpScreen);
         helpScreenButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, HelpScreenActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void switchActivityTakeBreath() {
+        Button takeBreathButton = findViewById(R.id.takeBreathButton);
+        takeBreathButton.setOnClickListener(View -> {
+            Intent intent = new Intent(this, TakeBreath.class);
             startActivity(intent);
         });
     }

@@ -42,8 +42,8 @@
 
     <Button
         android:id="@+id/breathButton"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="450px"
+        android:layout_height="450px"
         android:background="@drawable/breath_button"
         android:text="Begin"
         android:visibility="visible"

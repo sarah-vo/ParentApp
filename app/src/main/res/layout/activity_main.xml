@@ -24,12 +24,12 @@
     <Button
         android:id="@+id/timeoutTimerButton"
         style="@style/Widget.MaterialComponents.Button.Icon"
+        app:icon="@drawable/ic_timer"
         android:layout_width="206dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_menu_button"
         android:text="@string/timeout_timer"
         android:textSize="16sp"
-        app:icon="@drawable/ic_timer"
         app:layout_constraintBottom_toTopOf="@+id/taskButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -2,6 +2,7 @@ package ca.cmpt276.parentapp.takebreath;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -24,15 +25,16 @@ public class TakeBreath extends AppCompatActivity {
     CountDownTimer countDownTimer;
     int seconds = 0;
     final int MINIMUM_MILLISECONDS_FOR_INHALE = 3000;
+    MediaPlayer music;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_breath);
 
+        music = MediaPlayer.create(this, R.raw.piano_moment);
         setupHeading();
         inhaleStateButton();
-
     }
 
     private void inhaleStateButton() {
@@ -43,6 +45,7 @@ public class TakeBreath extends AppCompatActivity {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
+                        music.start();
                         if (breathCount == 0) {
                             breathButton.setText("In");
                         }
@@ -59,6 +62,7 @@ public class TakeBreath extends AppCompatActivity {
                             @Override
                             public void onFinish() {
                                 breathButton.setText("Out");
+                                music.pause();
                                 //For testing
 //                                new Handler().postDelayed(new Runnable() {
 //                                    @Override
@@ -73,6 +77,7 @@ public class TakeBreath extends AppCompatActivity {
                     }
 
                     case MotionEvent.ACTION_UP: {
+                        music.pause();
                         countDownTimer.cancel();
                         if (seconds < MINIMUM_MILLISECONDS_FOR_INHALE) {
                             resetButton();
@@ -98,6 +103,7 @@ public class TakeBreath extends AppCompatActivity {
         Button breathButton = findViewById(R.id.breathButton);
         breathButton.setText("Out");
         breathButton.setOnTouchListener(null);
+        music.start();
         countDownTimer = new CountDownTimer(seconds, 100) {
             @Override
             public void onTick(long l) {
@@ -114,6 +120,7 @@ public class TakeBreath extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                music.pause();
                 resetButton();
                 breathCount++;
                 seconds = 0;
@@ -121,6 +128,7 @@ public class TakeBreath extends AppCompatActivity {
         }.start();
 
         breathButton.setOnClickListener(view -> {
+            music.pause();
             countDownTimer.cancel();
             breathCount++;
             seconds = 0;

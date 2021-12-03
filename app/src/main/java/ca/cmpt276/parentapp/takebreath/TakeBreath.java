@@ -2,6 +2,7 @@ package ca.cmpt276.parentapp.takebreath;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class TakeBreath extends AppCompatActivity {
         Button breathButton = findViewById(R.id.breathButton);
 
         breathButton.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 switch (motionEvent.getAction()) {

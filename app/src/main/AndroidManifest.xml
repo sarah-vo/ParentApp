@@ -29,6 +29,10 @@
             android:exported="true"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".breath.breathActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
+        <activity
             android:name=".flipcoin.FlipCoinQueue"
             android:exported="true"
             android:parentActivityName=".flipcoin.FlipCoinActivity" />

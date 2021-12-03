@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.google.gson.Gson;
+
+import ca.cmpt276.parentapp.breath.breathActivity;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.child_config.ConfigActivity;
@@ -87,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
     private void switchActivityTakeBreath() {
         Button takeBreathButton = findViewById(R.id.takeBreathButton);
         takeBreathButton.setOnClickListener(View -> {
-            Intent intent = new Intent(this, TakeBreath.class);
+            //Intent intent = new Intent(this, TakeBreath.class);
+            Intent intent = new Intent(this, breathActivity.class);
             startActivity(intent);
         });
     }

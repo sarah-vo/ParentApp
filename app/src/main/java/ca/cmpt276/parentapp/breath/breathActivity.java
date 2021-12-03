@@ -108,19 +108,7 @@ public class breathActivity extends AppCompatActivity {
         heading.setText("Let's take " + breathNum + " breaths together");
     }
 
-    private void configureButton() {
-        breathButton = findViewById(R.id.breathButton);
-        breathButton.setText("Begin");
-        breathButton.setOnClickListener(View -> currentState.handleClickOff());
 
-    }
-
-    private void resetButton() {
-        ViewGroup.LayoutParams initialParams = breathButton.getLayoutParams();
-        initialParams.width = 450;
-        initialParams.height = 450;
-        breathButton.setLayoutParams(initialParams);
-    }
 
     // ************************************************************
     // Breath in State
@@ -275,14 +263,16 @@ public class breathActivity extends AppCompatActivity {
                 --breathNum;
                 updateTextView();
                 miliseconds = 0;
-                currentState.handleExit();
+                configureButton();
             }
         }.start();
 
 
 
     }
-
+    // ************************************************************
+    // Pre Breath State
+    // ************************************************************
     public class preBreathState extends State {
         public preBreathState(breathActivity context) {
             super(context);
@@ -297,12 +287,28 @@ public class breathActivity extends AppCompatActivity {
 
             configureTextView();
             configureButton();
+            breathButton.setText("Begin");
         }
         @Override
         void handleClickOff() {
             Log.d("preBreathState/handleClickOff", "In!");
             setState(inState);
         }
+    }
+
+    private void configureButton() {
+        breathButton = findViewById(R.id.breathButton);
+        breathButton.setOnClickListener(View -> {
+            currentState.handleClickOff();
+        });
+
+    }
+
+    private void resetButton() {
+        ViewGroup.LayoutParams initialParams = breathButton.getLayoutParams();
+        initialParams.width = 450;
+        initialParams.height = 450;
+        breathButton.setLayoutParams(initialParams);
     }
     // Use "Null Object" pattern: This class, does nothing! It's like a safe null
     private class IdleState extends State {

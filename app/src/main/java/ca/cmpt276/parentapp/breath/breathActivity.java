@@ -63,6 +63,7 @@ public class breathActivity extends AppCompatActivity {
     Button breathButton;
     Button addBreath;
     Button decreaseBreath;
+    boolean outOfBreath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +80,14 @@ public class breathActivity extends AppCompatActivity {
     private void configureTextView() {
         Log.d("configureTextView", "In!");
 
-        TextView heading = findViewById(R.id.tvHeading);
-        heading.setText("Let's take " + breathNum + " breaths together");
-
+        updateTextView();
         Button addBreath = findViewById(R.id.btnAddBreath);
         addBreath.setOnClickListener(view -> {
             if (breathNum < 10) {
                 breathNum++;
-                heading.setText("Let's take " + breathNum + " breaths together");
+                outOfBreath = false;
+                updateTextView();
+
             } else {
                 Toast.makeText(this, "Please select between 1 and 10 breaths", Toast.LENGTH_SHORT).show();
             }
@@ -95,7 +96,7 @@ public class breathActivity extends AppCompatActivity {
         decreaseBreath.setOnClickListener(view -> {
             if (breathNum > 0) {
                 breathNum--;
-                heading.setText("Let's take " + breathNum + " breaths together");
+                updateTextView();
             } else {
                 Toast.makeText(this, "Please select between 1 and 10 breaths", Toast.LENGTH_SHORT).show();
             }
@@ -114,7 +115,7 @@ public class breathActivity extends AppCompatActivity {
     // Breath in State
     // ************************************************************
 
-    /**Only executed in inState**/
+    /**Animation for breath in, used in inState**/
     @SuppressLint("ClickableViewAccessibility")
     private void breathInAnimation(){
         breathButton.setOnTouchListener(new View.OnTouchListener() {
@@ -183,16 +184,6 @@ public class breathActivity extends AppCompatActivity {
         }
 
         @Override
-        void handleThreeSecsLess() {
-            Log.d("inState", "Is 3 seconds or less condition triggered");
-            music.pause();
-            countDownTimer.cancel();
-            resetButton();
-            miliseconds = 0;
-            setState(preBreathState);
-        }
-
-        @Override
         void handleClickOff() {
             if (miliseconds < MINIMUM_MILLISECONDS_FOR_INHALE) {
                 currentState.handleThreeSecsLess();
@@ -200,6 +191,16 @@ public class breathActivity extends AppCompatActivity {
             else{
                 setState(outState);
             }
+        }
+
+        @Override
+        void handleThreeSecsLess() {
+            Log.d("inState", "Is 3 seconds or less condition triggered");
+            music.pause();
+            countDownTimer.cancel();
+            resetButton();
+            miliseconds = 0;
+            setState(preBreathState);
         }
     }
 
@@ -233,7 +234,7 @@ public class breathActivity extends AppCompatActivity {
             }
         }
     }
-
+    /**Animation for breath out, used in outState**/
     private void breathOutAnimation() {
         //starts inward animation, start breathing sound
         breathButton.setText("Out");
@@ -261,6 +262,9 @@ public class breathActivity extends AppCompatActivity {
                 breathButton.setText("In");
                 resetButton();
                 --breathNum;
+                if(breathNum == 0){
+                    outOfBreath = true;
+                }
                 updateTextView();
                 miliseconds = 0;
                 configureButton();
@@ -287,7 +291,13 @@ public class breathActivity extends AppCompatActivity {
 
             configureTextView();
             configureButton();
-            breathButton.setText("Begin");
+            if(outOfBreath){
+                breathButton.setText("Good job!");
+
+            }
+            else{
+                breathButton.setText("Begin");
+            }
         }
         @Override
         void handleClickOff() {

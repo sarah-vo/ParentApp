@@ -110,4 +110,9 @@
     <string name="help_screen">Help Screen</string>
     <string name="task_name">Task Name</string>
     <string name="timer_speed">Timer speed: %1$.2fx</string>
+    <string name="breath_in">In</string>
+    <string name="breath_out">Out</string>
+    <string name="breath_good_job">Good job!</string>
+    <string name="breath_start">Start</string>
+    <string name="breath_begin">Begin</string>
 </resources>

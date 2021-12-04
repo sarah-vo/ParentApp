@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -57,7 +56,8 @@ public class breathActivity extends AppCompatActivity {
     //Android global variables
     int breathNum;
     CountDownTimer countDownTimer;
-    int miliseconds = 0;
+    int milliseconds = 0;
+    int exhaleTimeInMilliSec = 0;
     final int MINIMUM_MILLISECONDS_FOR_INHALE = 3000;
     MediaPlayer music;
     Button breathButton;
@@ -157,7 +157,7 @@ public class breathActivity extends AppCompatActivity {
                     params.width *= 1.01;
                     params.height *= 1.01;
                     breathButton.setLayoutParams(params);
-                    miliseconds += 100;
+                    milliseconds += 100;
                 }
 
                 @Override
@@ -189,7 +189,7 @@ public class breathActivity extends AppCompatActivity {
 
         @Override
         void handleClickOff() {
-            if (miliseconds < MINIMUM_MILLISECONDS_FOR_INHALE) {
+            if (milliseconds < MINIMUM_MILLISECONDS_FOR_INHALE) {
                 currentState.handleThreeSecsLess();
             }
             else{
@@ -205,7 +205,7 @@ public class breathActivity extends AppCompatActivity {
                 countDownTimer.cancel();
             }
             resetButton();
-            miliseconds = 0;
+            milliseconds = 0;
             setState(preBreathState);
         }
     }
@@ -240,20 +240,23 @@ public class breathActivity extends AppCompatActivity {
             //starts inward animation, start breathing sound
             breathButton.setText("Out");
             breathButton.setOnTouchListener(null);
+            breathButton.setOnClickListener(null);
             music.start();
 
             long interval = 100;
 
             Toast.makeText(getApplicationContext(), "and exhale.", Toast.LENGTH_LONG).show();
 
-            countDownTimer = new CountDownTimer(miliseconds, interval) {
+
+            countDownTimer = new CountDownTimer(milliseconds, interval) {
                 @Override
                 public void onTick(long l) {
                     Log.d("BreathOutAnimation", "triggered");
+                    exhaleTimeInMilliSec += 100;
                     ViewGroup.LayoutParams params = breathButton.getLayoutParams();
 
-                    params.width /= 1.01;
-                    params.height /= 1.01;
+                    params.width /= 1.009;
+                    params.height /= 1.009;
 
                     // Since width and height are stored in int, there will be errors when dividing with a float.
                     // In order to shrink the button to the exact same size, we will manually set the parameters
@@ -263,6 +266,21 @@ public class breathActivity extends AppCompatActivity {
                         params.height = 450;
                     }
                     breathButton.setLayoutParams(params);
+                    if (exhaleTimeInMilliSec >= 3000) {
+                        breathButton.setOnClickListener(view -> {
+                            music.pause();
+                            countDownTimer.cancel();
+                            resetButton();
+                            breathButton.setText("In");
+                            breathNum--;
+                            milliseconds = 0;
+                            exhaleTimeInMilliSec = 0;
+
+                            updateTextView();
+                            handleClickOff();
+                        });
+                    }
+
                 }
 
                 @Override
@@ -277,12 +295,14 @@ public class breathActivity extends AppCompatActivity {
                     }
 
                     updateTextView();
-                    miliseconds = 0;
+                    milliseconds = 0;
+                    exhaleTimeInMilliSec = 0;
 
                     handleClickOff();
 
                 }
             }.start();
+
         }
     }
 

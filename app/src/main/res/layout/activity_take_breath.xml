@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".takebreath.TakeBreath">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/breathButton"
         android:layout_width="450px"
         android:layout_height="450px"

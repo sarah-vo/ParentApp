@@ -285,7 +285,7 @@ public class breathActivity extends AppCompatActivity {
                             countDownTimer.cancel();
                             resetButton();
                             breathButton.setText("In");
-                            breathNum--;
+                            --breathNum;
                             milliseconds = 0;
                             exhaleTimeInMilliSec = 0;
 
@@ -301,13 +301,11 @@ public class breathActivity extends AppCompatActivity {
                     music.pause();
                     breathButton.setText("In");
                     resetButton();
-
-                    --breathNum;
                     if(breathNum == 0){
                         outOfBreath = true;
+                        breathButton.setText("Good job!");
+                        setHelpText("Click add breath to practice breathing!");
                     }
-
-                    updateHeading();
                     milliseconds = 0;
                     exhaleTimeInMilliSec = 0;
 
@@ -337,7 +335,10 @@ public class breathActivity extends AppCompatActivity {
             configureButton();
 
             if(outOfBreath){
+                setHelpText("Good job! Press button to start again!");
                 breathButton.setText("Good job!");
+                breathButton.setOnClickListener(View ->{breathButton.setText("Start");});
+                setHelpText("Click add breath to practice breathing!");
             }
             else{
                 breathButton.setText("Start");

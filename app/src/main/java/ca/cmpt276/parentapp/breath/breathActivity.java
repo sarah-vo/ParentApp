@@ -262,7 +262,7 @@ public class breathActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "and exhale.", Toast.LENGTH_LONG).show();
 
-
+            final boolean[] isDecrement = {false};
             countDownTimer = new CountDownTimer(milliseconds, interval) {
                 @Override
                 public void onTick(long l) {
@@ -278,18 +278,23 @@ public class breathActivity extends AppCompatActivity {
                     }
                     breathButton.setLayoutParams(params);
 
+                    //only allows for the user to stop animation and sound after 3 seconds
+
                     exhaleTimeInMilliSec += interval;
                     if (exhaleTimeInMilliSec >= 3000) {
+                        if(!isDecrement[0]){
+                            --breathNum;
+                            updateHeading();
+                            isDecrement[0] = true;
+                        }
+                        breathButton.setText("In");
                         breathButton.setOnClickListener(view -> {
                             music.pause();
                             countDownTimer.cancel();
                             resetButton();
-                            breathButton.setText("In");
-                            --breathNum;
                             milliseconds = 0;
                             exhaleTimeInMilliSec = 0;
 
-                            updateHeading();
                             handleClickOff();
                         });
                     }
@@ -333,16 +338,7 @@ public class breathActivity extends AppCompatActivity {
             setHelpText("Click add breath to practice breathing!");
             configureHeading();
             configureButton();
-
-            if(outOfBreath){
-                setHelpText("Good job! Press button to start again!");
-                breathButton.setText("Good job!");
-                breathButton.setOnClickListener(View ->{breathButton.setText("Start");});
-                setHelpText("Click add breath to practice breathing!");
-            }
-            else{
-                breathButton.setText("Start");
-            }
+            breathButton.setText("Start");
         }
         @Override
         void handleClickOff() {

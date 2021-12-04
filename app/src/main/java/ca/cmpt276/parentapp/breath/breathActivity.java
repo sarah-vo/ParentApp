@@ -28,14 +28,12 @@ public class breathActivity extends AppCompatActivity {
             this.context = context;
         }
 
-
         // Empty implementations, so derived class don't need to
         // override methods they don't care about.
         void handleEnter() {}
         void handleExit() {}
         void handleClickOff() {}
         void handleThreeSecsLess() {}
-
     }
     //breath in
     public final State inState = new inState(breathActivity.this);
@@ -135,6 +133,7 @@ public class breathActivity extends AppCompatActivity {
 
         @SuppressLint("ClickableViewAccessibility")
         private void setUpBreathInButton(){
+            breathButton.setText("Begin");
             breathButton.setOnTouchListener((view, motionEvent) -> {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
@@ -322,7 +321,7 @@ public class breathActivity extends AppCompatActivity {
                 breathButton.setText("Good job!");
             }
             else{
-                breathButton.setText("Begin");
+                breathButton.setText("Start");
             }
         }
         @Override
@@ -333,8 +332,11 @@ public class breathActivity extends AppCompatActivity {
 
         private void configureButton() {
             breathButton = findViewById(R.id.breathButton);
+            breathButton.setOnTouchListener(null);
             breathButton.setOnClickListener(View -> {
-                currentState.handleClickOff();
+                if(breathNum > 0) {
+                    currentState.handleClickOff();
+                }
             });
         }
     }
@@ -345,9 +347,13 @@ public class breathActivity extends AppCompatActivity {
         initialParams.height = 450;
         breathButton.setLayoutParams(initialParams);
     }
-    // Use "Null Object" pattern: This class, does nothing! It's like a safe null
+
     private class IdleState extends State {
+        // Use "Null Object" pattern: This class, does nothing! It's like a safe null
         public IdleState(breathActivity context) {
+            // ************************************************************
+            // Idle State
+            // ************************************************************
             super(context);
         }
     }

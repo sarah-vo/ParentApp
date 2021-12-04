@@ -31,12 +31,12 @@
 
     <Button
         android:id="@+id/btnAddBreath"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/ic_baseline_add_24"
+        android:layout_marginTop="60dp"
         android:text="Breath"
+        app:icon="@drawable/ic_baseline_add_24"
         app:layout_constraintEnd_toStartOf="@+id/btnRemoveBreath"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,15 +44,26 @@
 
     <Button
         android:id="@+id/btnRemoveBreath"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/ic_baseline_remove_24"
+        android:layout_marginTop="60dp"
         android:text="Breath"
+        app:icon="@drawable/ic_baseline_remove_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btnAddBreath"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeading" />
+
+    <TextView
+        android:id="@+id/helpText"
+        android:layout_width="387dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHeading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

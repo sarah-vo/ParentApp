@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,16 +32,14 @@ public class breathActivity extends AppCompatActivity {
         // Empty implementations, so derived class don't need to
         // override methods they don't care about.
         void handleEnter() {}
-
         void handleExit() {}
-
         void handleClickOff() {}
-
         void handleThreeSecsLess() {}
 
     }
-
+    //breath in
     public final State inState = new inState(breathActivity.this);
+    //breath out
     public final State outState = new outState(breathActivity.this);
     private State currentState = new IdleState(breathActivity.this);
     public final State preBreathState = new preBreathState(breathActivity.this);
@@ -77,17 +74,17 @@ public class breathActivity extends AppCompatActivity {
     }
 
     //TODO fix string extract
-    private void configureTextView() {
+    private void configureHeading() {
         Log.d("configureTextView", "In!");
 
-        updateTextView();
+        updateHeading();
 
         Button addBreath = findViewById(R.id.btnAddBreath);
         addBreath.setOnClickListener(view -> {
             if (breathNum < 10) {
                 breathNum++;
                 outOfBreath = false;
-                updateTextView();
+                updateHeading();
 
             } else {
                 Toast.makeText(this, "Please select between 1 and 10 breaths", Toast.LENGTH_SHORT).show();
@@ -98,18 +95,32 @@ public class breathActivity extends AppCompatActivity {
         decreaseBreath.setOnClickListener(view -> {
             if (breathNum > 0) {
                 breathNum--;
-                updateTextView();
+                updateHeading();
             } else {
                 Toast.makeText(this, "Please select between 1 and 10 breaths", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
-    /**Call whenever breathout is triggered**/
-    private void updateTextView(){
+    private void updateHeading(){
         TextView heading = findViewById(R.id.tvHeading);
         heading.setText("Let's take " + breathNum + " breaths together");
     }
+
+    private void setHelpText(String string){
+        TextView help = findViewById(R.id.helpText);
+        help.setText(string);
+    }
+    private void makeHelpTextVisible(boolean bool){
+        TextView help = findViewById(R.id.helpText);
+        if(bool){
+            help.setVisibility(View.VISIBLE);
+        }
+        else{
+            help.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
 
 
@@ -183,6 +194,8 @@ public class breathActivity extends AppCompatActivity {
             }
             else{
                 Log.d("inState", "Animation setup-ed!");
+                setHelpText("Hold button and breath in!");
+                makeHelpTextVisible(true);
                 setUpBreathInButton();
             }
         }
@@ -200,6 +213,7 @@ public class breathActivity extends AppCompatActivity {
         @Override
         void handleThreeSecsLess() {
             Log.d("inState", "Is 3 seconds or less condition triggered");
+            setHelpText("Release button when breath out.");
             music.pause();
             if(countDownTimer != null){
                 countDownTimer.cancel();
@@ -276,7 +290,7 @@ public class breathActivity extends AppCompatActivity {
                         outOfBreath = true;
                     }
 
-                    updateTextView();
+                    updateHeading();
                     miliseconds = 0;
 
                     handleClickOff();
@@ -300,9 +314,8 @@ public class breathActivity extends AppCompatActivity {
 
             addBreath.setVisibility(View.VISIBLE);
             decreaseBreath.setVisibility(View.VISIBLE);
-            Toast.makeText(breathActivity.this, "PreSetState!", Toast.LENGTH_LONG).show();
-
-            configureTextView();
+            setHelpText("Click add breath to practice breathing!");
+            configureHeading();
             configureButton();
 
             if(outOfBreath){

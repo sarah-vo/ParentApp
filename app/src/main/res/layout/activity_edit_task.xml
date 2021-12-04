@@ -7,7 +7,7 @@
     tools:context=".whoseturn.EditTaskActivity">
 
     <Button
-        android:id="@+id/button_complete"
+        android:id="@+id/button_edit_task_complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="328dp"
@@ -46,7 +46,7 @@
         android:text="@string/child_name"
         android:textColor="@color/black"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_complete"
+        app:layout_constraintBottom_toTopOf="@+id/button_edit_task_complete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         app:srcCompat="@drawable/default_portrait"/>
 
     <Button
-        android:id="@+id/task_view_history_button"
+        android:id="@+id/button_edit_task_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="History"

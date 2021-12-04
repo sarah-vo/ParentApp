@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -121,11 +119,10 @@ public class EditTaskActivity extends AppCompatActivity {
     }
 
     private void setupButton() {
-        Button btnComplete = findViewById(R.id.button_complete);
-        Button btnCancel = findViewById(R.id.button_edit_task_done);
-        Button historyButton = findViewById(R.id.historyButton);
+        Button btnComplete = findViewById(R.id.button_edit_task_complete);
+        Button historyButton = findViewById(R.id.button_edit_task_history);
 
-        btnComplete.setOnClickListener(View -> {
+        btnComplete.setOnClickListener(view -> {
             LocalDateTime localDateTime = LocalDateTime.now();
             String lastTurnDate = DateTimeFormatter.ofPattern("MMM dd @ HH:mm a")
                     .format(localDateTime);
@@ -135,7 +132,7 @@ public class EditTaskActivity extends AppCompatActivity {
             task.passTurnToNextChild();
             finish();
         });
-        btnCancel.setOnClickListener(View -> finish());
+
 
         historyButton.setOnClickListener(view -> {
             Intent intent = new Intent(EditTaskActivity.this, TaskHistory.class);

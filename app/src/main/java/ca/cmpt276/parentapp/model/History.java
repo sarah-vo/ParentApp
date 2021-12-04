@@ -14,4 +14,8 @@ public class History {
     public Child getChild() {
         return child;
     }
+
+    public String getLastTurnDate() {
+        return lastTurnDate;
+    }
 }

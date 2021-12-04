@@ -110,4 +110,9 @@
     <string name="help_screen">Help Screen</string>
     <string name="task_name">Task Name</string>
     <string name="timer_speed">Timer speed: %1$.2fx</string>
+
+    <string name="task_history_child_portrait">Child Portrait</string>
+    <string name="task_history_child_name">Child Name</string>
+    <string name="task_history_last_turn_date">Date</string>
+
 </resources>

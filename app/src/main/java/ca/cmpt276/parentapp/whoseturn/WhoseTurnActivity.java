@@ -58,7 +58,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
     private void registerClickCallback() {
         ListView list = findViewById(R.id.listViewTask);
         list.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = new Intent(WhoseTurnActivity.this, EditTask.class);
+            Intent intent = new Intent(WhoseTurnActivity.this, EditTaskActivity.class);
             intent.putExtra("task index", i);
             startActivity(intent);
         });

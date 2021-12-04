@@ -16,15 +16,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
+import ca.cmpt276.parentapp.model.History;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
 
 /**
  * Screen to let user change task name, delete the task, and confirm the child has complete task.
  */
-public class EditTask extends AppCompatActivity {
+public class EditTaskActivity extends AppCompatActivity {
     TaskManager taskManager = TaskManager.getInstance();
     Task task;
     int taskIndex;
@@ -119,12 +123,25 @@ public class EditTask extends AppCompatActivity {
     private void setupButton() {
         Button btnComplete = findViewById(R.id.button_complete);
         Button btnCancel = findViewById(R.id.button_edit_task_done);
+        Button historyButton = findViewById(R.id.historyButton);
 
         btnComplete.setOnClickListener(View -> {
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String lastTurnDate = DateTimeFormatter.ofPattern("MMM dd @ HH:mm a")
+                    .format(localDateTime);
+
+            Child child = task.getCurrentTurnChild();
+            task.getTaskHistoryList().add(new History(child, lastTurnDate));
             task.passTurnToNextChild();
             finish();
         });
         btnCancel.setOnClickListener(View -> finish());
+
+        historyButton.setOnClickListener(view -> {
+            Intent intent = new Intent(EditTaskActivity.this, TaskHistory.class);
+            intent.putExtra("task index", taskIndex);
+            startActivity(intent);
+        });
     }
 
     @Override

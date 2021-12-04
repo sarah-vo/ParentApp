@@ -2,15 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ca.cmpt276.parentapp">
-    <!--permission for camera/gallery-->
-    <uses-feature android:name="android.hardware.camera"
+    <!-- permission for camera/gallery -->
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28" />
-    <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS"/>
 
-    <!--permission for timer notification-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS" /> <!-- permission for timer notification -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -24,30 +25,33 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".whoseturn.TaskHistory"
+            android:exported="false" />
+        <activity
             android:name=".flipcoin.FlipCoinQueue"
             android:exported="true"
-            android:parentActivityName=".flipcoin.FlipCoinActivity"/>
+            android:parentActivityName=".flipcoin.FlipCoinActivity" />
         <activity
             android:name=".child_config.EditChildren"
             android:exported="false"
-            android:parentActivityName=".child_config.ConfigActivity"/>
+            android:parentActivityName=".child_config.ConfigActivity" />
         <activity
             android:name=".child_config.AddChildren"
             android:exported="false"
-            android:parentActivityName=".child_config.ConfigActivity"/>
+            android:parentActivityName=".child_config.ConfigActivity" />
         <activity
             android:name=".child_config.ConfigActivity"
             android:exported="false"
             android:label="Configure children"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".whoseturn.AddTaskActivity"
-            android:parentActivityName=".whoseturn.WhoseTurnActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".whoseturn.WhoseTurnActivity" />
         <activity
-            android:name=".whoseturn.EditTask"
-            android:parentActivityName=".whoseturn.WhoseTurnActivity"
-            android:exported="true" />
+            android:name=".whoseturn.EditTaskActivity"
+            android:exported="true"
+            android:parentActivityName=".whoseturn.WhoseTurnActivity" />
         <activity
             android:name=".whoseturn.WhoseTurnActivity"
             android:exported="true"
@@ -69,7 +73,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".HelpScreenActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -84,7 +88,6 @@
         <service android:name=".timer.TimerService" />
 
         <receiver android:name=".timer.NotificationReceiver" />
-
     </application>
 
 </manifest>

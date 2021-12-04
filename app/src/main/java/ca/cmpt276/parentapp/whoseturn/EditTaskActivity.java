@@ -124,7 +124,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
         btnComplete.setOnClickListener(view -> {
             LocalDateTime localDateTime = LocalDateTime.now();
-            String lastTurnDate = DateTimeFormatter.ofPattern("MMM dd @ HH:mm a")
+            String lastTurnDate = DateTimeFormatter.ofPattern("MMM dd, YYYY ")
                     .format(localDateTime);
 
             Child child = task.getCurrentTurnChild();

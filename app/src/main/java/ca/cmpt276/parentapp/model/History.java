@@ -1,8 +1,7 @@
 package ca.cmpt276.parentapp.model;
 
-import android.graphics.Bitmap;
-
 public class History {
+
     private Child child;
     private String lastTurnDate;
 

@@ -50,7 +50,7 @@ public class TaskHistoryAdapter extends RecyclerView.Adapter<TaskHistoryAdapter.
             }
 
             if(taskHistoryList.get(position).getLastTurnDate() != null) {
-                holder.childName.setText(taskHistoryList.get(position).getLastTurnDate());
+                holder.lastTurnDate.setText(taskHistoryList.get(position).getLastTurnDate());
             }
         }
 

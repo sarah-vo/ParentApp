@@ -204,6 +204,7 @@ public class breathActivity extends AppCompatActivity {
         @Override
         void handleClickOff() {
             if (milliseconds < MINIMUM_MILLISECONDS_FOR_INHALE) {
+                setHelpText("Release button when breath out.");
                 currentState.handleThreeSecsLess();
             }
             else{
@@ -221,7 +222,6 @@ public class breathActivity extends AppCompatActivity {
             }
             resetButton();
             milliseconds = 0;
-            setState(preBreathState);
         }
     }
 
@@ -272,14 +272,13 @@ public class breathActivity extends AppCompatActivity {
                     params.width /= 1.009;
                     params.height /= 1.009;
 
-                    // Since width and height are stored in int, there will be errors when dividing with a float.
-                    // In order to shrink the button to the exact same size, we will manually set the parameters
-                    // when the division result is close to 450
                     if (params.width <= 450) {
                         params.width = 450;
                         params.height = 450;
                     }
                     breathButton.setLayoutParams(params);
+
+                    exhaleTimeInMilliSec += interval;
                     if (exhaleTimeInMilliSec >= 3000) {
                         breathButton.setOnClickListener(view -> {
                             music.pause();

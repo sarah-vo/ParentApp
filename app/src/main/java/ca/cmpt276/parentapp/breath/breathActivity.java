@@ -135,7 +135,6 @@ public class breathActivity extends AppCompatActivity {
 
         @SuppressLint("ClickableViewAccessibility")
         private void setUpBreathInButton(){
-            breathButton.setText("Begin");
             breathButton.setOnTouchListener((view, motionEvent) -> {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
@@ -294,7 +293,11 @@ public class breathActivity extends AppCompatActivity {
                             resetButton();
                             milliseconds = 0;
                             exhaleTimeInMilliSec = 0;
-
+                            if(breathNum == 0){
+                                outOfBreath = true;
+                                breathButton.setText("Good job!");
+                                setHelpText("Click add breath to practice breathing!");
+                            }
                             handleClickOff();
                         });
                     }
@@ -351,6 +354,7 @@ public class breathActivity extends AppCompatActivity {
             breathButton.setOnTouchListener(null);
             breathButton.setOnClickListener(View -> {
                 if(breathNum > 0) {
+                    breathButton.setText("Begin");
                     currentState.handleClickOff();
                 }
             });

@@ -290,7 +290,7 @@ public class breathActivity extends AppCompatActivity {
                             milliseconds = 0;
                             exhaleTimeInMilliSec = 0;
 
-                            updateTextView();
+                            updateHeading();
                             handleClickOff();
                         });
                     }

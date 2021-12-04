@@ -81,6 +81,7 @@ public class breathActivity extends AppCompatActivity {
         Log.d("configureTextView", "In!");
 
         updateTextView();
+
         Button addBreath = findViewById(R.id.btnAddBreath);
         addBreath.setOnClickListener(view -> {
             if (breathNum < 10) {
@@ -92,6 +93,7 @@ public class breathActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please select between 1 and 10 breaths", Toast.LENGTH_SHORT).show();
             }
         });
+
         Button decreaseBreath = findViewById(R.id.btnRemoveBreath);
         decreaseBreath.setOnClickListener(view -> {
             if (breathNum > 0) {
@@ -114,53 +116,6 @@ public class breathActivity extends AppCompatActivity {
     // ************************************************************
     // Breath in State
     // ************************************************************
-
-    /**Animation for breath in, used in inState**/
-    @SuppressLint("ClickableViewAccessibility")
-    private void breathInAnimation(){
-        breathButton.setOnTouchListener(new View.OnTouchListener() {
-            @SuppressLint("ClickableViewAccessibility")
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        Toast.makeText(getApplicationContext(), "Now inhale ...", Toast.LENGTH_LONG).show();
-                        music.start();
-                        breathButton.setText("In");
-                        countDownTimer = new CountDownTimer(10000, 100) {
-                            @Override
-                            public void onTick(long l) {
-                                ViewGroup.LayoutParams params = breathButton.getLayoutParams();
-                                params.width *= 1.01;
-                                params.height *= 1.01;
-                                breathButton.setLayoutParams(params);
-                                miliseconds += 100;
-                            }
-
-                            @Override
-                            public void onFinish() {
-                                countDownTimer.cancel();
-                                music.pause();
-                                setState(outState);
-                            }
-                        }.start();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        //currentState would be inState
-                        countDownTimer.cancel();
-                        music.pause();
-                        currentState.handleClickOff();
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
-
-    }
-
-
     private class inState extends State {
 
         public inState(breathActivity context) {
@@ -168,9 +123,58 @@ public class breathActivity extends AppCompatActivity {
         }
 
         @SuppressLint("ClickableViewAccessibility")
+        private void setUpBreathInButton(){
+            breathButton.setOnTouchListener((view, motionEvent) -> {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        Toast.makeText(getApplicationContext(), "Now inhale ...", Toast.LENGTH_LONG).show();
+                        breathInAnimation();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        //currentState would be inState
+                        if(countDownTimer != null){
+                            countDownTimer.cancel();
+                        }
+                        music.pause();
+                        currentState.handleClickOff();
+                        break;
+                    }
+                }
+                return false;
+            });
+        }
+
+        /**Animation for breath in, used in inState**/
+        @SuppressLint("ClickableViewAccessibility")
+        private void breathInAnimation(){
+            music.start();
+            breathButton.setText("In");
+            countDownTimer = new CountDownTimer(10000, 100) {
+                @Override
+                public void onTick(long l) {
+                    ViewGroup.LayoutParams params = breathButton.getLayoutParams();
+                    params.width *= 1.01;
+                    params.height *= 1.01;
+                    breathButton.setLayoutParams(params);
+                    miliseconds += 100;
+                }
+
+                @Override
+                public void onFinish() {
+                    countDownTimer.cancel();
+                    music.pause();
+                    currentState.handleClickOff();
+                }
+            }.start();
+
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         void handleEnter() {
             Log.d("inState", "In!");
+
             addBreath.setVisibility(View.INVISIBLE);
             decreaseBreath.setVisibility(View.INVISIBLE);
             if(breathNum <= 0){
@@ -179,7 +183,7 @@ public class breathActivity extends AppCompatActivity {
             }
             else{
                 Log.d("inState", "Animation setup-ed!");
-                breathInAnimation();
+                setUpBreathInButton();
             }
         }
 
@@ -197,7 +201,9 @@ public class breathActivity extends AppCompatActivity {
         void handleThreeSecsLess() {
             Log.d("inState", "Is 3 seconds or less condition triggered");
             music.pause();
-            countDownTimer.cancel();
+            if(countDownTimer != null){
+                countDownTimer.cancel();
+            }
             resetButton();
             miliseconds = 0;
             setState(preBreathState);
@@ -214,12 +220,7 @@ public class breathActivity extends AppCompatActivity {
         }
         @Override
         void handleEnter() {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    breathOutAnimation();
-                }
-            }, 1);
+            breathOutAnimation();
         }
 
         @Override
@@ -233,47 +234,58 @@ public class breathActivity extends AppCompatActivity {
                 setState(inState);
             }
         }
-    }
-    /**Animation for breath out, used in outState**/
-    private void breathOutAnimation() {
-        //starts inward animation, start breathing sound
-        breathButton.setText("Out");
-        breathButton.setOnTouchListener(null);
-        music.start();
-        Toast.makeText(getApplicationContext(), "and exhale.", Toast.LENGTH_LONG).show();
-        countDownTimer = new CountDownTimer(miliseconds, 100) {
-            @Override
-            public void onTick(long l) {
-                Log.d("BreathOutAnimation", "triggered");
-                ViewGroup.LayoutParams params = breathButton.getLayoutParams();
-                params.width /= 1.01;
-                params.height /= 1.01;
-                // Since width and height are stored in int, there will be errors when dividing with a float.
-                // In order to shrink the button to the exact same size, we will manually set the parameters
-                // when the division result is close to 450
-                if (params.width > 450) {
+
+        /**Animation for breath out, used in outState**/
+        private void breathOutAnimation() {
+            //starts inward animation, start breathing sound
+            breathButton.setText("Out");
+            breathButton.setOnTouchListener(null);
+            music.start();
+
+            long interval = 100;
+
+            Toast.makeText(getApplicationContext(), "and exhale.", Toast.LENGTH_LONG).show();
+
+            countDownTimer = new CountDownTimer(miliseconds, interval) {
+                @Override
+                public void onTick(long l) {
+                    Log.d("BreathOutAnimation", "triggered");
+                    ViewGroup.LayoutParams params = breathButton.getLayoutParams();
+
+                    params.width /= 1.01;
+                    params.height /= 1.01;
+
+                    // Since width and height are stored in int, there will be errors when dividing with a float.
+                    // In order to shrink the button to the exact same size, we will manually set the parameters
+                    // when the division result is close to 450
+                    if (params.width <= 450) {
+                        params.width = 450;
+                        params.height = 450;
+                    }
                     breathButton.setLayoutParams(params);
                 }
-            }
 
-            @Override
-            public void onFinish() {
-                music.pause();
-                breathButton.setText("In");
-                resetButton();
-                --breathNum;
-                if(breathNum == 0){
-                    outOfBreath = true;
+                @Override
+                public void onFinish() {
+                    music.pause();
+                    breathButton.setText("In");
+                    resetButton();
+
+                    --breathNum;
+                    if(breathNum == 0){
+                        outOfBreath = true;
+                    }
+
+                    updateTextView();
+                    miliseconds = 0;
+
+                    handleClickOff();
+
                 }
-                updateTextView();
-                miliseconds = 0;
-                configureButton();
-            }
-        }.start();
-
-
-
+            }.start();
+        }
     }
+
     // ************************************************************
     // Pre Breath State
     // ************************************************************
@@ -285,15 +297,16 @@ public class breathActivity extends AppCompatActivity {
         @Override
         void handleEnter() {
             Log.d("preBreathState", "In!");
+
             addBreath.setVisibility(View.VISIBLE);
             decreaseBreath.setVisibility(View.VISIBLE);
             Toast.makeText(breathActivity.this, "PreSetState!", Toast.LENGTH_LONG).show();
 
             configureTextView();
             configureButton();
+
             if(outOfBreath){
                 breathButton.setText("Good job!");
-
             }
             else{
                 breathButton.setText("Begin");
@@ -304,14 +317,13 @@ public class breathActivity extends AppCompatActivity {
             Log.d("preBreathState/handleClickOff", "In!");
             setState(inState);
         }
-    }
 
-    private void configureButton() {
-        breathButton = findViewById(R.id.breathButton);
-        breathButton.setOnClickListener(View -> {
-            currentState.handleClickOff();
-        });
-
+        private void configureButton() {
+            breathButton = findViewById(R.id.breathButton);
+            breathButton.setOnClickListener(View -> {
+                currentState.handleClickOff();
+            });
+        }
     }
 
     private void resetButton() {

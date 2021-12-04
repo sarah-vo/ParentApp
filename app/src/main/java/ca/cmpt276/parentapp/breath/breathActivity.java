@@ -261,8 +261,9 @@ public class breathActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "and exhale.", Toast.LENGTH_LONG).show();
 
-            final boolean[] isDecrement = {false};
+            //final boolean[] isDecrement = {false};
             countDownTimer = new CountDownTimer(milliseconds, interval) {
+                boolean isDecrement = false;
                 @Override
                 public void onTick(long l) {
                     Log.d("BreathOutAnimation", "triggered");
@@ -278,13 +279,12 @@ public class breathActivity extends AppCompatActivity {
                     breathButton.setLayoutParams(params);
 
                     //only allows for the user to stop animation and sound after 3 seconds
-
                     exhaleTimeInMilliSec += interval;
                     if (exhaleTimeInMilliSec >= 3000) {
-                        if(!isDecrement[0]){
+                        if(!isDecrement){
                             --breathNum;
                             updateHeading();
-                            isDecrement[0] = true;
+                            isDecrement = true;
                         }
                         breathButton.setText("In");
                         breathButton.setOnClickListener(view -> {

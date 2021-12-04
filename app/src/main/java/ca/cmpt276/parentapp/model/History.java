@@ -14,5 +14,4 @@ public class History {
     public Child getChild() {
         return child;
     }
-
 }

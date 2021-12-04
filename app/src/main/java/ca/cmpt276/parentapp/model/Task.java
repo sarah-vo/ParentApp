@@ -2,11 +2,13 @@ package ca.cmpt276.parentapp.model;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Task {
 
     private String taskName;
+    private ArrayList<History> taskHistoryList = new ArrayList<>();
     private int whoseTurnIndex = -1;
 
     public Task(String taskName) {
@@ -50,6 +52,10 @@ public class Task {
         return child;
     }
 
+    public ArrayList<History> getTaskHistoryList() {
+        return taskHistoryList;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -62,4 +68,5 @@ public class Task {
         }
         return taskName + "\nNext turn: " + childName;
     }
+
 }

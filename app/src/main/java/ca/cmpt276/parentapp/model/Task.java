@@ -2,11 +2,17 @@ package ca.cmpt276.parentapp.model;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+/**
+ * Represent tasks in the app. Each task is an object.
+ */
 
 public class Task {
 
     private String taskName;
+    private final ArrayList<History> taskHistoryList = new ArrayList<>();
     private int whoseTurnIndex = -1;
 
     public Task(String taskName) {
@@ -22,6 +28,12 @@ public class Task {
     }
 
     public int getWhoseTurn(int numChildren) {
+
+        if (numChildren == 0) {
+            whoseTurnIndex = -1;
+            return whoseTurnIndex;
+        }
+
         if (whoseTurnIndex == -1) {
             Random rand = new Random();
             whoseTurnIndex = rand.nextInt(numChildren);
@@ -50,6 +62,10 @@ public class Task {
         return child;
     }
 
+    public ArrayList<History> getTaskHistoryList() {
+        return taskHistoryList;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -62,4 +78,5 @@ public class Task {
         }
         return taskName + "\nNext turn: " + childName;
     }
+
 }

@@ -117,5 +117,17 @@
     <string name="breath_good_job">Good job!</string>
     <string name="breath_start">Start</string>
     <string name="breath_begin">Begin</string>
-    <string name="take_num_breath">"Let's take %1$d breaths together")</string>
+    <string name="take_num_breath"> Let\'s take %1$d breaths together</string>
+
+    <string name="task_history_child_portrait">Child Portrait</string>
+    <string name="task_history_child_name">Child Name</string>
+    <string name="task_history_last_turn_date">Date</string>
+    <string name="task_history_deleted_child">A deleted child</string>
+    <string name="edit_task_activity_title">Modify Task</string>
+    <string name="are_you_sure_you_want_to_delete_the_task">Are you sure you want to delete the task?</string>
+    <string name="task_history_child_name_header_string">Name</string>
+    <string name="task_history_date_header_string">Date</string>
+    <string name="task_history_child_portrait_string">Child Portrait</string>
+    <string name="task_history_empty_text_string">No one has completed the task yet</string>
+
 </resources>

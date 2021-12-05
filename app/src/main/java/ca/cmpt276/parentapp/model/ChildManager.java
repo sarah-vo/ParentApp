@@ -34,8 +34,9 @@ public  class ChildManager {
         childrenList.add(child);
     }
 
-    public void removeChildren(int index){
+    public void removeChildren(int index) {
         childrenList.remove(index);
+
     }
 
 
@@ -48,6 +49,9 @@ public  class ChildManager {
     }
 
     public Child getChild(int pos) {
+        if (pos >= childrenList.size() || pos < 0) {
+            return null;
+        }
         return childrenList.get(pos);
     }
 

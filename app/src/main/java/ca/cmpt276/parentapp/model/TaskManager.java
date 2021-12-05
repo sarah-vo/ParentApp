@@ -44,6 +44,9 @@ public  class TaskManager {
                 if(history.getChildIndex() == removedChildIndex) {
                     history.setChildIndex(-1);
                 }
+                if(history.getChildIndex() > removedChildIndex) {
+                    history.setChildIndex(history.getChildIndex()-1);
+                }
             }
         }
     }

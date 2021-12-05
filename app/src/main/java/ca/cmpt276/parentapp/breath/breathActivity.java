@@ -390,5 +390,9 @@ public class breathActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         storeBreathNumToSharedPreferences();
+        if(music != null && music.isPlaying()){
+            music.pause();
+        }
     }
+
 }

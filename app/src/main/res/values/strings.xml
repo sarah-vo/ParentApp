@@ -115,5 +115,5 @@
     <string name="breath_good_job">Good job!</string>
     <string name="breath_start">Start</string>
     <string name="breath_begin">Begin</string>
-    <string name="take_num_breath">"Let's take %1$d breaths together")</string>
+    <string name="take_num_breath"> Let\'s take %1$d breaths together</string>
 </resources>

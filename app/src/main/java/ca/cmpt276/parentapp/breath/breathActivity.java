@@ -20,22 +20,15 @@ import ca.cmpt276.parentapp.R;
 public class breathActivity extends AppCompatActivity {
     // State Pattern's base states
     private abstract static class State {
-        // If putting in new file, you might want State base class to
-        // hold a reference to the activity
-
         public State(breathActivity context) {
         }
-
-        // Empty implementations, so derived class don't need to
-        // override methods they don't care about.
         void handleEnter() {}
         void handleExit() {}
         void handleClickOff() {}
         void handleThreeSecsLess() {}
     }
-    //breath in
+
     public final State inState = new inState(breathActivity.this);
-    //breath out
     public final State outState = new outState(breathActivity.this);
     private State currentState = new IdleState(breathActivity.this);
     public final State preBreathState = new preBreathState(breathActivity.this);
@@ -46,14 +39,13 @@ public class breathActivity extends AppCompatActivity {
         currentState.handleEnter();
     }
 
-    // Android Code
-    //Android global variables
     int breathNum;
     int originalBreathNum;
     CountDownTimer countDownTimer;
     int milliseconds = 0;
     int exhaleTimeInMilliSec = 0;
     final int MINIMUM_MILLISECONDS_FOR_INHALE = 3000;
+    final String SAVE_ORIGINAL_BREATH_NUM = "SAVE ORIGINAL BREATH NUM";
     MediaPlayer music;
     Button breathButton;
     Button addBreath;
@@ -68,14 +60,17 @@ public class breathActivity extends AppCompatActivity {
         getBreathNumFromSharedPreferences();
 
         music = MediaPlayer.create(this, R.raw.piano_moment);
+        music.setLooping(true);
+
         addBreath = findViewById(R.id.btnAddBreath);
         decreaseBreath = findViewById(R.id.btnRemoveBreath);
         setState(preBreathState);
     }
 
-    //TODO fix string extract
     private void configureHeading() {
         Log.d("configureTextView", "In!");
+        Log.i("OriginalBreath_configure", originalBreathNum + "");
+        Log.i("BreathNum_configure", breathNum + "");
 
         updateHeading();
 
@@ -84,6 +79,8 @@ public class breathActivity extends AppCompatActivity {
             if (breathNum < 10) {
                 breathNum++;
                 originalBreathNum++;
+                Log.i("OriginalBreath", originalBreathNum + "");
+                Log.i("BreathNum", breathNum + "");
                 updateHeading();
 
             } else {
@@ -96,6 +93,8 @@ public class breathActivity extends AppCompatActivity {
             if (breathNum > 0) {
                 breathNum--;
                 originalBreathNum--;
+                Log.i("OriginalBreath", originalBreathNum + "");
+                Log.i("BreathNum", breathNum + "");
                 updateHeading();
             } else {
                 Toast.makeText(this, "Please select between 1 and 10 breaths", Toast.LENGTH_SHORT).show();
@@ -103,10 +102,10 @@ public class breathActivity extends AppCompatActivity {
         });
 
     }
-    @SuppressLint("SetTextI18n")
+
     private void updateHeading(){
         TextView heading = findViewById(R.id.tvHeading);
-        heading.setText("Let's take " + breathNum + " breaths together");
+        heading.setText(getString(R.string.take_num_breath, breathNum));
     }
 
     private void setHelpText(String string){
@@ -230,8 +229,8 @@ public class breathActivity extends AppCompatActivity {
 
         @Override
         void handleClickOff() {
-
             Log.i("outState", "Exiting outState");
+
             if(breathNum <= 0){
                 setState(preBreathState);
             }
@@ -279,6 +278,7 @@ public class breathActivity extends AppCompatActivity {
                         }
                         if(breathNum == 0){
                             breathButton.setText(R.string.breath_good_job);
+                            originalBreathNum = 0;
                             setHelpText("Click add breath to practice breathing!");
                         }
                         else {
@@ -302,6 +302,7 @@ public class breathActivity extends AppCompatActivity {
                     music.pause();
                     if(breathNum == 0){
                         breathButton.setText(R.string.breath_good_job);
+                        originalBreathNum = 0;
                         setHelpText("Click add breath to practice breathing!");
                     }
                     else {
@@ -355,13 +356,6 @@ public class breathActivity extends AppCompatActivity {
         }
     }
 
-    private void resetButton() {
-        ViewGroup.LayoutParams initialParams = breathButton.getLayoutParams();
-        initialParams.width = 450;
-        initialParams.height = 450;
-        breathButton.setLayoutParams(initialParams);
-    }
-
     private static class IdleState extends State {
         // Use "Null Object" pattern: This class, does nothing! It's like a safe null
         public IdleState(breathActivity context) {
@@ -372,16 +366,24 @@ public class breathActivity extends AppCompatActivity {
         }
     }
 
+    private void resetButton() {
+        ViewGroup.LayoutParams initialParams = breathButton.getLayoutParams();
+        initialParams.width = 450;
+        initialParams.height = 450;
+        breathButton.setLayoutParams(initialParams);
+    }
+
     private void storeBreathNumToSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("originalBreathNum", originalBreathNum);
+        editor.putInt(SAVE_ORIGINAL_BREATH_NUM, originalBreathNum);
         editor.apply();
     }
 
     private void getBreathNumFromSharedPreferences() {
         SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
-        breathNum = sharedPreferences.getInt("originalBreathNum", 0);
+        originalBreathNum = sharedPreferences.getInt(SAVE_ORIGINAL_BREATH_NUM, 0);
+        breathNum = originalBreathNum;
     }
 
     @Override

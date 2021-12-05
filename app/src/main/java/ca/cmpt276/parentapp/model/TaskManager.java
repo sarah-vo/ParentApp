@@ -1,5 +1,10 @@
 package ca.cmpt276.parentapp.model;
 
+import static android.content.Context.MODE_PRIVATE;
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 
 public  class TaskManager {
@@ -42,7 +47,7 @@ public  class TaskManager {
             }
         }
     }
-
+    
     public ArrayList<Task> getTaskList() {
         return taskList;
     }

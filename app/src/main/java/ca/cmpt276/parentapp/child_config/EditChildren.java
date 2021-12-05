@@ -42,7 +42,7 @@ public class EditChildren extends AppCompatActivity {
     String byteArray;
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
-    public static final String TASK_HISTORY_LIST = "Task History List";
+    public static final String TASK_LIST = "Task List";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class EditChildren extends AppCompatActivity {
         fillPositionAndChild();
         fillPortraitAndNameField();
         editImage();
+        byteArray = child.getPortraitString();
     }
 
     @Override
@@ -184,6 +185,7 @@ public class EditChildren extends AppCompatActivity {
 
     private void deleteChildInfo() {
         manager.removeChildren(position);
+        taskManager.updateTaskHistoryList(position);
         saveData();
         finish();
     }
@@ -212,10 +214,15 @@ public class EditChildren extends AppCompatActivity {
 
         //Convert gridManager to json format
         Gson gson = new Gson();
+        Gson gsonTaskList = new Gson();
+
         String json = gson.toJson(manager);
+        String jsonTaskList = gsonTaskList.toJson(taskManager);
 
         //Save the json
         editor.putString(CHILD_LIST,json);
+        editor.putString(TASK_LIST, jsonTaskList);
+
         editor.apply();
     }
 }

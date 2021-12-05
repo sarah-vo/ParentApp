@@ -11,7 +11,6 @@ public  class ChildManager {
     private static ChildManager instance;
     private final ArrayList<Child> childrenList;
 
-    TaskManager taskManager = TaskManager.getInstance();
     public static ChildManager getInstance() {
         if(instance == null){
             instance = new ChildManager();
@@ -37,7 +36,7 @@ public  class ChildManager {
 
     public void removeChildren(int index) {
         childrenList.remove(index);
-        taskManager.updateTaskHistoryList(index);
+
     }
 
 

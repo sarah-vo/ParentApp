@@ -38,6 +38,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
         });
 
         setTitle("Whose Turn");
+        taskManager = TaskManager.getInstance();
         getTaskListFromSharedPreferences();
         displayTask();
         registerClickCallback();

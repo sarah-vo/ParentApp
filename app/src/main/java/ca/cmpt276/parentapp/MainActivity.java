@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.child_config.ConfigActivity;
+import ca.cmpt276.parentapp.model.TaskManager;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.whoseturn.WhoseTurnActivity;
 
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         ChildManager childrenManager = gson.fromJson(json, ChildManager.class);
         ChildManager.setInstance(childrenManager);
     }
-
 
     void switchActivityFlipCoin(){
         Button flipCoinButton = findViewById(R.id.coinFlipButton);

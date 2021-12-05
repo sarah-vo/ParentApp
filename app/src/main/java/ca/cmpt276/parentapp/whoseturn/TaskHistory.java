@@ -19,17 +19,17 @@ import ca.cmpt276.parentapp.model.TaskManager;
 public class TaskHistory extends AppCompatActivity {
 
     RecyclerView taskHistoryRecyclerView;
-    int taskIndex;
     TaskManager taskManager = TaskManager.getInstance();
     Task task;
 
+    int taskIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        taskIndex = intent.getIntExtra("task index", -1);
+        taskIndex = intent.getIntExtra(EditTaskActivity.TASK_INDEX, -1);
         task = taskManager.getTask(taskIndex);
 
         setTitle(task.getTaskName());
@@ -49,7 +49,6 @@ public class TaskHistory extends AppCompatActivity {
             taskHistoryRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
                     StaggeredGridLayoutManager.VERTICAL));
         }
-
     }
 
     @Override

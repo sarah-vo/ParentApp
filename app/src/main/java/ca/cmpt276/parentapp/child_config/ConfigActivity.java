@@ -22,6 +22,7 @@ public class ConfigActivity extends AppCompatActivity {
     ChildManager manager = ChildManager.getInstance();
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
+    public static final String CHILD_POSITION = "Child Position";
     ArrayAdapter<Child> adapter;
 
 
@@ -60,7 +61,7 @@ public class ConfigActivity extends AppCompatActivity {
         list.setAdapter(adapter);
         list.setOnItemClickListener((parent, viewClicked, position, id) -> {
             Intent intent = new Intent(this, EditChildren.class);
-            intent.putExtra("Child Position",position);
+            intent.putExtra(CHILD_POSITION,position);
             startActivity(intent);
             saveData();
         });

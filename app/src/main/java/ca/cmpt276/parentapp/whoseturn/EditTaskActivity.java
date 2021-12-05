@@ -29,6 +29,7 @@ import ca.cmpt276.parentapp.model.TaskManager;
  */
 
 public class EditTaskActivity extends AppCompatActivity {
+    public static final String TASK_INDEX = "task index";
     TaskManager taskManager = TaskManager.getInstance();
     Task task;
     int taskIndex;
@@ -40,7 +41,7 @@ public class EditTaskActivity extends AppCompatActivity {
         setTitle(getString(R.string.edit_task_activity_title));
 
         Intent intent = getIntent();
-        taskIndex = intent.getIntExtra("task index", -1);
+        taskIndex = intent.getIntExtra(TASK_INDEX, -1);
         task = taskManager.getTask(taskIndex);
 
         setupText();
@@ -135,7 +136,7 @@ public class EditTaskActivity extends AppCompatActivity {
 
         historyButton.setOnClickListener(view -> {
             Intent intent = new Intent(EditTaskActivity.this, TaskHistory.class);
-            intent.putExtra("task index", taskIndex);
+            intent.putExtra(TASK_INDEX, taskIndex);
             startActivity(intent);
         });
     }

@@ -38,7 +38,7 @@ public class FlipCoinQueueAdapter extends ArrayAdapter<Child> {
 
         ImageView player_profile = convertView.findViewById(R.id.flipCoin_queue_profile);
 
-        if(child.getPortrait() != null){
+        if (child.getPortrait() != null){
             player_profile.setImageBitmap(child.getPortrait());
         }
         else{

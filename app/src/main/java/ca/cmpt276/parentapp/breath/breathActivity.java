@@ -68,11 +68,41 @@ public class breathActivity extends AppCompatActivity {
         setState(preBreathState);
     }
 
-    private void configureHeading() {
-        Log.d("configureTextView", "In!");
-        Log.i("OriginalBreath_configure", originalBreathNum + "");
-        Log.i("BreathNum_configure", breathNum + "");
+    @Override
+    protected void onPause() {
+        super.onPause();
+        storeBreathNumToSharedPreferences();
+        if(music != null && music.isPlaying()){
+            music.pause();
+        }
+    }
 
+    private void storeBreathNumToSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SAVE_ORIGINAL_BREATH_NUM, originalBreathNum);
+        editor.apply();
+    }
+
+    private void getBreathNumFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
+        originalBreathNum = sharedPreferences.getInt(SAVE_ORIGINAL_BREATH_NUM, 0);
+        breathNum = originalBreathNum;
+    }
+
+    private void resetButton() {
+        ViewGroup.LayoutParams initialParams = breathButton.getLayoutParams();
+        initialParams.width = 450;
+        initialParams.height = 450;
+        breathButton.setLayoutParams(initialParams);
+    }
+
+    private void setHelpText(String string){
+        TextView help = findViewById(R.id.helpText);
+        help.setText(string);
+    }
+
+    private void configureHeading() {
         updateHeading();
 
         Button addBreath = findViewById(R.id.btnAddBreath);
@@ -80,8 +110,6 @@ public class breathActivity extends AppCompatActivity {
             if (breathNum < 10) {
                 breathNum++;
                 originalBreathNum++;
-                Log.i("OriginalBreath", originalBreathNum + "");
-                Log.i("BreathNum", breathNum + "");
                 updateHeading();
 
             } else {
@@ -94,8 +122,6 @@ public class breathActivity extends AppCompatActivity {
             if (breathNum > 0) {
                 breathNum--;
                 originalBreathNum--;
-                Log.i("OriginalBreath", originalBreathNum + "");
-                Log.i("BreathNum", breathNum + "");
                 updateHeading();
             } else {
                 Toast.makeText(this, "Please select between 1 and 10 breaths", Toast.LENGTH_SHORT).show();
@@ -108,12 +134,6 @@ public class breathActivity extends AppCompatActivity {
         TextView heading = findViewById(R.id.tvHeading);
         heading.setText(getString(R.string.take_num_breath, breathNum));
     }
-
-    private void setHelpText(String string){
-        TextView help = findViewById(R.id.helpText);
-        help.setText(string);
-    }
-
 
     // ************************************************************
     // Breath in State
@@ -152,6 +172,7 @@ public class breathActivity extends AppCompatActivity {
         private void breathInAnimation(){
             music.start();
             breathButton.setText(R.string.breath_in);
+
             countDownTimer = new CountDownTimer(10000, 100) {
                 @Override
                 public void onTick(long l) {
@@ -170,16 +191,15 @@ public class breathActivity extends AppCompatActivity {
                     currentState.handleClickOff();
                 }
             }.start();
-
         }
 
         @SuppressLint("ClickableViewAccessibility")
         @Override
         void handleEnter() {
             Log.d("inState", "In!");
-
             addBreath.setVisibility(View.INVISIBLE);
             decreaseBreath.setVisibility(View.INVISIBLE);
+
             if(breathNum <= 0){
                 setState(preBreathState);
 
@@ -207,7 +227,8 @@ public class breathActivity extends AppCompatActivity {
             Log.d("inState", "Is 3 seconds or less condition triggered");
             setHelpText("Release button when breath out.");
             music.pause();
-            if(countDownTimer != null){
+
+            if (countDownTimer != null){
                 countDownTimer.cancel();
             }
             resetButton();
@@ -231,7 +252,6 @@ public class breathActivity extends AppCompatActivity {
         @Override
         void handleClickOff() {
             Log.i("outState", "Exiting outState");
-
             if(breathNum <= 0){
                 setState(preBreathState);
             }
@@ -272,12 +292,12 @@ public class breathActivity extends AppCompatActivity {
                     //only allows for the user to stop animation and sound after 3 seconds
                     exhaleTimeInMilliSec += interval;
                     if (exhaleTimeInMilliSec >= 3000) {
-                        if(!isDecrement){
+                        if (!isDecrement){
                             --breathNum;
                             updateHeading();
                             isDecrement = true;
                         }
-                        if(breathNum == 0){
+                        if (breathNum == 0){
                             breathButton.setText(R.string.breath_good_job);
                             originalBreathNum = 0;
                             setHelpText("Click add breath to practice breathing!");
@@ -295,13 +315,12 @@ public class breathActivity extends AppCompatActivity {
                             handleClickOff();
                         });
                     }
-
                 }
 
                 @Override
                 public void onFinish() {
                     music.pause();
-                    if(breathNum == 0){
+                    if (breathNum == 0){
                         breathButton.setText(R.string.breath_good_job);
                         originalBreathNum = 0;
                         setHelpText("Click add breath to practice breathing!");
@@ -314,7 +333,6 @@ public class breathActivity extends AppCompatActivity {
                     exhaleTimeInMilliSec = 0;
 
                     handleClickOff();
-
                 }
             }.start();
         }
@@ -357,43 +375,10 @@ public class breathActivity extends AppCompatActivity {
         }
     }
 
+    //"Null Object" pattern
     private static class IdleState extends State {
-        // Use "Null Object" pattern: This class, does nothing! It's like a safe null
         public IdleState(breathActivity context) {
-            // ************************************************************
-            // Idle State
-            // ************************************************************
             super(context);
         }
     }
-
-    private void resetButton() {
-        ViewGroup.LayoutParams initialParams = breathButton.getLayoutParams();
-        initialParams.width = 450;
-        initialParams.height = 450;
-        breathButton.setLayoutParams(initialParams);
-    }
-
-    private void storeBreathNumToSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(SAVE_ORIGINAL_BREATH_NUM, originalBreathNum);
-        editor.apply();
-    }
-
-    private void getBreathNumFromSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
-        originalBreathNum = sharedPreferences.getInt(SAVE_ORIGINAL_BREATH_NUM, 0);
-        breathNum = originalBreathNum;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        storeBreathNumToSharedPreferences();
-        if(music != null && music.isPlaying()){
-            music.pause();
-        }
-    }
-
 }

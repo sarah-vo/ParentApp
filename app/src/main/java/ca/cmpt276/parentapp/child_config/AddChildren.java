@@ -74,7 +74,6 @@ public class AddChildren extends AppCompatActivity{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-
             //Getting URI and converting it to bitmap
             Uri fileUri = data.getData();
             try {
@@ -97,7 +96,6 @@ public class AddChildren extends AppCompatActivity{
 
 
     }
-
 
     //configure save button
     @Override

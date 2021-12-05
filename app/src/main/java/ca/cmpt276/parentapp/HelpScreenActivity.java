@@ -18,8 +18,6 @@ public class HelpScreenActivity extends AppCompatActivity {
 
         setTitle("Help Screen");
         setupLink();
-
-
     }
 
     private void setupLink() {

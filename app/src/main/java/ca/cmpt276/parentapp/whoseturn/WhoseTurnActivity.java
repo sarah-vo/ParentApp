@@ -25,6 +25,8 @@ import ca.cmpt276.parentapp.model.TaskManager;
 public class WhoseTurnActivity extends AppCompatActivity {
     TaskManager taskManager;
 
+    public static final String TASK_lIST = "Task List";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +95,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
 
         Gson gson = new Gson();
         String json = gson.toJson(taskManager);
-        editor.putString("Task List",json);
+        editor.putString(TASK_lIST,json);
         editor.apply();
     }
 
@@ -101,7 +103,7 @@ public class WhoseTurnActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
 
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("Task List",null);
+        String json = sharedPreferences.getString(TASK_lIST,null);
         taskManager = gson.fromJson(json, TaskManager.class);
         TaskManager.setInstance(taskManager);
 

@@ -96,7 +96,7 @@ public class TimerActivity extends AppCompatActivity {
         menuHidden = true;
 
         //Check if a timer service exist and on pause state
-        if(isTimerServiceRunning() && TimerService.isPaused){
+        if (isTimerServiceRunning() && TimerService.isPaused){
             timeLeft = TimerService.timerIntent.getIntExtra(TimerService.TIME_LEFT_SERVICE_TAG,3000);
             initialTime = TimerService.timerIntent.getIntExtra(TimerService.TIME_INITIAL_SERVICE_TAG,9000);
             isTimerRunning = false;
@@ -115,7 +115,7 @@ public class TimerActivity extends AppCompatActivity {
     private final BroadcastReceiver bReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(!isTimerServiceRunning() || TimerService.willServiceDestroy){
+            if (!isTimerServiceRunning() || TimerService.willServiceDestroy){
                 isTimerRunning = false;
                 pauseResumeButton.setText(getString(R.string.resume));
                 timeLeft = initialTime;
@@ -132,7 +132,7 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.clear();
-        if(!menuHidden){
+        if (!menuHidden){
             if (timerSpeedList != null){
                 for (int i = 0; i < timerSpeedList.size(); i++){
                     menu.add(0,i,Menu.NONE, timerSpeedList.get(i) + "%");

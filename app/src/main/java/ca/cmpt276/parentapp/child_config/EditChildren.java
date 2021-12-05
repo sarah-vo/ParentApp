@@ -72,7 +72,7 @@ public class EditChildren extends AppCompatActivity {
 
     private void fillPositionAndChild() {
         Intent intent = getIntent();
-        position = intent.getIntExtra("Child Position", -1);
+        position = intent.getIntExtra(ConfigActivity.CHILD_POSITION, -1);
         if (position == -1) {
             throw new IllegalArgumentException("Error in passing child position from configActivity!");
         }

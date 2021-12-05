@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Shared Preference", MODE_PRIVATE);
 
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("Child List",null);
+        String json = sharedPreferences.getString(ConfigActivity.CHILD_LIST,null);
 
         ChildManager childrenManager = gson.fromJson(json, ChildManager.class);
         ChildManager.setInstance(childrenManager);

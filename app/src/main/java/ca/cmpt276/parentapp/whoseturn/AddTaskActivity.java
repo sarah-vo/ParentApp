@@ -19,11 +19,9 @@ import ca.cmpt276.parentapp.model.TaskManager;
 
 public class AddTaskActivity extends AppCompatActivity {
 
-    TaskManager taskManager = TaskManager.getInstance();
+    TaskManager taskManager;
     String taskName;
-    Task newTask = new Task(taskName);
-
-
+    Task newTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +29,14 @@ public class AddTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_task);
         setTitle("Add Task");
 
+        taskManager = TaskManager.getInstance();
+        newTask = new Task(taskName);
+
         onClickDone();
 
     }
 
     public void onClickDone() {
-
         Button mAddTaskButton = findViewById(R.id.button_done);
         EditText mTaskNameEntry = findViewById(R.id.add_task_name);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -60,6 +60,7 @@ public class AddTaskActivity extends AppCompatActivity {
                             finish();
                         })
                         .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
+
                 AlertDialog alert = builder.create();
                 alert.show();
             }
@@ -71,16 +72,19 @@ public class AddTaskActivity extends AppCompatActivity {
         //confirm if user wanted to exit
         EditText mTaskNameEntry = findViewById(R.id.add_task_name);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         if (TextUtils.isEmpty(mTaskNameEntry.getText().toString())) {
             builder.setMessage(R.string.back_without_value)
                     .setPositiveButton (R.string.yes_add_task, (dialog, which) -> super.onBackPressed())
                     .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
+
             AlertDialog alert = builder.create();
             alert.show();
         } else {
             builder.setMessage(R.string.back_without_done)
                     .setPositiveButton (R.string.yes_add_task, (dialog, which) -> super.onBackPressed())
                     .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
+
             AlertDialog alert = builder.create();
             alert.show();
         }

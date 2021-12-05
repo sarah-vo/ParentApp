@@ -20,28 +20,27 @@ public class ListViewAdapter extends ArrayAdapter<Child> {
         super(context, R.layout.activity_config, childList);
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Child child = getItem(position);
 
         View itemView = convertView;
-        if(itemView == null){
+        if (itemView == null){
             itemView = LayoutInflater.from(getContext()).inflate(R.layout.config_listview, parent, false);
         }
 
         if (child != null){
             //image
             ImageView imageView = itemView.findViewById(R.id.portrait);
-            if(child.getPortrait() != null){
+            if (child.getPortrait() != null){
                 imageView.setImageBitmap(child.getPortrait());
             }
 
             //name
             TextView name = itemView.findViewById(R.id.name);
-            name.setText("Name: " + child.getChildName());
-        }
+            name.setText(getContext().getString(R.string.format_name, child.getChildName()));
 
+        }
         return itemView;
     }
 }

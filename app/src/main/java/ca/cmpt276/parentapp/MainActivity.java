@@ -1,10 +1,13 @@
 package ca.cmpt276.parentapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 
 import com.google.gson.Gson;
@@ -32,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         switchActivityTimeoutTimer();
         switchActivitySettings();
         switchActivityWhoseTurn();
-        switchActivityHelpScreen();
         switchActivityTakeBreath();
     }
 
@@ -78,14 +80,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void switchActivityHelpScreen() {
-        Button helpScreenButton = findViewById(R.id.btnHelpScreen);
-        helpScreenButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, HelpScreenActivity.class);
-            startActivity(intent);
-        });
-    }
-
     private void switchActivityTakeBreath() {
         Button takeBreathButton = findViewById(R.id.takeBreathButton);
         takeBreathButton.setOnClickListener(View -> {
@@ -95,4 +89,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.help_button:
+                Intent intent = new Intent(this, HelpScreenActivity.class);
+                startActivity(intent);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

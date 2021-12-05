@@ -6,6 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/tvMainMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="@string/main_menu"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/coinFlipButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/takeBreathButton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_menu_button"
+        android:text="Take Breath"
+        android:textSize="16sp"
+        app:icon="@drawable/ic_baseline_air_24"
+        app:layout_constraintBottom_toTopOf="@+id/mainMenuImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsButton" />
+
+    <Button
+        android:id="@+id/settingsButton"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="206dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_menu_button"
+        android:text="@string/settings"
+        android:textSize="16sp"
+        app:icon="@drawable/ic_setting"
+        app:layout_constraintBottom_toTopOf="@+id/takeBreathButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskButton" />
+
     <Button
         android:id="@+id/coinFlipButton"
         style="@style/Widget.MaterialComponents.Button.Icon"
@@ -19,48 +60,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMainMenu" />
 
     <Button
         android:id="@+id/timeoutTimerButton"
         style="@style/Widget.MaterialComponents.Button.Icon"
-        app:icon="@drawable/ic_timer"
         android:layout_width="206dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_menu_button"
         android:text="@string/timeout_timer"
         android:textSize="16sp"
+        app:icon="@drawable/ic_timer"
         app:layout_constraintBottom_toTopOf="@+id/taskButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/coinFlipButton" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:text="@string/main_menu"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/coinFlipButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/settingsButton"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="206dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_menu_button"
-        android:text="@string/settings"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_setting"
-        app:layout_constraintBottom_toTopOf="@+id/btnHelpScreen"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskButton" />
 
     <Button
         android:id="@+id/taskButton"
@@ -78,40 +93,15 @@
         app:layout_constraintTop_toBottomOf="@+id/timeoutTimerButton" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/mainMenuImage"
         android:layout_width="181dp"
         android:layout_height="258dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnHelpScreen"
+        app:layout_constraintTop_toBottomOf="@+id/takeBreathButton"
         app:srcCompat="@drawable/menu_bg"
         tools:ignore="ContentDescription" />
-
-    <Button
-        android:id="@+id/btnHelpScreen"
-        style="@style/Widget.MaterialComponents.Button.Icon"
-        android:layout_width="206dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/main_menu_button"
-        android:text="@string/help_screen"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_baseline_help_24"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsButton" />
-
-    <Button
-        android:id="@+id/takeBreathButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Take Breath"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

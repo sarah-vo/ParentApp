@@ -61,6 +61,7 @@ public class breathActivity extends AppCompatActivity {
 
         music = MediaPlayer.create(this, R.raw.piano_moment);
         music.setLooping(true);
+        setTitle("Take Breath");
 
         addBreath = findViewById(R.id.btnAddBreath);
         decreaseBreath = findViewById(R.id.btnRemoveBreath);

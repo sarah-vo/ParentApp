@@ -43,5 +43,9 @@ public class HelpScreenActivity extends AppCompatActivity {
         tv17.setMovementMethod(LinkMovementMethod.getInstance());
         TextView tv18 = findViewById(R.id.textView18);
         tv18.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView breathBtnLink = findViewById(R.id.breathBtnLink);
+        breathBtnLink.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView breathMusicLink = findViewById(R.id.breathMusicLink);
+        breathMusicLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

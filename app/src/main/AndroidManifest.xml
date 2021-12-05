@@ -57,9 +57,6 @@
             android:exported="true"
             android:parentActivityName=".whoseturn.WhoseTurnActivity" />
         <activity
-            android:name=".whoseturn.EditTask"
-            android:exported="true"
-            android:parentActivityName=".whoseturn.WhoseTurnActivity" />
             android:name=".whoseturn.EditTaskActivity"
             android:exported="true"
             android:parentActivityName=".whoseturn.WhoseTurnActivity" />

@@ -11,6 +11,7 @@ public  class ChildManager {
     private static ChildManager instance;
     private final ArrayList<Child> childrenList;
 
+    TaskManager taskManager = TaskManager.getInstance();
     public static ChildManager getInstance() {
         if(instance == null){
             instance = new ChildManager();
@@ -34,8 +35,9 @@ public  class ChildManager {
         childrenList.add(child);
     }
 
-    public void removeChildren(int index){
+    public void removeChildren(int index) {
         childrenList.remove(index);
+        taskManager.updateTaskHistoryList(index);
     }
 
 
@@ -48,6 +50,9 @@ public  class ChildManager {
     }
 
     public Child getChild(int pos) {
+        if (pos >= childrenList.size() || pos < 0) {
+            return null;
+        }
         return childrenList.get(pos);
     }
 

@@ -19,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
+import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.History;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
@@ -127,9 +128,11 @@ public class EditTaskActivity extends AppCompatActivity {
             String lastTurnDate = DateTimeFormatter.ofPattern("MMM dd, YYYY ")
                     .format(localDateTime);
 
-            Child child = task.getCurrentTurnChild();
-            task.getTaskHistoryList().add(new History(child, lastTurnDate));
-            task.passTurnToNextChild();
+            int childIndex = task.getWhoseTurn(ChildManager.getInstance().getNumberOfChildren());
+            if (childIndex != -1) {
+                task.getTaskHistoryList().add(new History(childIndex, lastTurnDate));
+                task.passTurnToNextChild();
+            }
             finish();
         });
 

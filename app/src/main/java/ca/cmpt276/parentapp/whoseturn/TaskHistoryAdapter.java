@@ -14,12 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
+import ca.cmpt276.parentapp.model.Child;
+import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.History;
 
 public class TaskHistoryAdapter extends RecyclerView.Adapter<TaskHistoryAdapter.TaskHistoryViewHolder> {
 
     Context context;
     ArrayList<History> taskHistoryList;
+    ChildManager childManager = ChildManager.getInstance();
 
     public TaskHistoryAdapter(Context context, ArrayList<History> taskHistoryList) {
         this.context = context;
@@ -37,25 +40,35 @@ public class TaskHistoryAdapter extends RecyclerView.Adapter<TaskHistoryAdapter.
     @Override
     public void onBindViewHolder(@NonNull TaskHistoryViewHolder holder, int position) {
 
-        if (taskHistoryList.get(position).getChild() != null) {
-            if(taskHistoryList.get(position).getChild().getPortrait() != null) {
-                holder.childPortrait.setImageBitmap(taskHistoryList.get(position).getChild().getPortrait());
-            }
-            else {
-                holder.childPortrait.setImageResource(R.drawable.default_portrait);
-            }
+        int childIndex = taskHistoryList.get(position).getChildIndex();
+        System.out.println("child index: " + childIndex);
 
-            if(taskHistoryList.get(position).getChild().getChildName() != null) {
-                holder.childName.setText(taskHistoryList.get(position).getChild().getChildName());
-            }
-
-            if(taskHistoryList.get(position).getLastTurnDate() != null) {
-                holder.lastTurnDate.setText(taskHistoryList.get(position).getLastTurnDate());
-            }
+        if(childIndex == -1) {
+            holder.childPortrait.setImageResource(R.drawable.default_portrait);
+            holder.childName.setText(R.string.task_history_deleted_child);
+            holder.lastTurnDate.setText(taskHistoryList.get(position).getLastTurnDate());
         }
 
-        else {
-            holder.childPortrait.setImageResource(R.drawable.default_portrait);
+        else if (childManager.getChildList().size() != 0) {
+            if (childManager.getChild(childIndex) != null) {
+                if(childManager.getChild(childIndex).getPortrait() != null) {
+                    holder.childPortrait.setImageBitmap(childManager.getChild(childIndex).getPortrait());
+                }
+                else {
+                    holder.childPortrait.setImageResource(R.drawable.default_portrait);
+                }
+
+                if(childManager.getChild(childIndex).getChildName() != null) {
+                    holder.childName.setText(childManager.getChild(childIndex).getChildName());
+                }
+                else {
+                    holder.childName.setText(R.string.task_history_deleted_child);
+                }
+
+                if(taskHistoryList.get(position).getLastTurnDate() != null) {
+                    holder.lastTurnDate.setText(taskHistoryList.get(position).getLastTurnDate());
+                }
+            }
         }
     }
 

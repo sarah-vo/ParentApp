@@ -114,5 +114,6 @@
     <string name="task_history_child_portrait">Child Portrait</string>
     <string name="task_history_child_name">Child Name</string>
     <string name="task_history_last_turn_date">Date</string>
+    <string name="task_history_deleted_child">A deleted child</string>
 
 </resources>

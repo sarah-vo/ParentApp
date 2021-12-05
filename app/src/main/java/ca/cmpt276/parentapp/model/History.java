@@ -2,16 +2,20 @@ package ca.cmpt276.parentapp.model;
 
 public class History {
 
-    private Child child;
+    private int childIndex = -1;
     private String lastTurnDate;
 
-    public History(Child child, String lastTurnDate) {
-        this.child = child;
+    public History(int childIndex, String lastTurnDate) {
+        this.childIndex = childIndex;
         this.lastTurnDate = lastTurnDate;
     }
 
-    public Child getChild() {
-        return child;
+    public int getChildIndex() {
+        return this.childIndex;
+    }
+
+    public void setChildIndex(int childIndex) {
+        this.childIndex = childIndex;
     }
 
     public String getLastTurnDate() {

@@ -28,10 +28,12 @@ import java.io.ByteArrayOutputStream;
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.TaskManager;
 
 /**Function that allows user to edit/delete child and their name/picture**/
 public class EditChildren extends AppCompatActivity {
     final ChildManager manager = ChildManager.getInstance();
+    TaskManager taskManager = TaskManager.getInstance();
     Child child;
     int position;
     ImageView portraitImageView;
@@ -40,6 +42,7 @@ public class EditChildren extends AppCompatActivity {
     String byteArray;
     public static final String SHARED_PREFERENCE = "Shared Preference";
     public static final String CHILD_LIST = "Child List";
+    public static final String TASK_HISTORY_LIST = "Task History List";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,6 +24,12 @@ public class Task {
     }
 
     public int getWhoseTurn(int numChildren) {
+
+        if (numChildren == 0) {
+            whoseTurnIndex = -1;
+            return whoseTurnIndex;
+        }
+
         if (whoseTurnIndex == -1) {
             Random rand = new Random();
             whoseTurnIndex = rand.nextInt(numChildren);

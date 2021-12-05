@@ -33,6 +33,16 @@ public  class TaskManager {
         return taskList.get(index);
     }
 
+    public void updateTaskHistoryList(Integer removedChildIndex) {
+        for(Task task : taskList) {
+            for(History history: task.getTaskHistoryList()) {
+                if(history.getChildIndex() == removedChildIndex) {
+                    history.setChildIndex(-1);
+                }
+            }
+        }
+    }
+
     public ArrayList<Task> getTaskList() {
         return taskList;
     }

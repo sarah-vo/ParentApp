@@ -46,4 +46,31 @@ public class TaskHistory extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        task = taskManager.getTask(taskIndex);
+        if (task.getTaskHistoryList() == null || task.getTaskHistoryList().size() == 0) {
+            setContentView(R.layout.task_history_empty);
+        }
+        else {
+            setContentView(R.layout.activity_task_history);
+
+            taskHistoryRecyclerView = findViewById(R.id.task_history_recycler_view);
+
+            TaskHistoryAdapter taskHistoryAdapter = new TaskHistoryAdapter(this,
+                    task.getTaskHistoryList());
+
+            taskHistoryRecyclerView.setAdapter(taskHistoryAdapter);
+            taskHistoryRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
+                    StaggeredGridLayoutManager.VERTICAL));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

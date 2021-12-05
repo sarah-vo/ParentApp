@@ -2,6 +2,12 @@ package ca.cmpt276.parentapp.model;
 
 import java.util.ArrayList;
 
+/**
+ * Store a list of Task objects. Supports singleton access and includes methods to
+ * edit and retrieve elements from the list. Also has an update task history method which updates the
+ * task history when child is removed.
+ */
+
 public  class TaskManager {
     private final ArrayList<Task> taskList;
     private static TaskManager instance;
@@ -33,6 +39,19 @@ public  class TaskManager {
         return taskList.get(index);
     }
 
+    public void updateTaskHistoryList(Integer removedChildIndex) {
+        for(Task task : taskList) {
+            for(History history: task.getTaskHistoryList()) {
+                if(history.getChildIndex() == removedChildIndex) {
+                    history.setChildIndex(-1);
+                }
+                if(history.getChildIndex() > removedChildIndex) {
+                    history.setChildIndex(history.getChildIndex()-1);
+                }
+            }
+        }
+    }
+    
     public ArrayList<Task> getTaskList() {
         return taskList;
     }

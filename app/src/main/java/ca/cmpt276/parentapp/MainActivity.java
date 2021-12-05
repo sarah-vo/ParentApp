@@ -14,6 +14,7 @@ import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.child_config.ConfigActivity;
 import ca.cmpt276.parentapp.takebreath.TakeBreath;
+import ca.cmpt276.parentapp.model.TaskManager;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.whoseturn.WhoseTurnActivity;
 

@@ -36,6 +36,10 @@ public class Child {
         }
     }
 
+    public String getPortraitString() {
+        return bytePhoto;
+    }
+
     public void saveBitmapString(Bitmap bitmap){
         ByteArrayOutputStream byteOutput = new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100, byteOutput);

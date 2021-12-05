@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -16,15 +14,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Child;
+import ca.cmpt276.parentapp.model.ChildManager;
+import ca.cmpt276.parentapp.model.History;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
 
 /**
  * Screen to let user change task name, delete the task, and confirm the child has complete task.
  */
-public class EditTask extends AppCompatActivity {
+
+public class EditTaskActivity extends AppCompatActivity {
     TaskManager taskManager = TaskManager.getInstance();
     Task task;
     int taskIndex;
@@ -33,7 +37,7 @@ public class EditTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
-        setTitle("Modify Task");
+        setTitle(getString(R.string.edit_task_activity_title));
 
         Intent intent = getIntent();
         taskIndex = intent.getIntExtra("task index", -1);
@@ -49,7 +53,6 @@ public class EditTask extends AppCompatActivity {
         Button mEditTaskButton = findViewById(R.id.button_edit_task_done);
         EditText mEditTaskName = findViewById(R.id.etTaskName);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        String oldTaskName = mEditTaskName.getText().toString();
 
         mEditTaskButton.setOnClickListener((view) -> {
             if (TextUtils.isEmpty(mEditTaskName.getText().toString())) {
@@ -82,12 +85,8 @@ public class EditTask extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (TextUtils.isEmpty(mEditTaskName.getText().toString())) {
             builder.setMessage(R.string.back_edit_task_without_value)
-                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> {
-                        finish();
-                    })
-                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> {
-                        onClickDone();
-                    });
+                    .setPositiveButton (R.string.yes_add_task, (dialog, which) -> finish())
+                    .setNegativeButton(R.string.no_add_task, (dialog, which) -> onClickDone());
             AlertDialog alert = builder.create();
             alert.show();
         } else {
@@ -117,14 +116,28 @@ public class EditTask extends AppCompatActivity {
     }
 
     private void setupButton() {
-        Button btnComplete = findViewById(R.id.button_complete);
-        Button btnCancel = findViewById(R.id.button_edit_task_done);
+        Button btnComplete = findViewById(R.id.button_edit_task_complete);
+        Button historyButton = findViewById(R.id.button_edit_task_history);
 
-        btnComplete.setOnClickListener(View -> {
-            task.passTurnToNextChild();
+        btnComplete.setOnClickListener(view -> {
+            LocalDateTime localDateTime = LocalDateTime.now();
+            String lastTurnDate = DateTimeFormatter.ofPattern("MMM dd, yyyy")
+                    .format(localDateTime);
+
+            int childIndex = task.getWhoseTurn(ChildManager.getInstance().getNumberOfChildren());
+            if (childIndex != -1) {
+                task.getTaskHistoryList().add(new History(childIndex, lastTurnDate));
+                task.passTurnToNextChild();
+            }
             finish();
         });
-        btnCancel.setOnClickListener(View -> finish());
+
+
+        historyButton.setOnClickListener(view -> {
+            Intent intent = new Intent(EditTaskActivity.this, TaskHistory.class);
+            intent.putExtra("task index", taskIndex);
+            startActivity(intent);
+        });
     }
 
     @Override

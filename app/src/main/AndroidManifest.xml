@@ -33,6 +33,9 @@
             android:exported="true"
             android:parentActivityName=".MainActivity"/>
         <activity
+            android:name=".whoseturn.TaskHistory"
+            android:exported="false" />
+        <activity
             android:name=".flipcoin.FlipCoinQueue"
             android:exported="true"
             android:parentActivityName=".flipcoin.FlipCoinActivity" />
@@ -55,6 +58,9 @@
             android:parentActivityName=".whoseturn.WhoseTurnActivity" />
         <activity
             android:name=".whoseturn.EditTask"
+            android:exported="true"
+            android:parentActivityName=".whoseturn.WhoseTurnActivity" />
+            android:name=".whoseturn.EditTaskActivity"
             android:exported="true"
             android:parentActivityName=".whoseturn.WhoseTurnActivity" />
         <activity

@@ -1,11 +1,12 @@
 package ca.cmpt276.parentapp.model;
 
-import static android.content.Context.MODE_PRIVATE;
-import android.content.SharedPreferences;
-
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
+
+/**
+ * Store a list of Task objects. Supports singleton access and includes methods to
+ * edit and retrieve elements from the list. Also has an update task history method which updates the
+ * task history when child is removed.
+ */
 
 public  class TaskManager {
     private final ArrayList<Task> taskList;

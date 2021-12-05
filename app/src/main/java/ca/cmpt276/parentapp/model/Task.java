@@ -5,10 +5,14 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Represent tasks in the app. Each task is an object.
+ */
+
 public class Task {
 
     private String taskName;
-    private ArrayList<History> taskHistoryList = new ArrayList<>();
+    private final ArrayList<History> taskHistoryList = new ArrayList<>();
     private int whoseTurnIndex = -1;
 
     public Task(String taskName) {

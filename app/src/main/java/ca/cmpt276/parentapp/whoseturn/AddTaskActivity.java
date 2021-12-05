@@ -13,6 +13,10 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
 
+/**
+ * Screen to let user add task.
+ */
+
 public class AddTaskActivity extends AppCompatActivity {
 
     TaskManager taskManager = TaskManager.getInstance();

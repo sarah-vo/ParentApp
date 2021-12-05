@@ -1,7 +1,6 @@
 package ca.cmpt276.parentapp.whoseturn;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ca.cmpt276.parentapp.R;
-import ca.cmpt276.parentapp.model.Child;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.model.History;
+
+/**
+ *An adapter used to show the history of a task list onto a Recycler View.
+ */
 
 public class TaskHistoryAdapter extends RecyclerView.Adapter<TaskHistoryAdapter.TaskHistoryViewHolder> {
 
@@ -41,7 +43,6 @@ public class TaskHistoryAdapter extends RecyclerView.Adapter<TaskHistoryAdapter.
     public void onBindViewHolder(@NonNull TaskHistoryViewHolder holder, int position) {
 
         int childIndex = taskHistoryList.get(position).getChildIndex();
-        System.out.println("child index: " + childIndex);
 
         if(childIndex == -1) {
             holder.childPortrait.setImageResource(R.drawable.default_portrait);
@@ -77,7 +78,7 @@ public class TaskHistoryAdapter extends RecyclerView.Adapter<TaskHistoryAdapter.
         return taskHistoryList.size();
     }
 
-    public class TaskHistoryViewHolder extends RecyclerView.ViewHolder {
+    public static class TaskHistoryViewHolder extends RecyclerView.ViewHolder {
 
         ImageView childPortrait;
         TextView childName;

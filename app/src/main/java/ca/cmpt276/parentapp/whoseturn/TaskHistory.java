@@ -11,6 +11,11 @@ import ca.cmpt276.parentapp.R;
 import ca.cmpt276.parentapp.model.Task;
 import ca.cmpt276.parentapp.model.TaskManager;
 
+/**
+ * Display the task completion history with information including
+ * child portrait, child name, last turn date.
+ */
+
 public class TaskHistory extends AppCompatActivity {
 
     RecyclerView taskHistoryRecyclerView;

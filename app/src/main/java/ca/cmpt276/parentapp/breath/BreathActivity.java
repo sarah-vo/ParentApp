@@ -17,10 +17,13 @@ import android.widget.Toast;
 
 import ca.cmpt276.parentapp.R;
 
-public class breathActivity extends AppCompatActivity {
+/**
+ * Feature that allows user to practice meditative activity
+ **/
+public class BreathActivity extends AppCompatActivity {
     // State Pattern's base states
     private abstract static class State {
-        public State(breathActivity context) {
+        public State(BreathActivity context) {
         }
         void handleEnter() {}
         void handleExit() {}
@@ -28,10 +31,10 @@ public class breathActivity extends AppCompatActivity {
         void handleThreeSecsLess() {}
     }
 
-    public final State inState = new inState(breathActivity.this);
-    public final State outState = new outState(breathActivity.this);
-    private State currentState = new IdleState(breathActivity.this);
-    public final State preBreathState = new preBreathState(breathActivity.this);
+    public final State inState = new inState(BreathActivity.this);
+    public final State outState = new outState(BreathActivity.this);
+    private State currentState = new IdleState(BreathActivity.this);
+    public final State preBreathState = new preBreathState(BreathActivity.this);
 
     public void setState(State newState) {
         currentState.handleExit();
@@ -140,7 +143,7 @@ public class breathActivity extends AppCompatActivity {
     // ************************************************************
     private class inState extends State {
 
-        public inState(breathActivity context) {
+        public inState(BreathActivity context) {
             super(context);
         }
 
@@ -241,7 +244,7 @@ public class breathActivity extends AppCompatActivity {
     // ************************************************************
     private class outState extends State {
 
-        public outState(breathActivity context) {
+        public outState(BreathActivity context) {
             super(context);
         }
         @Override
@@ -342,7 +345,7 @@ public class breathActivity extends AppCompatActivity {
     // Pre Breath State
     // ************************************************************
     public class preBreathState extends State {
-        public preBreathState(breathActivity context) {
+        public preBreathState(BreathActivity context) {
             super(context);
         }
 
@@ -377,7 +380,7 @@ public class breathActivity extends AppCompatActivity {
 
     //"Null Object" pattern
     private static class IdleState extends State {
-        public IdleState(breathActivity context) {
+        public IdleState(BreathActivity context) {
             super(context);
         }
     }

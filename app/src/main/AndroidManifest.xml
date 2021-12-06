@@ -25,11 +25,7 @@
         android:theme="@style/Theme.ParentApp"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".takebreath.TakeBreath"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"/>
-        <activity
-            android:name=".breath.breathActivity"
+            android:name=".breath.BreathActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"/>
         <activity

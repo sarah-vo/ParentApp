@@ -12,12 +12,10 @@ import android.widget.Button;
 
 import com.google.gson.Gson;
 
-import ca.cmpt276.parentapp.breath.breathActivity;
+import ca.cmpt276.parentapp.breath.BreathActivity;
 import ca.cmpt276.parentapp.flipcoin.FlipCoinActivity;
 import ca.cmpt276.parentapp.model.ChildManager;
 import ca.cmpt276.parentapp.child_config.ConfigActivity;
-import ca.cmpt276.parentapp.takebreath.TakeBreath;
-import ca.cmpt276.parentapp.model.TaskManager;
 import ca.cmpt276.parentapp.timer.TimerActivity;
 import ca.cmpt276.parentapp.whoseturn.WhoseTurnActivity;
 
@@ -84,8 +82,7 @@ public class MainActivity extends AppCompatActivity {
     private void switchActivityTakeBreath() {
         Button takeBreathButton = findViewById(R.id.takeBreathButton);
         takeBreathButton.setOnClickListener(View -> {
-            //Intent intent = new Intent(this, TakeBreath.class);
-            Intent intent = new Intent(this, breathActivity.class);
+            Intent intent = new Intent(this, BreathActivity.class);
             startActivity(intent);
         });
     }

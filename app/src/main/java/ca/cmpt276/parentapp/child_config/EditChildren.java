@@ -186,6 +186,7 @@ public class EditChildren extends AppCompatActivity {
     private void deleteChildInfo() {
         manager.removeChildren(position);
         taskManager.updateTaskHistoryList(position);
+        taskManager.updateTaskList(position, manager.getNumberOfChildren());
         saveData();
         finish();
     }

@@ -44,8 +44,13 @@ public class Task {
         return whoseTurnIndex;
     }
 
+
     public void passTurnToNextChild() {
         whoseTurnIndex++;
+    }
+
+    public void updateTurnToNextChild() {
+        whoseTurnIndex--;
     }
 
     public Child getCurrentTurnChild() {

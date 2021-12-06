@@ -51,6 +51,14 @@ public  class TaskManager {
             }
         }
     }
+
+    public void updateTaskList(Integer removedChildIndex, Integer numChildren) {
+        for (Task task:taskList) {
+            if (task.getWhoseTurn(numChildren) > removedChildIndex) {
+                task.updateTurnToNextChild();
+            }
+        }
+    }
     
     public ArrayList<Task> getTaskList() {
         return taskList;
